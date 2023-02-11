@@ -4,3 +4,4 @@
 
 The focus is put on teamwork.
 
+<Img src="https://picoparkgame.com/assets/img/mode/world/2.png">
