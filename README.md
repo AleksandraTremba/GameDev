@@ -3,7 +3,7 @@
 4 players are given controll of one character and have to woek together to progress.
 
 The focus is put on teamwork.
-The game should be fun and give players a sense of unity and sense that they are indispensable.
+The game should be fun and give players a sense of unity and that they are indispensable.
 
 Feature list:
 - Playable characters are frogs.
