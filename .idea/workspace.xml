@@ -5,34 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7ea40eaf-446b-4c41-851d-8136ce4c4d50" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/client/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/badlogic.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/core/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/core/src/com/mygdx/game/MyGdxGame.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/desktop/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/desktop/src/com/mygdx/game/DesktopLauncher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/gradle.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/settings.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/assets/badlogic.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/core/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/core/src/com/mygdx/game/MyGdxGame.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/desktop/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/desktop/src/com/mygdx/game/DesktopLauncher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/gradle.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/assets/badlogic.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/core/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/core/src/com/mygdx/game/MyGdxGame.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/desktop/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/desktop/src/com/mygdx/game/DesktopLauncher.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/settings.gradle" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,26 +37,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/aleks/IdeaProjects/iti0301-2023-aroundtheworld/server",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/aleks/IdeaProjects/iti0301-2023-aroundtheworld&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\aleks\IdeaProjects\iti0301-2023-aroundtheworld\server" />
       <recent name="C:\Users\aleks\IdeaProjects\iti0301-2023-aroundtheworld\server\gradle" />
       <recent name="C:\Users\aleks\IdeaProjects\iti0301-2023-aroundtheworld\client" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="iti0301-2023-aroundtheworld" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="iti0301-2023-aroundtheworld" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -81,6 +84,8 @@
       <updated>1676551248718</updated>
       <workItem from="1676551250687" duration="4080000" />
       <workItem from="1676555831450" duration="89000" />
+      <workItem from="1677075818048" duration="45000" />
+      <workItem from="1677075889488" duration="76000" />
     </task>
     <servers />
   </component>
