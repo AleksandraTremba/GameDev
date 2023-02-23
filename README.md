@@ -12,7 +12,3 @@ Feature list:
 - Story.
 
 ![image](9ec46776-1628-4874-bf24-3fdee676b2d0.png)
-
-
-
-<Img src="https://gitlab.cs.ttu.ee/alprok/iti0301-2023-aroundtheworld/-/blob/main/9ec46776-1628-4874-bf24-3fdee676b2d0.png">
