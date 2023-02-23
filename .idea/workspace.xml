@@ -5,21 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7ea40eaf-446b-4c41-851d-8136ce4c4d50" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/client/core/src/client/RequestDataEncoder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/assets/badlogic.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/core/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/core/src/com/mygdx/game/MyGdxGame.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/desktop/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/desktop/src/com/mygdx/game/DesktopLauncher.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gradle.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/client/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +30,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/aleks/IdeaProjects/iti0301-2023-aroundtheworld&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/aleks/IdeaProjects/iti0301-2023-aroundtheworld/client/core&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -59,21 +47,6 @@
       <recent name="C:\Users\aleks\IdeaProjects\iti0301-2023-aroundtheworld\client" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="iti0301-2023-aroundtheworld" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="iti0301-2023-aroundtheworld" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -86,6 +59,9 @@
       <workItem from="1676555831450" duration="89000" />
       <workItem from="1677075818048" duration="45000" />
       <workItem from="1677075889488" duration="76000" />
+      <workItem from="1677139793832" duration="125000" />
+      <workItem from="1677139921039" duration="353000" />
+      <workItem from="1677140291532" duration="254000" />
     </task>
     <servers />
   </component>
