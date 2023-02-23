@@ -11,4 +11,4 @@ Feature list:
 - Collectables in form of bugs. Can be used to upgreade your character or unlock alternative styles.
 - Story.
 
-![image](photo_2023-02-12_16-29-44.jpg)
+![image](images/photo_2023-02-12_16-29-44.jpg)
