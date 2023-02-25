@@ -5,21 +5,22 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.Scenes.Hud;
 
 public class PlayScreen implements Screen {
     private MyGdxGame game;
-    Texture texture;
+    // Texture texture;
     private OrthographicCamera gamecam;
     private Viewport gamePort;
+    private Hud hud;
     public PlayScreen(MyGdxGame game) {
         this.game = game;
-        texture = new Texture("badlogic.jpg");
+        // texture = new Texture("badlogic.jpg");
         gamecam = new OrthographicCamera();
-        gamePort = new FitViewport(800, 480, gamecam);
+        gamePort = new FitViewport(MyGdxGame.V_WIDTH, MyGdxGame.V_HEIGHT, gamecam);
+        hud = new Hud(game.batch);
     }
     @Override
     public void show() {
@@ -28,11 +29,13 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(1, 0, 0, 1);
-        game.batch.setProjectionMatrix(gamecam.combined);
-        game.batch.begin();
-        game.batch.draw(texture, 0, 0);
-        game.batch.end();
+        ScreenUtils.clear(1, 1, 1, 1);
+        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
+        // game.batch.setProjectionMatrix(gamecam.combined);
+        // game.batch.begin();
+        // game.batch.draw(texture, 0, 0);
+        // game.batch.end();
     }
 
     @Override
