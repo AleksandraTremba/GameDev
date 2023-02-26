@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="16" height="8" tilewidth="25" tileheight="25" infinite="0" nextlayerid="4" nextobjectid="2">
+ <tileset firstgid="1" source="SewerBackgroundBlue25.tsx"/>
+ <tileset firstgid="46" source="SewerAccess25.tsx"/>
+ <layer id="1" name="Tile Layer 1" width="16" height="8">
+  <data encoding="base64" compression="zlib">
+   eJylzUkOgkAQQNFmEEEFBUVQGZwYHLj/9fgLFhUS6AWdvFSq8pN2lVIe3GGu4GAtbt5ol02ISMwAexzELRrtsjFgwoI98f9cs8EWO/gT/881R5wQ44wEKS644qZpMuQoUOKOB5544a1pKtRo0OKDL374o9M0S18PYVEIjg==
+  </data>
+ </layer>
+ <layer id="2" name="graphics" width="16" height="8">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFQxmEMTIwhANxBCN5bAC8xAWA
+  </data>
+ </layer>
+ <objectgroup id="3" name="ground">
+  <object id="1" x="-0.842948" y="175.755" width="400.822" height="24.024"/>
+ </objectgroup>
+</map>

@@ -29,10 +29,10 @@ public class Hud {
         table.top();
         table.setFillParent(true);
 
-        levelLabel = new Label("0-1", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
-        worldLabel = new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
+        levelLabel = new Label("0 - 1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        worldLabel = new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
-        table.add(worldLabel).expandX().padTop(10);
+        table.add(worldLabel).expandX().padTop(5);
         table.row();
         table.add(levelLabel).expandX();
         stage.addActor(table);
