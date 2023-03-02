@@ -21,7 +21,7 @@ public class Frog extends Sprite {
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(10);
+        shape.setRadius(25);
 
         fdef.shape = shape;
         b2body.createFixture(fdef);

@@ -128,7 +128,7 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
         batch.begin();
-        batch.draw(frogPng, player.b2body.getPosition().x, player.b2body.getPosition().y, 0, 0, 20, 20);
+        batch.draw(frogPng, player.b2body.getPosition().x, player.b2body.getPosition().y, 0, 0, 50, 50);
         batch.end();
         // game.batch.setProjectionMatrix(gamecam.combined);
         // game.batch.begin();
