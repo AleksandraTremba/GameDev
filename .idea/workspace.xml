@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7ea40eaf-446b-4c41-851d-8136ce4c4d50" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01-Mar-23_22_28__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01-Mar-23_22_28__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/core/src/com/mygdx/game/States/GameStateManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/core/src/com/mygdx/game/States/MenuState.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/core/src/com/mygdx/game/States/PlayState.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/core/src/com/mygdx/game/States/State.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/core/src/com/mygdx/game/MyGdxGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/com/mygdx/game/MyGdxGame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
