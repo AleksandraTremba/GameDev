@@ -3,8 +3,11 @@ package com.mygdx.game.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -24,6 +27,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.Sprites.Frog;
 
 public class PlayScreen implements Screen {
     private MyGdxGame game;
@@ -36,6 +40,9 @@ public class PlayScreen implements Screen {
     private OrthogonalTiledMapRenderer renderer;
     private World world;
     private Box2DDebugRenderer b2dr;
+    private Frog player;
+    private Texture frogPng;
+    private SpriteBatch batch;
 
     public PlayScreen(MyGdxGame game) {
         this.game = game;
@@ -55,6 +62,11 @@ public class PlayScreen implements Screen {
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         Body body;
+
+        player = new Frog(world);
+
+        frogPng = new Texture(Gdx.files.internal("frog1.png"));
+        batch = new SpriteBatch();
 
         /**
          * This part should create ground for world, but "object" in second line throws error :/
@@ -81,14 +93,28 @@ public class PlayScreen implements Screen {
     }
 
     public void handleInput(float dt) {
-         if (Gdx.input.isTouched()) {
-                     gamecam.position.x += 100 * dt;
-                 }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+            player.b2body.applyLinearImpulse(new Vector2(0, 50f), player.b2body.getWorldCenter(), true);
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+            player.b2body.applyLinearImpulse(new Vector2(0, -50f), player.b2body.getWorldCenter(), true);
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2) {
+            player.b2body.applyLinearImpulse(new Vector2(20f, 0), player.b2body.getWorldCenter(), true);
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2) {
+            player.b2body.applyLinearImpulse(new Vector2(-20f, 0), player.b2body.getWorldCenter(), true);
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            player.b2body.setLinearVelocity(new Vector2(0, 0));
+        }
     }
     public void update(float dt) {
         handleInput(dt);
 
         world.step(1/60f, 6, 2);
+
+        gamecam.position.x = player.b2body.getPosition().x;
 
         gamecam.update();
         renderer.setView(gamecam);
@@ -101,6 +127,9 @@ public class PlayScreen implements Screen {
         renderer.render();
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
+        batch.begin();
+        batch.draw(frogPng, player.b2body.getPosition().x, player.b2body.getPosition().y, 0, 0, 50, 50);
+        batch.end();
         // game.batch.setProjectionMatrix(gamecam.combined);
         // game.batch.begin();
         // game.batch.draw(texture, 0, 0);
