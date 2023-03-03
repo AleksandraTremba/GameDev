@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="43" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="1">
+ <tileset firstgid="1" source="PixelArt16.tsx"/>
+ <tileset firstgid="1651" source="SewerAccess16.tsx"/>
+ <layer id="1" name="Tile Layer 1" width="43" height="13">
+  <data encoding="base64" compression="zlib">
+   eJzllDlSw0AQRUeUJgNSllMAB2Gp4g7APYDENssFgJRF5gBAZLMcg0VypsR2gs32u1CXv9pjyo6ZqleWra8/392tcW6ylYKkoD7hs6G1653bA/t+PL3sm9P+bdAB3eI39kspbyV2rgpq8eDZZEJu4HkL7vzfHloXvU6LzDYr+2nOLf+btQGacdk3JS/+ZFTXhk8HdH05B+s4K/tlgazsZ+vaA/24nC8j/zrppyPnZsBsFP5vur+S07Oa9RxcgEtwZbKmtLfVLSH7Mljx5b2tjjNlbri/Vm9zq07WM3gBr+AtUFedIauTum4j544v99nquG6hebB6+9+0trLm0JN5sAAWo3Bd04Cuhd9OkfOMZi0L6Gxvbb1Ceq5tnbKu4v4aWAcbI7ImAZ1k1Xnls8LquDf8vsj1ZjSs13yCPdNy8pLPazMD/C7yd55Xe/bwM9wbngPJKVRBDRyAQ3AEjot77OvINy9ytkxWWwvdT3Q6r6POisT4c+8lSwU0QBPcgwfwCJ6Ke+zrzGzI/nYG7DuhPTrxg3nVWeXzxp5H1kuyvIMe6IMP8Am+wDdwU+VZH2fZHobek5CX6v/j+gEaMj95
+  </data>
+ </layer>
+ <layer id="2" name="ground" width="43" height="13">
+  <data encoding="base64" compression="zlib">
+   eJzj5GRg4AJiDiDmpAObnQJ2KQfDkAF7hpBbR8OVNmA0XGkDRsOVNmA0XGkD2NHqQmry2alsHi3cSCs+ABITDxo=
+  </data>
+ </layer>
+ <layer id="3" name="water" width="43" height="13">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRMApGASngJyNxYgMJDJkYGIyA2ACITYDYlAlTbLCASBYGhiggjgbiGBYEH1kcGQAAwrAHGQ==
+  </data>
+ </layer>
+</map>
