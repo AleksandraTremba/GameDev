@@ -7,6 +7,14 @@
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "SuperMario16.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "bugs16.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "level1.tmx": {
             "scale": 2.3726249999999998,
             "selectedLayer": 0,
@@ -27,6 +35,8 @@
     ],
     "project": "level01.tiled-project",
     "recentFiles": [
+        "bugs16.tsx",
+        "SuperMario16.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.margin": 1,
