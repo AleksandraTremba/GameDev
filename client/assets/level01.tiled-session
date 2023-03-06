@@ -3,10 +3,32 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "level01.tmx",
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "BlueFrog.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Blue_Frog.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "PixelArt16.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "SewerAccess16.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "SewerAccess25.tsx": {
+            "scaleInDock": 1
+        },
+        "SewerBackgroundBlue25.tsx": {
+            "scaleInDock": 1
+        },
         "SuperMario16.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
@@ -15,12 +37,20 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "level01.tmx": {
+            "scale": 2,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 165.5,
+                "y": 103.5
+            }
+        },
         "level1.tmx": {
             "scale": 2.3726249999999998,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 200.20020020020024,
-                "y": 100.31083715294243
+                "x": 199.7787260945156,
+                "y": 99.88936304725779
             }
         }
     },
@@ -32,9 +62,20 @@
     "map.tileWidth": 16,
     "map.width": 25,
     "openFiles": [
+        "level1.tmx",
+        "level01.tmx",
+        "PixelArt16.tsx",
+        "SewerAccess16.tsx",
+        "BlueFrog.tsx"
     ],
     "project": "level01.tiled-project",
     "recentFiles": [
+        "level1.tmx",
+        "BlueFrog.tsx",
+        "SewerAccess16.tsx",
+        "PixelArt16.tsx",
+        "level01.tmx",
+        "Blue_Frog.tsx",
         "bugs16.tsx",
         "SuperMario16.tsx"
     ],
