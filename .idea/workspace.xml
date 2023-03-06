@@ -29,7 +29,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/Lexa/IdeaProjects/iti0301-2023-aroundtheworld/client/core/build.gradle",
+    "last_opened_file_path": "C:/Users/aleks/IdeaProjects/iti0301-2023-aroundtheworld/client",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -80,6 +80,7 @@
       <workItem from="1677139921039" duration="353000" />
       <workItem from="1677140291532" duration="254000" />
       <workItem from="1677583639784" duration="1082000" />
+      <workItem from="1678112358197" duration="50000" />
     </task>
     <servers />
   </component>
