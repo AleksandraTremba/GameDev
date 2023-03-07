@@ -46,16 +46,25 @@ public class PlayScreen implements Screen {
 
     public PlayScreen(MyGdxGame game) {
         this.game = game;
-        // texture = new Texture("badlogic.jpg");
+
+        // create cam used to follow frog through cam world
         gamecam = new OrthographicCamera();
-        gamePort = new FitViewport(MyGdxGame.V_WIDTH, MyGdxGame.V_HEIGHT, gamecam);
+
+        // create a FitViewport to maintain virtual aspects ratio despite screen size
+        gamePort = new FitViewport(MyGdxGame.V_WIDTH / MyGdxGame.PPM, MyGdxGame.V_HEIGHT / MyGdxGame.PPM, gamecam);
+
+        // create our HUD for world/level info
         hud = new Hud(game.batch);
+
+        // load our map and setup our map renderer
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("level01.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map);
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / MyGdxGame.PPM);
+
+        // initially set our gamecam to be centered correctly at the start of the map
         gamecam.position.set(gamePort.getWorldWidth() / 4, gamePort.getWorldWidth() / 4, 0);
 
-        world = new World(new Vector2(0, 0), true);
+        world = new World(new Vector2(0, -50), true);
         b2dr = new Box2DDebugRenderer();
 
         BodyDef bdef = new BodyDef();
@@ -65,8 +74,63 @@ public class PlayScreen implements Screen {
 
         player = new Frog(world);
 
+
         frogPng = new Texture(Gdx.files.internal("frog1.png"));
         batch = new SpriteBatch();
+
+        //create ground bodies/fixtures
+        for (MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set((rect.getX() + rect.getWidth() / 2) / MyGdxGame.PPM, (rect.getY() + rect.getHeight() / 2) / MyGdxGame.PPM);
+
+            body = world.createBody(bdef);
+
+            shape.setAsBox(rect.getWidth() / 2 / MyGdxGame.PPM, rect.getHeight() / 2 / MyGdxGame.PPM);
+            fdef.shape = shape;
+            body.createFixture(fdef);
+        }
+
+        //crete water bodies
+        for (MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set((rect.getX() + rect.getWidth() / 2) / MyGdxGame.PPM, (rect.getY() + rect.getHeight() / 2) / MyGdxGame.PPM);
+
+            body = world.createBody(bdef);
+
+            shape.setAsBox(rect.getWidth() / 2 / MyGdxGame.PPM, rect.getHeight() / 2 / MyGdxGame.PPM);
+            fdef.shape = shape;
+            body.createFixture(fdef);
+        }
+
+        //create steel door bodies/fixtures
+        for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2);
+
+            body = world.createBody(bdef);
+            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
+            fdef.shape = shape;
+            body.createFixture(fdef);
+        }
+
+        //create wood planks bodies/fixtures
+        for (MapObject object : map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2);
+
+            body = world.createBody(bdef);
+            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
+            fdef.shape = shape;
+            body.createFixture(fdef);
+        }
 
         /**
          * This part should create ground for world, but "object" in second line throws error :/
@@ -100,10 +164,10 @@ public class PlayScreen implements Screen {
             player.b2body.applyLinearImpulse(new Vector2(0, -50f), player.b2body.getWorldCenter(), true);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2) {
-            player.b2body.applyLinearImpulse(new Vector2(20f, 0), player.b2body.getWorldCenter(), true);
+            player.b2body.applyLinearImpulse(new Vector2(40f, 0), player.b2body.getWorldCenter(), true);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2) {
-            player.b2body.applyLinearImpulse(new Vector2(-20f, 0), player.b2body.getWorldCenter(), true);
+            player.b2body.applyLinearImpulse(new Vector2(-40f, 0), player.b2body.getWorldCenter(), true);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             player.b2body.setLinearVelocity(new Vector2(0, 0));
@@ -125,6 +189,8 @@ public class PlayScreen implements Screen {
         update(delta);
         ScreenUtils.clear(0, 0, 0, 1);
         renderer.render();
+        //see the lines of the objects
+        b2dr.render(world, gamecam.combined);
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
         batch.begin();

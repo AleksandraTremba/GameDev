@@ -15,13 +15,13 @@ public class Frog extends Sprite {
 
     public void defineFrog() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(100, 100);
+        bdef.position.set(100 / MyGdxGame.PPM, 32 / MyGdxGame.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(25);
+        shape.setRadius(15 / MyGdxGame.PPM);
 
         fdef.shape = shape;
         b2body.createFixture(fdef);
