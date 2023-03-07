@@ -75,7 +75,7 @@ public class PlayScreen implements Screen {
         gamecam.position.set(gamePort.getWorldWidth() / 4, gamePort.getWorldWidth() / 4, 0);
 
         //create our Box2D world, setting no gravity in X, -50 gravity in Y, and allow bodies to sleep
-        world = new World(new Vector2(0, -140), true);
+        world = new World(new Vector2(0, -150), true);
         //allows for debug lines of our box2d world.
         b2dr = new Box2DDebugRenderer();
 
@@ -183,7 +183,7 @@ public class PlayScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.UP) && isOnGround()) {
             velocity.y = 70f; // jump speed is higher than normal speed
         } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            velocity.y = -120;
+            velocity.y = -70;
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
