@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.game.Screens.MainMenuScreen;
 import com.mygdx.game.Screens.PlayScreen;
 
 
@@ -19,7 +20,7 @@ public class MyGdxGame extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		setScreen(new PlayScreen(this));
+		setScreen(new MainMenuScreen(this));
 		// img = new Texture("frog1.png");
 
 	}
