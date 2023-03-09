@@ -45,11 +45,6 @@ public class MainMenuScreen implements Screen {
         Vector2 scalingSize = windowSize.cpy().scl((float) 1 / 640, (float) 1 / 480);
         Vector2 mouseInput = new Vector2(Gdx.input.getX(), Gdx.input.getY());
         mouseInput.scl(1 / scalingSize.x, 1 / scalingSize.y);
-        System.out.println(mouseInput);
-        //mouseInput.scl(scalingSize);`
-
-        //System.out.println(scalingSize);
-        //System.out.println(mouseInput);
 
 
         game.batch.begin();
