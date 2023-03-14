@@ -31,6 +31,8 @@ import com.mygdx.game.Scenes.LobbyHud;
 import com.mygdx.game.Sprites.Frog;
 import com.mygdx.game.Sprites.FrogGame;
 
+import java.util.HashMap;
+
 public class Lobby implements Screen{
     //Reference to our Game, used to set Screens
     private MyGdxGame game;
@@ -51,10 +53,9 @@ public class Lobby implements Screen{
 
     //sprites
     private Frog player;
-    private Frog player0;
-
-    private Frog player1;
     private Frog player2;
+
+    private FrogGame frogs;
 
     private Texture frogPng;
     private SpriteBatch batch;
@@ -90,11 +91,8 @@ public class Lobby implements Screen{
 
 
         //create frog in our game world
-        //FrogGame frogGame = new FrogGame();
-        //player = frogGame.getFrog("player1");
-        //player1 = frogGame.getFrog("player2");
         player = new Frog(world, 200, 32, "player1");
-        //player2 = new Frog(world, 250, 32, "player2");
+        player2 = new Frog(world, 250, 32, "player2");
         //player = new Frog(world, 150, 32, "frog3");
 
         frogPng = new Texture(Gdx.files.internal("frog1.png"));
@@ -119,42 +117,8 @@ public class Lobby implements Screen{
 
     }
 
-    public boolean isOnGround() {
-        Array<Contact> contacts = world.getContactList();
-        for (Contact contact : contacts) {
-            if (contact.isTouching() && (contact.getFixtureA().getBody() == player.b2body || contact.getFixtureB().getBody() == player.b2body)) {
-                Vector2 contactNormal = contact.getWorldManifold().getNormal();
-                if (contactNormal.y > 0.5f) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public void handleInput(float dt) {
-        float speed = 70f; // adjust this to change the speed of the character
-        Vector2 velocity = player.b2body.getLinearVelocity();
-
-        if (Gdx.input.isKeyPressed(Input.Keys.UP) && isOnGround()) {
-            velocity.y = 70f; // jump speed is higher than normal speed
-        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            velocity.y = -70;
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            velocity.x = speed;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            velocity.x = -speed;
-        } else {
-            velocity.x = 0;
-        }
-
-        player.b2body.setLinearVelocity(velocity);
-    }
-
     public void update(float dt) {
-        handleInput(dt);
+        Frog.handleInput(dt);
 
         world.step(1/60f, 6, 2);
 
