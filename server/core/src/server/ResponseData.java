@@ -2,6 +2,7 @@ package server;
 
 public class ResponseData {
     private int intValue;
+    private String stringValue;
 
     public int getIntValue() {
         return intValue;
@@ -9,6 +10,14 @@ public class ResponseData {
 
     public void setIntValue(int intValue) {
         this.intValue = intValue;
+    }
+
+    public String getStringValue() {
+        return stringValue;
+    }
+
+    public void setStringValue(String stringValue) {
+        this.stringValue = stringValue;
     }
 
     // standard getters and setters

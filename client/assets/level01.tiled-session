@@ -7,6 +7,9 @@
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
         "BlueFrog.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
@@ -37,12 +40,28 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "clouds.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "field-improved.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "field-removed.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "field.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "level01.tmx": {
             "scale": 2,
             "selectedLayer": 2,
             "viewCenter": {
                 "x": 165.5,
-                "y": 103.5
+                "y": 103.75
             }
         },
         "level1.tmx": {
@@ -52,6 +71,26 @@
                 "x": 199.7787260945156,
                 "y": 99.88936304725779
             }
+        },
+        "lobby.tmx": {
+            "scale": 2.3655,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 198.90086662439234,
+                "y": 104.41767068273091
+            }
+        },
+        "lobbymap.tmx": {
+            "scale": 2.3655,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 177.76368632424433,
+                "y": 104.41767068273091
+            }
+        },
+        "sunny-green-hills.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         }
     },
     "last.imagePath": "C:/Users/jarik/IdeaProjects/iti0301-2023-aroundtheworld/client/assets",
@@ -70,14 +109,18 @@
     ],
     "project": "level01.tiled-project",
     "recentFiles": [
+        "field-improved.tsx",
+        "lobby.tmx",
+        "lobbymap.tmx",
+        "sunny-green-hills.tsx",
+        "clouds.tsx",
+        "field-removed.tsx",
+        "field.tsx",
         "level1.tmx",
         "BlueFrog.tsx",
         "SewerAccess16.tsx",
         "PixelArt16.tsx",
-        "level01.tmx",
-        "Blue_Frog.tsx",
-        "bugs16.tsx",
-        "SuperMario16.tsx"
+        "level01.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.margin": 1,

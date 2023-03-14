@@ -22,7 +22,12 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg)
             throws Exception {
-        System.out.println((ResponseData)msg);
+        if (msg instanceof ResponseData) {
+            System.out.println(((ResponseData) msg).getIntValue());
+        } else {
+            System.out.println("Unknown data type");
+        }
+        //System.out.println((ResponseData)msg);
         ctx.close();
     }
 }

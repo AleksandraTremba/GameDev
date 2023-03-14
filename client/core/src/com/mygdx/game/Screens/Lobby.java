@@ -1,5 +1,4 @@
 package com.mygdx.game.Screens;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -28,16 +27,18 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.Scenes.LobbyHud;
 import com.mygdx.game.Sprites.Frog;
+import com.mygdx.game.Sprites.FrogGame;
 
-public class PlayScreen implements Screen {
+public class Lobby implements Screen{
     //Reference to our Game, used to set Screens
     private MyGdxGame game;
 
     //basic playscreen variables
     private OrthographicCamera gamecam;
     private Viewport gamePort;
-    private Hud hud;
+    private LobbyHud hud;
 
     //Tiled map variables
     private TmxMapLoader mapLoader;
@@ -50,11 +51,14 @@ public class PlayScreen implements Screen {
 
     //sprites
     private Frog player;
+    private Frog player0;
+
+    private Frog player1;
+    private Frog player2;
 
     private Texture frogPng;
     private SpriteBatch batch;
-
-    public PlayScreen(MyGdxGame game) {
+    public Lobby(MyGdxGame game) {
         this.game = game;
 
         // create cam used to follow frog through cam world
@@ -64,17 +68,17 @@ public class PlayScreen implements Screen {
         gamePort = new FitViewport(MyGdxGame.V_WIDTH / MyGdxGame.PPM, MyGdxGame.V_HEIGHT / MyGdxGame.PPM, gamecam);
 
         // create our HUD for world/level info
-        hud = new Hud(game.batch);
+        hud = new LobbyHud(game.batch);
 
         // load our map and setup our map renderer
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load("level01.tmx");
+        map = mapLoader.load("lobby.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / MyGdxGame.PPM);
 
         // initially set our gamecam to be centered correctly at the start of the map
         gamecam.position.set(gamePort.getWorldWidth() / 4, gamePort.getWorldWidth() / 4, 0);
 
-        //create our Box2D world, setting no gravity in X, -150 gravity in Y, and allow bodies to sleep
+        //create our Box2D world, setting no gravity in X, -50 gravity in Y, and allow bodies to sleep
         world = new World(new Vector2(0, -150), true);
         //allows for debug lines of our box2d world.
         b2dr = new Box2DDebugRenderer();
@@ -84,72 +88,23 @@ public class PlayScreen implements Screen {
         FixtureDef fdef = new FixtureDef();
         Body body;
 
+
         //create frog in our game world
-        player = new Frog(world, 100, 32, "frog1");
-        //player = new Frog(world, 80, 32, "frog2");
+        //FrogGame frogGame = new FrogGame();
+        //player = frogGame.getFrog("player1");
+        //player1 = frogGame.getFrog("player2");
+        player = new Frog(world, 200, 32, "player1");
+        //player2 = new Frog(world, 250, 32, "player2");
+        //player = new Frog(world, 150, 32, "frog3");
 
         frogPng = new Texture(Gdx.files.internal("frog1.png"));
         batch = new SpriteBatch();
 
         //create ground bodies/fixtures
-        for (MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / MyGdxGame.PPM, (rect.getY() + rect.getHeight() / 2) / MyGdxGame.PPM);
-
-            body = world.createBody(bdef);
-
-            shape.setAsBox(rect.getWidth() / 2 / MyGdxGame.PPM, rect.getHeight() / 2 / MyGdxGame.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
-        //create ceiling bodies/fixtures
-        for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / MyGdxGame.PPM, (rect.getY() + rect.getHeight() / 2) / MyGdxGame.PPM);
-
-            body = world.createBody(bdef);
-
-            shape.setAsBox(rect.getWidth() / 2 / MyGdxGame.PPM, rect.getHeight() / 2 / MyGdxGame.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
-
-        //crete water bodies
-        for (MapObject object : map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / MyGdxGame.PPM, (rect.getY() + rect.getHeight() / 2) / MyGdxGame.PPM);
-
-            body = world.createBody(bdef);
-
-            shape.setAsBox(rect.getWidth() / 2 / MyGdxGame.PPM, rect.getHeight() / 2 / MyGdxGame.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
-
-        //create steel door bodies/fixtures
         for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2);
-
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
-
-        //create wood planks bodies/fixtures
-        for (MapObject object : map.getLayers().get(10).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
             bdef.position.set((rect.getX() + rect.getWidth() / 2) / MyGdxGame.PPM, (rect.getY() + rect.getHeight() / 2) / MyGdxGame.PPM);
 
             body = world.createBody(bdef);
@@ -158,12 +113,12 @@ public class PlayScreen implements Screen {
             fdef.shape = shape;
             body.createFixture(fdef);
         }
-
     }
     @Override
     public void show() {
 
     }
+
     public boolean isOnGround() {
         Array<Contact> contacts = world.getContactList();
         for (Contact contact : contacts) {
@@ -197,12 +152,14 @@ public class PlayScreen implements Screen {
 
         player.b2body.setLinearVelocity(velocity);
     }
+
     public void update(float dt) {
         handleInput(dt);
 
         world.step(1/60f, 6, 2);
 
-        gamecam.position.x = player.b2body.getPosition().x;
+        // set the gamecam so it will not move with the character
+        gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
         gamecam.update();
         renderer.setView(gamecam);
@@ -217,20 +174,13 @@ public class PlayScreen implements Screen {
         b2dr.render(world, gamecam.combined);
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
-        /**
-        batch.begin();
-        batch.draw(frogPng, player.b2body.getPosition().x, player.b2body.getPosition().y, 0, 0, 50, 50);
-        batch.end();
-         **/
-        // game.batch.setProjectionMatrix(gamecam.combined);
-        // game.batch.begin();
-        // game.batch.draw(texture, 0, 0);
-        // game.batch.end();
+
     }
 
     @Override
     public void resize(int width, int height) {
         gamePort.update(width, height);
+
     }
 
     @Override
