@@ -74,7 +74,7 @@ public class PlayScreen implements Screen {
         // initially set our gamecam to be centered correctly at the start of the map
         gamecam.position.set(gamePort.getWorldWidth() / 4, gamePort.getWorldWidth() / 4, 0);
 
-        //create our Box2D world, setting no gravity in X, -50 gravity in Y, and allow bodies to sleep
+        //create our Box2D world, setting no gravity in X, -150 gravity in Y, and allow bodies to sleep
         world = new World(new Vector2(0, -150), true);
         //allows for debug lines of our box2d world.
         b2dr = new Box2DDebugRenderer();
@@ -85,7 +85,8 @@ public class PlayScreen implements Screen {
         Body body;
 
         //create frog in our game world
-        player = new Frog(world);
+        player = new Frog(world, 100, 32, "frog1");
+        //player = new Frog(world, 80, 32, "frog2");
 
         frogPng = new Texture(Gdx.files.internal("frog1.png"));
         batch = new SpriteBatch();
