@@ -3,6 +3,7 @@ package server;
 public class RequestData {
     private int intValue;
     private String stringValue;
+    private double floatValue;
 
     public String getStringValue() {
         return stringValue;
@@ -18,6 +19,14 @@ public class RequestData {
 
     public void setIntValue(int intValue) {
         this.intValue = intValue;
+    }
+
+    public double getFloatValue() {
+        return floatValue;
+    }
+
+    public void setFloatValue(double floatValue) {
+        this.floatValue = floatValue;
     }
 
     // standard getters and setters
