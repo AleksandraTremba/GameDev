@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7ea40eaf-446b-4c41-851d-8136ce4c4d50" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/iti0301-2023-aroundtheworld.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/iti0301-2023-aroundtheworld.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01-Mar-23_22_28__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01-Mar-23_22_28__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/desktop/src/com/mygdx/game/DesktopLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/desktop/src/com/mygdx/game/DesktopLauncher.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +35,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/jarik/IdeaProjects/iti0301-2023-aroundtheworld",
+    "last_opened_file_path": "C:/Users/aleks/IdeaProjects/iti0301-2023-aroundtheworld",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -90,6 +88,7 @@
       <workItem from="1677140291532" duration="254000" />
       <workItem from="1677583639784" duration="1082000" />
       <workItem from="1678112358197" duration="50000" />
+      <workItem from="1678911766139" duration="1197000" />
     </task>
     <servers />
   </component>

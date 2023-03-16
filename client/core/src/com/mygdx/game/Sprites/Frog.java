@@ -93,4 +93,8 @@ public class Frog extends Sprite {
         b2body.setLinearVelocity(velocity);
     }
 
+    public void update(){
+
+    }
+
 }
