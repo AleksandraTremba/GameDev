@@ -43,6 +43,9 @@ public class MyGdxGame extends Game {
 		// img.dispose();
 	//}
 
+	public void setClient(Client client) {
+		this.client = client;
+	}
 	public Client getClient() {
 		return client;
 	}

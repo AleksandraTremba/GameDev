@@ -15,6 +15,10 @@ public class ServerFoundation {
 
     public ServerFoundation() {
         this.server = new Server(1_000_000, 1_000_000);
+        this.server.getKryo().register(PlayerAddEvent.class);
+        this.server.getKryo().register(PlayerUpdateEvent.class);
+        this.server.getKryo().register(PlayerRemoveEvent.class);
+
         this.bindServer(8080, 8080);
     }
 

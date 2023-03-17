@@ -1,8 +1,10 @@
 package com.mygdx.game.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Net;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,14 +19,20 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.net.ServerSocket;
+import com.badlogic.gdx.net.ServerSocketHints;
+import com.badlogic.gdx.net.Socket;
+import com.badlogic.gdx.net.SocketHints;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import com.esotericsoftware.kryonet.Server;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Scenes.Hud;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -34,8 +42,21 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Scenes.LobbyHud;
 import com.mygdx.game.Sprites.Frog;
 import com.mygdx.game.Sprites.FrogGame;
+import com.mygdx.game.client.ConnectionStateListener;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
+
+import static io.netty.buffer.ByteBufUtil.getBytes;
 
 public class Lobby implements Screen{
     //Reference to our Game, used to set Screens
@@ -63,6 +84,14 @@ public class Lobby implements Screen{
 
     private Texture frogPng;
     private SpriteBatch batch;
+
+    //client
+    private Client client;
+    //private String messageReceived;
+    //private String ipadresse;
+
+
+
     public Lobby(MyGdxGame game) {
         this.game = game;
 
@@ -114,8 +143,70 @@ public class Lobby implements Screen{
             fdef.shape = shape;
             body.createFixture(fdef);
         }
+        //creating a server
+        client = new Client();
+        client.addListener(new ConnectionStateListener());
+        client.addListener(new Listener());
+        try {
+            client.start();
+            client.connect(15000, "localhost", 8080, 8080);
+            System.out.println("Connection successful");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
 
+        game.setClient(client);
+
+        /**
+        //adding a Client
+        ArrayList<String> addressen = new ArrayList<>();
+        try {
+            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+            for(NetworkInterface I : Collections.list(interfaces)) {
+                for(InetAddress addr: Collections.list(I.getInetAddresses())) {
+                    if(addr instanceof Inet4Address) {
+                        addressen.add(addr.getHostAddress());
+                    }
+                }
+            }
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+
+        client.addListener(new Listener());
+        String send = "The cake is a lie";
+        SocketHints sh = new SocketHints();
+        sh.connectTimeout = 10000;
+
+        Socket socket = Gdx.net.newClientSocket(Net.Protocol.TCP, "localhost", 8080, sh);
+        try {
+            socket.getOutputStream().write(send.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ServerSocketHints ssh = new ServerSocketHints();
+                ssh.acceptTimeout = 0;
+
+                ServerSocket socket = Gdx.net.newServerSocket(Net.Protocol.TCP, 8080, ssh);
+                while(true) {
+                    Socket s = socket.accept(null);
+                    BufferedReader buffer = new BufferedReader(new InputStreamReader(s.getInputStream()));
+
+                    try {
+                        messageReceived = buffer.readLine();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+        **/
     }
+
     @Override
     public void show() {
 
