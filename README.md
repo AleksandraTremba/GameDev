@@ -27,7 +27,7 @@ First you need to start the server. To do this, go to the Server folder, from th
 
 Clients can then run the game by running DesktopLauncher.java located in the Client -> desktop -> src -> com.mygdx.game. -> DesktopLauncher.
 
-You can move in the game with up, left and right buttons (please inform us if it is convenient for you because based on your reviews we may change it to WASD controls).
+You can move in the game with the WASD buttons.
 
 Multiplayer can be started by running DesktopLauncher several times. If an error occurs, open the white triangle to the left of the "Run" button on the top bar and "Edit configurations...". From there, "Modify options" and "Allow multiple instances".
 
