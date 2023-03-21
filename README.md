@@ -19,7 +19,7 @@ Feature list:
 
 **How to play**
 
-Load server and client from different windows: open server as a new qindow, then open client as a new window. Otherwise it will not work because the source root is not found (there are two gradles where one is responsible for the client and another one for the server.)
+Load server and client from different windows: open server as a new window, then open client as a new window. Otherwise it will not work because the source root is not found (there are two gradles where one is responsible for the client and another one for the server.)
 
 To play the game, you need to clone the HTTP link of this repository into IntelliJ. Gradle offers a "Gradle build scripts found" option at the bottom right, after which you have to press "Load".
 
