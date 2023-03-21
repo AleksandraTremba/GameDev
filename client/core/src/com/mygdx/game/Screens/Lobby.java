@@ -157,7 +157,7 @@ public class Lobby implements Screen{
 
         try {
             client.start();
-            client.connect(15000, "localhost", 8080, 8080);
+            client.connect(15000, "localhost", 8080, 8090);
             System.out.println("Connection successful");
         } catch (IOException e) {
             e.printStackTrace();
