@@ -29,3 +29,6 @@ You can move in the game with up, left and right buttons (please inform us if it
 
 Multiplayer can be started by running DesktopLauncher several times. If an error occurs, open the white triangle to the left of the "Run" button on the top bar and "Edit configurations...". From there, "Modify options" and "Allow multiple instances".
 
+![image](image.png)
+![image](mpodify-optiobns.png)
+![image](multiplayer-screens.png)
