@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.esotericsoftware.kryonet.Client;
 import com.mygdx.game.Screens.MainMenuScreen;
 import com.mygdx.game.Screens.PlayScreen;
 
@@ -16,7 +17,8 @@ public class MyGdxGame extends Game {
 	public static final float PPM = 1;
 	public SpriteBatch batch;
 	// Texture img;
-	
+	public static Client client;
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -40,4 +42,11 @@ public class MyGdxGame extends Game {
 		//batch.dispose();
 		// img.dispose();
 	//}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+	public Client getClient() {
+		return client;
+	}
 }

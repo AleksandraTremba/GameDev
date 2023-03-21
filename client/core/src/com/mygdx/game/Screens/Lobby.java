@@ -1,7 +1,10 @@
 package com.mygdx.game.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Net;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,11 +19,20 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.net.ServerSocket;
+import com.badlogic.gdx.net.ServerSocketHints;
+import com.badlogic.gdx.net.Socket;
+import com.badlogic.gdx.net.SocketHints;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.esotericsoftware.kryonet.Client;
+import com.esotericsoftware.kryonet.Connection;
+import com.esotericsoftware.kryonet.Listener;
+import com.esotericsoftware.kryonet.Server;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Scenes.Hud;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -30,8 +42,24 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Scenes.LobbyHud;
 import com.mygdx.game.Sprites.Frog;
 import com.mygdx.game.Sprites.FrogGame;
+import com.mygdx.game.client.ConnectionStateListener;
+import com.mygdx.game.client.PlayerAddEvent;
+import com.mygdx.game.client.PlayerRemoveEvent;
+import com.mygdx.game.client.PlayerUpdateEvent;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
+
+import static io.netty.buffer.ByteBufUtil.getBytes;
 
 public class Lobby implements Screen{
     //Reference to our Game, used to set Screens
@@ -57,8 +85,16 @@ public class Lobby implements Screen{
 
     private FrogGame frogs;
 
-    private Texture frogPng;
-    private SpriteBatch batch;
+    //private Texture frogPng;
+    //private SpriteBatch batch;
+
+    //client
+    private Client client;
+    //private String messageReceived;
+    //private String ipadresse;
+
+
+
     public Lobby(MyGdxGame game) {
         this.game = game;
 
@@ -89,14 +125,13 @@ public class Lobby implements Screen{
         FixtureDef fdef = new FixtureDef();
         Body body;
 
-
         //create frog in our game world
         player = new Frog(world, 200, 32, "player1");
-        player2 = new Frog(world, 250, 32, "player2");
+        //player2 = new Frog(world, 250, 32, "player2");
         //player = new Frog(world, 150, 32, "frog3");
 
-        frogPng = new Texture(Gdx.files.internal("frog1.png"));
-        batch = new SpriteBatch();
+        //frogPng = new Texture(Gdx.files.internal("frog1.png"));
+        //batch = new SpriteBatch();
 
         //create ground bodies/fixtures
         for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
@@ -111,7 +146,27 @@ public class Lobby implements Screen{
             fdef.shape = shape;
             body.createFixture(fdef);
         }
+        //creating a server
+        client = new Client();
+        client.addListener(new ConnectionStateListener());
+        client.getKryo().register(PlayerAddEvent.class);
+        client.getKryo().register(PlayerUpdateEvent.class);
+        client.getKryo().register(PlayerRemoveEvent.class);
+        client.getKryo().register(String.class);
+        //client.getKryo().register(Color.class);
+
+        try {
+            client.start();
+            client.connect(15000, "localhost", 8080, 8090);
+            System.out.println("Connection successful");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+
+        game.setClient(client);
     }
+
     @Override
     public void show() {
 
