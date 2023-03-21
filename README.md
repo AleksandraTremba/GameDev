@@ -23,9 +23,9 @@ Load server and client from different windows: open server as a new window, then
 
 To play the game, you need to clone the HTTP link of this repository into IntelliJ. Gradle offers a "Gradle build scripts found" option at the bottom right, after which you have to press "Load".
 
-First you need to start the server. To do this, go to the Server folder, from there src -> main -> java -> org -> example, where Main.java is located, which must be run.
+First you need to start the server. To do this, go to the Server folder, from there src -> server packet -> ServerFoundation.java. Press the button to run.
 
-Clients can then run the game by running DesktopLauncher.java located in the Client -> desktop -> src -> com -> gdx -> game folder.
+Clients can then run the game by running DesktopLauncher.java located in the Client -> desktop -> src -> com.mygdx.game. -> DesktopLauncher.
 
 You can move in the game with up, left and right buttons (please inform us if it is convenient for you because based on your reviews we may change it to WASD controls).
 
