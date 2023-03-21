@@ -4,6 +4,7 @@ The focus is put on teamwork.
 The game should be fun and give players a sense of unity and that they are indispensable.
 
 **AroundTheWorld game description**
+
 The name of our game is 'Around the world', where four players are given control of one character and have to work together to progress. The game combines platform players (parkour) and quest elements, in which all levels must be completed only by working in a team.
 The game is about a frog who gets kidnapped by evil forces, and players must go on an adventure to save it. The adventure takes place in different environments which presents different challenges such as parkour, puzzles, mini-games and boss battles.
 In addition, players have the opportunity to find additional collectibles to strengthen themselves or unlock new clothes.
