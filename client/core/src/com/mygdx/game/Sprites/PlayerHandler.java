@@ -15,4 +15,8 @@ public class PlayerHandler {
             this.players.get(i).update();
         }
     }
+
+    public LinkedList<Frog> getPlayers() {
+        return players;
+    }
 }

@@ -51,12 +51,12 @@ public class Frog extends Sprite {
 
     @Override
     public float getX() {
-        return x;
+        return b2body.getPosition().x;
     }
 
     @Override
     public float getY() {
-        return y;
+        return b2body.getPosition().y;
     }
 
     public static boolean isOnGround() {

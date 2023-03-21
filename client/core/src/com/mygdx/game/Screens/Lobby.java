@@ -43,6 +43,9 @@ import com.mygdx.game.Scenes.LobbyHud;
 import com.mygdx.game.Sprites.Frog;
 import com.mygdx.game.Sprites.FrogGame;
 import com.mygdx.game.client.ConnectionStateListener;
+import com.mygdx.game.client.PlayerAddEvent;
+import com.mygdx.game.client.PlayerRemoveEvent;
+import com.mygdx.game.client.PlayerUpdateEvent;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -82,8 +85,8 @@ public class Lobby implements Screen{
 
     private FrogGame frogs;
 
-    private Texture frogPng;
-    private SpriteBatch batch;
+    //private Texture frogPng;
+    //private SpriteBatch batch;
 
     //client
     private Client client;
@@ -124,11 +127,11 @@ public class Lobby implements Screen{
 
         //create frog in our game world
         player = new Frog(world, 200, 32, "player1");
-        player2 = new Frog(world, 250, 32, "player2");
+        //player2 = new Frog(world, 250, 32, "player2");
         //player = new Frog(world, 150, 32, "frog3");
 
-        frogPng = new Texture(Gdx.files.internal("frog1.png"));
-        batch = new SpriteBatch();
+        //frogPng = new Texture(Gdx.files.internal("frog1.png"));
+        //batch = new SpriteBatch();
 
         //create ground bodies/fixtures
         for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
@@ -146,7 +149,12 @@ public class Lobby implements Screen{
         //creating a server
         client = new Client();
         client.addListener(new ConnectionStateListener());
-        client.addListener(new Listener());
+        client.getKryo().register(PlayerAddEvent.class);
+        client.getKryo().register(PlayerUpdateEvent.class);
+        client.getKryo().register(PlayerRemoveEvent.class);
+        client.getKryo().register(String.class);
+        //client.getKryo().register(Color.class);
+
         try {
             client.start();
             client.connect(15000, "localhost", 8080, 8080);
@@ -157,54 +165,6 @@ public class Lobby implements Screen{
         }
 
         game.setClient(client);
-
-        /**
-        //adding a Client
-        ArrayList<String> addressen = new ArrayList<>();
-        try {
-            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
-            for(NetworkInterface I : Collections.list(interfaces)) {
-                for(InetAddress addr: Collections.list(I.getInetAddresses())) {
-                    if(addr instanceof Inet4Address) {
-                        addressen.add(addr.getHostAddress());
-                    }
-                }
-            }
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }
-
-        client.addListener(new Listener());
-        String send = "The cake is a lie";
-        SocketHints sh = new SocketHints();
-        sh.connectTimeout = 10000;
-
-        Socket socket = Gdx.net.newClientSocket(Net.Protocol.TCP, "localhost", 8080, sh);
-        try {
-            socket.getOutputStream().write(send.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ServerSocketHints ssh = new ServerSocketHints();
-                ssh.acceptTimeout = 0;
-
-                ServerSocket socket = Gdx.net.newServerSocket(Net.Protocol.TCP, 8080, ssh);
-                while(true) {
-                    Socket s = socket.accept(null);
-                    BufferedReader buffer = new BufferedReader(new InputStreamReader(s.getInputStream()));
-
-                    try {
-                        messageReceived = buffer.readLine();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
-        **/
     }
 
     @Override

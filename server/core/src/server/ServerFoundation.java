@@ -6,6 +6,7 @@ import java.io.IOException;
 
 public class ServerFoundation {
     private static ServerFoundation instance;
+    private final Server ;
     private Server server;
 
     public static void main(String[] args) {
@@ -18,7 +19,8 @@ public class ServerFoundation {
         this.server.getKryo().register(PlayerAddEvent.class);
         this.server.getKryo().register(PlayerUpdateEvent.class);
         this.server.getKryo().register(PlayerRemoveEvent.class);
-
+        this.server.getKryo().register(String.class);
+        //this.server.getKryo().register(Color.class);
         this.bindServer(8080, 8080);
     }
 
