@@ -15,7 +15,6 @@ Feature list:
 - Collectables in form of bugs. Can be used to upgreade your character or unlock alternative styles.
 - Story.
 
-![image](images/photo_2023-02-12_16-29-44.jpg)
 
 **How to play**
 
@@ -34,3 +33,5 @@ Multiplayer can be started by running DesktopLauncher several times. If an error
 ![image](image.png)
 ![image](mpodify-optiobns.png)
 ![image](multiplayer-screens.png)
+
+![image](images/photo_2023-02-12_16-29-44.jpg)
