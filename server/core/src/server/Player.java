@@ -1,6 +1,7 @@
 package server;
 
 public class Player {
+
     private float xPosition;
     private float yPosition;
     private final String name;
@@ -23,11 +24,11 @@ public class Player {
         xPosition += xPos;
         yPosition += yPos;
 
-        //The height and width of the map is 1000
+        //The height and width of the map is 1900
         if (xPosition < 0) xPosition= 0;
-        if (xPosition > 1000) xPosition = 1000;
+        if (xPosition > 1900) xPosition = 1900;
         if (yPosition < 0) yPosition = 0;
-        if (yPosition > 200) yPosition = 50;
+        if (yPosition > 1900) yPosition = 1900;
     }
 
     public float getXPosition() {

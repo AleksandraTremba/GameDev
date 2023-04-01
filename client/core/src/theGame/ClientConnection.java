@@ -12,7 +12,7 @@ import javax.swing.*;
 import java.io.IOException;
 
 /**
-Class for connecting client to the server and exchanging information with the server.
+ Class for connecting client to the server and exchanging information with the server.
  */
 public class ClientConnection {
     String ip = "193.40.156.35";

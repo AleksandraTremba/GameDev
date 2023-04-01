@@ -11,7 +11,7 @@ import theGame.Screens.StartScreen;
 import java.io.IOException;
 
 public class GameClient extends Game {
-//    public static final int V_WIDTH = 400;
+    //    public static final int V_WIDTH = 400;
 //    public static final int V_HEIGHT = 208;
     public SpriteBatch batch;
     private GameScreen gameScreen;

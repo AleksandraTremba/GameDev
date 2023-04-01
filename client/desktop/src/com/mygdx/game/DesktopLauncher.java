@@ -14,5 +14,6 @@ public class DesktopLauncher {
 		config.setTitle("Around the world");
 		//config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
 		new Lwjgl3Application(new GameClient(), config);
+		//new Lwjgl3Application(new MyGdxGame(), config);
 	}
 }

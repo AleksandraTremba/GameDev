@@ -42,10 +42,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Scenes.LobbyHud;
 import com.mygdx.game.Sprites.Frog;
 import com.mygdx.game.Sprites.FrogGame;
-import com.mygdx.game.client.ConnectionStateListener;
-import com.mygdx.game.client.PlayerAddEvent;
-import com.mygdx.game.client.PlayerRemoveEvent;
-import com.mygdx.game.client.PlayerUpdateEvent;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -146,25 +142,6 @@ public class Lobby implements Screen{
             fdef.shape = shape;
             body.createFixture(fdef);
         }
-        //creating a server
-        client = new Client();
-        client.addListener(new ConnectionStateListener());
-        client.getKryo().register(PlayerAddEvent.class);
-        client.getKryo().register(PlayerUpdateEvent.class);
-        client.getKryo().register(PlayerRemoveEvent.class);
-        client.getKryo().register(String.class);
-        //client.getKryo().register(Color.class);
-
-        try {
-            client.start();
-            client.connect(15000, "localhost", 8080, 8090);
-            System.out.println("Connection successful");
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-        }
-
-        game.setClient(client);
     }
 
     @Override

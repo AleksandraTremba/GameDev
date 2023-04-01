@@ -64,7 +64,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         Gdx.input.setInputProcessor(this);
 
         // get the collision layer
-        collisionLayer = (TiledMapTileLayer) tiledMap.getLayers().get(3);
+        collisionLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
         Gdx.input.setInputProcessor(this);
 
         // add music that loops

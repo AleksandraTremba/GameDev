@@ -61,23 +61,23 @@
             "selectedLayer": 2,
             "viewCenter": {
                 "x": 288,
-                "y": 111
+                "y": 111.25
             }
         },
         "level1.tmx": {
             "scale": 2.3726249999999998,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 200.20020020020021,
-                "y": 99.88936304725777
+                "x": 199.7787260945156,
+                "y": 99.88936304725779
             }
         },
         "lobby.tmx": {
             "scale": 2.3655,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 188.54364827731985,
-                "y": 114.98626083280493
+                "x": 176.284083703234,
+                "y": 115.19763263580637
             }
         },
         "lobbymap.tmx": {
@@ -110,6 +110,7 @@
     "project": "level01.tiled-project",
     "recentFiles": [
         "level1.tmx",
+        "level01.tmx",
         "field-improved.tsx",
         "lobby.tmx",
         "lobbymap.tmx",
@@ -119,8 +120,7 @@
         "field.tsx",
         "BlueFrog.tsx",
         "SewerAccess16.tsx",
-        "PixelArt16.tsx",
-        "level01.tmx"
+        "PixelArt16.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.margin": 1,

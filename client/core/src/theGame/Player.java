@@ -2,10 +2,11 @@ package theGame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import java.util.Objects;
 
-public class Player {
+public class Player extends Sprite {
     private int id;
     private String name;
     private float xPosition;
@@ -77,13 +78,13 @@ public class Player {
      */
     public Texture getTexture() {
         if (Objects.equals(direction, "up")) {
-            return new Texture(Gdx.files.internal("player_idle.png"));
+            return new Texture(Gdx.files.internal("rsz_1player_idle.png"));
         } else if (Objects.equals(direction, "down")) {
-            return new Texture(Gdx.files.internal("player_idle.png"));
+            return new Texture(Gdx.files.internal("rsz_1player_idle.png"));
         } else if (Objects.equals(direction, "left")) {
-            return new Texture(Gdx.files.internal("player_idle.png"));
+            return new Texture(Gdx.files.internal("rsz_1player_idle.png"));
         } else {
-            return new Texture(Gdx.files.internal("player_idle.png"));
+            return new Texture(Gdx.files.internal("rsz_1player_idle.png"));
         }
     }
 }
