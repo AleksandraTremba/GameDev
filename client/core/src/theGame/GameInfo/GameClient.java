@@ -11,7 +11,7 @@ import theGame.Screens.StartScreen;
 import java.io.IOException;
 
 public class GameClient extends Game {
-    //    public static final int V_WIDTH = 400;
+//    public static final int V_WIDTH = 400;
 //    public static final int V_HEIGHT = 208;
     public SpriteBatch batch;
     private GameScreen gameScreen;
@@ -53,7 +53,7 @@ public class GameClient extends Game {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Gdx.input.setInputProcessor(gameScreen);
+        //Gdx.input.setInputProcessor(gameScreen);
     }
 
     /**

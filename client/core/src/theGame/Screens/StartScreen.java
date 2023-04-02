@@ -41,8 +41,8 @@ public class StartScreen extends ApplicationAdapter implements Screen {
         // Load textures
         backgroundTexture = new Texture("background.jpg");
 
-        playButtonActive = new Texture("playButtonActive.png");
-        playButtonInactive = new Texture("playButtonInactive.png");
+        playButtonActive = new Texture("playButtonInactive.png");
+        playButtonInactive = new Texture("playButtonActive.png");
 
         playButton = new ImageButton(new TextureRegionDrawable(playButtonInactive),
                 new TextureRegionDrawable(playButtonActive));
@@ -67,8 +67,8 @@ public class StartScreen extends ApplicationAdapter implements Screen {
         });
         stage.addActor(playButton);
 
-        exitButtonActive = new Texture("exitButtonActive.png");
-        exitButtonInactive = new Texture("exitButtonInactive.png");
+        exitButtonActive = new Texture("exitButtonInactive.png");
+        exitButtonInactive = new Texture("exitButtonActive.png");
 
         exitButton = new ImageButton(new TextureRegionDrawable(exitButtonInactive),
                 new TextureRegionDrawable(exitButtonActive));
