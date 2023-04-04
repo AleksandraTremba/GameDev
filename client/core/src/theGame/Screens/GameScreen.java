@@ -4,12 +4,18 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.MyGdxGame;
 import theGame.GameInfo.ClientWorld;
 import theGame.GameInfo.GameClient;
 import theGame.ClientConnection;
@@ -31,8 +37,17 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     private GameClient gameClient;
     private Integer myPlayerId;
 
+    //Box2d variables
+    private World world;
+    private Box2DDebugRenderer b2dr;
+
     public GameScreen(ClientWorld clientWorld) {
         this.clientWorld = clientWorld;
+        //create our Box2D world, setting no gravity in X, -50 gravity in Y, and allow bodies to sleep
+        world = new World(new Vector2(0, 0), true);
+        //allows for debug lines of our box2d world.
+        b2dr = new Box2DDebugRenderer();
+
         create();
         render();
     }
@@ -63,16 +78,25 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         Gdx.input.setInputProcessor(this);
 
-        // get the collision layer
-        collisionLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
-        Gdx.input.setInputProcessor(this);
+        BodyDef bdef = new BodyDef();
+        PolygonShape shape = new PolygonShape();
+        FixtureDef fdef = new FixtureDef();
+        Body body;
 
-        // add music that loops
-        /**
-         Music menuMusic = Gdx.audio.newMusic(Gdx.files.internal("Client/assets/gameMusic.ogg"));
-         menuMusic.setLooping(true);
-         menuMusic.play();
-         **/
+        // get the collision layer
+        //create ground bodies/fixtures
+        for (MapObject object : tiledMap.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set((rect.getX() + rect.getWidth() / 2) / MyGdxGame.PPM, (rect.getY() + rect.getHeight() / 2) / MyGdxGame.PPM);
+
+            body = world.createBody(bdef);
+
+            shape.setAsBox(rect.getWidth() / 2 / MyGdxGame.PPM, rect.getHeight() / 2 / MyGdxGame.PPM);
+            fdef.shape = shape;
+            body.createFixture(fdef);
+        }
 
     }
 
@@ -91,12 +115,15 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         }
         camera.update();
 
+        //see the lines of the objects
+        b2dr.render(world, camera.combined);
+
         batch.setProjectionMatrix(camera.combined);
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
 
         batch.begin();
-        detectInput();
+        handleInput();
 
         //Draw all the players in the game onto the map
         drawPlayerGameCharacters();
@@ -124,8 +151,8 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
             character = new Rectangle();
             character.x = player.getXPosition();
             character.y = player.getYPosition();
-            character.width = 22;
-            character.height = 22;
+//            character.width = 22;
+//            character.height = 22;
             batch.draw(player.getTexture(), character.x, character.y);
         }
     }
@@ -141,13 +168,27 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         batch.setProjectionMatrix(camera.combined);
     }
 
+    private Player player;
+
+    public boolean isOnGround() {
+        Array<Contact> contacts = world.getContactList();
+        for (Contact contact : contacts) {
+            if (contact.isTouching() && (contact.getFixtureA().getBody() == player.b2body || contact.getFixtureB().getBody() == player.b2body)) {
+                Vector2 contactNormal = contact.getWorldManifold().getNormal();
+                if (contactNormal.y > 0.5f) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     /**
      * Get input from buttons, react to the player pressing a button on their computer's keyboard.
      * The first part of the method is about collision, but doesn't temporarily work,
      * because the logic about the player's movements has been moved to the server.
      */
-    private void detectInput() {
+    private void handleInput() {
         boolean upAndDownPressed = Gdx.input.isKeyPressed(Input.Keys.W) && Gdx.input.isKeyPressed(Input.Keys.S) ||
                 Gdx.input.isKeyPressed(Input.Keys.UP) && Gdx.input.isKeyPressed(Input.Keys.DOWN);
         boolean leftAndRightPressed = Gdx.input.isKeyPressed(Input.Keys.A) && Gdx.input.isKeyPressed(Input.Keys.D) ||

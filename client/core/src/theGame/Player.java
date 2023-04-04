@@ -3,10 +3,17 @@ package theGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.World;
 import java.util.Objects;
 
 public class Player extends Sprite {
+    public static World world;
+    public static Body b2body;
     private int id;
     private String name;
     private float xPosition;
@@ -14,17 +21,33 @@ public class Player extends Sprite {
     private String direction;
 
 
-    public Player(float xPosition, float yPosition, String name, int id) {
+    public Player(World world, float xPosition, float yPosition, String name, int id) {
+        this.world = world;
         this.id = id;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.name = name;
+        definePlayer();
+    }
+
+    public void definePlayer() {
+        BodyDef bdef = new BodyDef();
+        bdef.position.set(xPosition, yPosition);
+        bdef.type = BodyDef.BodyType.DynamicBody;
+        b2body = world.createBody(bdef);
+
+        FixtureDef fdef = new FixtureDef();
+        CircleShape shape = new CircleShape();
+        shape.setRadius(12);
+
+        fdef.shape = shape;
+        b2body.createFixture(fdef);
     }
 
     /**
      * Empty constructor is needed here to receive Player objects over the network.
      */
-    public Player() { }
+    public Player(float x, float y, String name, int id) { }
 
     public float getXPosition() {
         return xPosition;
@@ -64,7 +87,7 @@ public class Player extends Sprite {
      * @param id the id of the player
      * @return new Player instance
      */
-    public static Player createPlayer(float x, float y, String name, int id) {
+    public static Player createPlayer( float x, float y, String name, int id) {
         return new Player(x, y, name, id);
     }
 

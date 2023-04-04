@@ -41,21 +41,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Scenes.LobbyHud;
 import com.mygdx.game.Sprites.Frog;
-import com.mygdx.game.Sprites.FrogGame;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
-
-import static io.netty.buffer.ByteBufUtil.getBytes;
 
 public class Lobby implements Screen{
     //Reference to our Game, used to set Screens
@@ -77,19 +63,9 @@ public class Lobby implements Screen{
 
     //sprites
     private Frog player;
-    private Frog player2;
-
-    private FrogGame frogs;
 
     //private Texture frogPng;
     //private SpriteBatch batch;
-
-    //client
-    private Client client;
-    //private String messageReceived;
-    //private String ipadresse;
-
-
 
     public Lobby(MyGdxGame game) {
         this.game = game;
@@ -122,7 +98,7 @@ public class Lobby implements Screen{
         Body body;
 
         //create frog in our game world
-        player = new Frog(world, 200, 32, "player1");
+        player = new Frog(world, 200, 32, "player1", 1);
         //player2 = new Frog(world, 250, 32, "player2");
         //player = new Frog(world, 150, 32, "frog3");
 

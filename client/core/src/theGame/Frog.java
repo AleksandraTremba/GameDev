@@ -22,21 +22,24 @@ public class Frog extends Sprite {
     private float yPosition;
     private String direction;
 
-    public Frog(float xPosition, float yPosition, String name, int id) {
+    public Frog(World world, float xPosition, float yPosition, String name, int id) {
+        this.world = world;
         this.id = id;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.name = name;
+        defineFrog();
     }
 
     public void defineFrog() {
         BodyDef bdef = new BodyDef();
+        bdef.position.set(xPosition, yPosition);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(12 / MyGdxGame.PPM);
+        shape.setRadius(12);
 
         fdef.shape = shape;
         b2body.createFixture(fdef);
@@ -45,7 +48,7 @@ public class Frog extends Sprite {
     /**
      * Empty constructor is needed here to receive Player objects over the network.
      */
-    public Frog() { }
+    public Frog(float x, float y, String name, int id) { }
 
     public float getXPosition() {
         return xPosition;
@@ -116,15 +119,15 @@ public class Frog extends Sprite {
         b2body.setLinearVelocity(velocity);
     }
 
-    public Texture getTexture() {
-        if (Objects.equals(direction, "up")) {
-            return new Texture(Gdx.files.internal("rsz_1player_idle.png"));
-        } else if (Objects.equals(direction, "left")) {
-            return new Texture(Gdx.files.internal("rsz_1player_idle.png"));
-        } else if (Objects.equals(direction, "right")) {
-            return new Texture(Gdx.files.internal("rsz_1player_idle.png"));
-        } else {
-            return new Texture(Gdx.files.internal("rsz_1player_idle.png"));
-        }
-    }
+//    public Texture getTexture() {
+//        if (Objects.equals(direction, "up")) {
+//            return new Texture(Gdx.files.internal("rsz_1player_idle.png"));
+//        } else if (Objects.equals(direction, "left")) {
+//            return new Texture(Gdx.files.internal("rsz_1player_idle.png"));
+//        } else if (Objects.equals(direction, "right")) {
+//            return new Texture(Gdx.files.internal("rsz_1player_idle.png"));
+//        } else {
+//            return new Texture(Gdx.files.internal("rsz_1player_idle.png"));
+//        }
+//    }
 }

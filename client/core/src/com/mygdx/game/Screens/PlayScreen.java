@@ -85,7 +85,7 @@ public class PlayScreen implements Screen {
         Body body;
 
         //create frog in our game world
-        player = new Frog(world, 100, 32, "frog1");
+        //player = new Frog(world, 100, 32, "frog1");
         //player = new Frog(world, 80, 32, "frog2");
 
         frogPng = new Texture(Gdx.files.internal("frog1.png"));

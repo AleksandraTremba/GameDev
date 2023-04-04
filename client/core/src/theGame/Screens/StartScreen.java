@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -33,6 +34,7 @@ public class StartScreen extends ApplicationAdapter implements Screen {
     private final Texture exitButtonInactive;
     private ImageButton playButton;
     private ImageButton exitButton;
+    private Music menuMusic;
 
 
     public StartScreen(final GameClient gameClient) {
@@ -52,6 +54,8 @@ public class StartScreen extends ApplicationAdapter implements Screen {
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                Gdx.audio.newSound(Gdx.files.internal("naitatilli.mp3")).play(1.0f);
+                menuMusic.stop(); // stop the music
                 gameClient.startGame();
             }
 
@@ -92,12 +96,16 @@ public class StartScreen extends ApplicationAdapter implements Screen {
             }
         });
         stage.addActor(exitButton);
+        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("tyagi.mp3"));
 
     }
 
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
+
+        menuMusic.setLooping(true);
+        menuMusic.play();
 
     }
 
@@ -140,5 +148,7 @@ public class StartScreen extends ApplicationAdapter implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+        menuMusic.stop();
+        menuMusic.dispose();
     }
 }
