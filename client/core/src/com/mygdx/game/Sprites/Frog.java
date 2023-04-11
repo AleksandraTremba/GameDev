@@ -37,12 +37,12 @@ public class Frog extends Sprite {
         b2body.createFixture(fdef);
 
         /**
-        FixtureDef fdef2 = new FixtureDef();
-        CircleShape shape2 = new CircleShape();
-        shape2.setRadius(12 / MyGdxGame.PPM);
-        fdef2.shape = shape2;
-        fdef2.isSensor = true; // set the fixture to be a sensor
-        b2body.createFixture(fdef2);
+         FixtureDef fdef2 = new FixtureDef();
+         CircleShape shape2 = new CircleShape();
+         shape2.setRadius(12 / MyGdxGame.PPM);
+         fdef2.shape = shape2;
+         fdef2.isSensor = true; // set the fixture to be a sensor
+         b2body.createFixture(fdef2);
          **/
     }
     public String getFrogId() {

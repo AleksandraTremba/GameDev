@@ -1,45 +1,36 @@
-package com.mygdx.game.Screens;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Net;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.FPSLogger;
+package theGame.Screens;
+
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
-
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.Scenes.Hud;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Scenes.LobbyHud;
 import com.mygdx.game.Sprites.Frog;
+import theGame.GameInfo.ClientWorld;
+import theGame.GameInfo.GameClient;
+import theGame.ClientConnection;
+import theGame.Player;
 
-public class Lobby implements Screen{
-    //Reference to our Game, used to set Screens
-    private MyGdxGame game;
+import java.util.ArrayList;
+import java.util.List;
 
+public class TheLobby implements Screen {
+    SpriteBatch batch;
+    private ClientWorld clientWorld;
     //basic playscreen variables
     private OrthographicCamera gamecam;
     private Viewport gamePort;
@@ -54,35 +45,30 @@ public class Lobby implements Screen{
     private World world;
     private Box2DDebugRenderer b2dr;
 
-    //sprites
-    private Frog player;
-    private Frog player2;
 
-    //private Texture frogPng;
-    //private SpriteBatch bat
+    private ClientConnection clientConnection;
+    private GameClient gameClient;
+    private Integer myPlayerId;
 
-    public Lobby(MyGdxGame game) {
-        this.game = game;
+    public TheLobby(ClientWorld clientWorld) {
+        this.clientWorld = clientWorld;
 
         // create cam used to follow frog through cam world
         gamecam = new OrthographicCamera();
 
         // create a FitViewport to maintain virtual aspects ratio despite screen size
-        gamePort = new FitViewport(MyGdxGame.V_WIDTH / MyGdxGame.PPM, MyGdxGame.V_HEIGHT / MyGdxGame.PPM, gamecam);
-
-        // create our HUD for world/level info
-        hud = new LobbyHud(game.batch);
+        gamePort = new FitViewport(400, 208, gamecam);
 
         // load our map and setup our map renderer
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("lobby.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 1 / MyGdxGame.PPM);
+        renderer = new OrthogonalTiledMapRenderer(map, 1);
 
         // initially set our gamecam to be centered correctly at the start of the map
         gamecam.position.set(gamePort.getWorldWidth() / 4, gamePort.getWorldWidth() / 4, 0);
 
         //create our Box2D world, setting no gravity in X, -50 gravity in Y, and allow bodies to sleep
-        world = new World(new Vector2(0, -150), true);
+        world = new World(new Vector2(0, 0), true);
         //allows for debug lines of our box2d world.
         b2dr = new Box2DDebugRenderer();
 
@@ -91,13 +77,8 @@ public class Lobby implements Screen{
         FixtureDef fdef = new FixtureDef();
         Body body;
 
-        //create frog in our game world
-        player = new Frog(world, 200, 32, "player1");
-        //player2 = new Frog(world, 250, 32, "player2");
-        //player = new Frog(world, 150, 32, "frog3");
-
-        //frogPng = new Texture(Gdx.files.internal("frog1.png"));
-        //batch = new SpriteBatch();
+        //Draw all the player that are in the game, onto the map
+        //drawPlayerGameCharacters();
 
         //create ground bodies/fixtures
         for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
@@ -112,6 +93,7 @@ public class Lobby implements Screen{
             fdef.shape = shape;
             body.createFixture(fdef);
         }
+
     }
 
     @Override
@@ -125,7 +107,6 @@ public class Lobby implements Screen{
         world.step(1/60f, 6, 2);
 
         // set the gamecam so it will not move with the character
-        //gamecam.position.x = player.b2body.getPosition().x;
         gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
         gamecam.update();
@@ -134,19 +115,48 @@ public class Lobby implements Screen{
 
     @Override
     public void render(float delta) {
+        // getGameCharacter(myPlayerId) is equal to "null" only the first time that this render is called
+        // All the later times it won't be null
+        if (clientWorld.getGameCharacter(myPlayerId) != null) {
+            gamecam.position.x = clientWorld.getGameCharacter(myPlayerId).getXPosition();
+        }
+        gamecam.update();
         update(delta);
         ScreenUtils.clear(0, 0, 0, 1);
         renderer.render();
         //see the lines of the objects
         b2dr.render(world, gamecam.combined);
-        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.stage.draw();
 
     }
 
+    /**
+     * Register the clientConnection instance that connects this client to the server.
+     * Save the id of this particular player (this client) into a variable.
+     * @param clientConnection the clientConnection
+     */
+    public void registerClientConnection(ClientConnection clientConnection) {
+        this.clientConnection = clientConnection;
+        this.myPlayerId = clientConnection.getClientId();
+    }
+
+    /**
+     * Method for drawing PlayerGameCharacters.
+     * Takes a list of all the players in the game, and draws their Textures to the right places on the map.
+     */
+//    public void drawPlayerGameCharacters() {
+//        List<theGame.Frog> characterValues = new ArrayList<>(clientWorld.getWorldGameCharactersMap().values());
+//        for (theGame.Frog player : characterValues) {
+//            character = new Rectangle();
+//            character.x = player.getXPosition();
+//            character.y = player.getYPosition();
+//            character.width = 22;
+//            character.height = 22;
+//            batch.draw(player.getTexture(), character.x, character.y);
+//        }
+//    }
+
     @Override
     public void resize(int width, int height) {
-        gamePort.update(width, height);
 
     }
 
@@ -167,6 +177,7 @@ public class Lobby implements Screen{
 
     @Override
     public void dispose() {
-
+        // dispose of all the native resources
+        batch.dispose();
     }
 }

@@ -16,8 +16,7 @@ public class MyGdxGame extends Game {
 	public static final int V_HEIGHT = 208;
 	public static final float PPM = 1;
 	public SpriteBatch batch;
-	// Texture img;
-	public static Client client;
+
 
 	@Override
 	public void create () {
@@ -43,10 +42,4 @@ public class MyGdxGame extends Game {
 		// img.dispose();
 	//}
 
-	public void setClient(Client client) {
-		this.client = client;
-	}
-	public Client getClient() {
-		return client;
-	}
 }
