@@ -3,17 +3,10 @@ package theGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.World;
+
 import java.util.Objects;
 
 public class Player extends Sprite {
-    public static World world;
-    public static Body b2body;
     private int id;
     private String name;
     private float xPosition;
@@ -21,33 +14,17 @@ public class Player extends Sprite {
     private String direction;
 
 
-    public Player(World world, float xPosition, float yPosition, String name, int id) {
-        this.world = world;
+    public Player(float xPosition, float yPosition, String name, int id) {
         this.id = id;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.name = name;
-        definePlayer();
-    }
-
-    public void definePlayer() {
-        BodyDef bdef = new BodyDef();
-        bdef.position.set(xPosition, yPosition);
-        bdef.type = BodyDef.BodyType.DynamicBody;
-        b2body = world.createBody(bdef);
-
-        FixtureDef fdef = new FixtureDef();
-        CircleShape shape = new CircleShape();
-        shape.setRadius(12);
-
-        fdef.shape = shape;
-        b2body.createFixture(fdef);
     }
 
     /**
      * Empty constructor is needed here to receive Player objects over the network.
      */
-    public Player(float x, float y, String name, int id) { }
+    public Player() { }
 
     public float getXPosition() {
         return xPosition;
@@ -64,6 +41,8 @@ public class Player extends Sprite {
      * @param xPos the x coordinate change
      * @param yPos the y coordinate change
      */
+    private float prevXPosition;
+    private float prevYPosition;
     public void moveToNewPos(float xPos, float yPos) {
         if (xPos > xPosition) {
             direction = "right";
@@ -74,6 +53,8 @@ public class Player extends Sprite {
         } else {
             direction = "down";
         }
+        prevXPosition = xPosition;
+        prevYPosition = yPosition;
         xPosition = xPos;
         yPosition = yPos;
     }
@@ -87,7 +68,7 @@ public class Player extends Sprite {
      * @param id the id of the player
      * @return new Player instance
      */
-    public static Player createPlayer( float x, float y, String name, int id) {
+    public static Player createPlayer(float x, float y, String name, int id) {
         return new Player(x, y, name, id);
     }
 
@@ -101,13 +82,26 @@ public class Player extends Sprite {
      */
     public Texture getTexture() {
         if (Objects.equals(direction, "up")) {
-            return new Texture(Gdx.files.internal("rsz_1player_idle.png"));
+            return new Texture(Gdx.files.internal("rsz_player_idle.png"));
         } else if (Objects.equals(direction, "down")) {
-            return new Texture(Gdx.files.internal("rsz_1player_idle.png"));
+            return new Texture(Gdx.files.internal("rsz_player_idle.png"));
         } else if (Objects.equals(direction, "left")) {
-            return new Texture(Gdx.files.internal("rsz_1player_idle.png"));
+            return new Texture(Gdx.files.internal("rsz_5player_idle.png"));
+        } else if (Objects.equals(direction, "right")) {
+//            if (prevXPosition == xPosition && prevYPosition == yPosition) {
+//                // Player is standing still
+//                return new Texture(Gdx.files.internal("rsz_player_idle.png"));
+//            } else {
+//                Texture[] textures = new Texture[3];
+//                for (int i = 1; i <= 3; i++) {
+//                    textures[i-1] = new Texture(Gdx.files.internal("rsz_" + i + "player_idle.png"));
+//                }
+//                int frameIndex = (int) ((System.currentTimeMillis() / 100) % 3);
+//                return textures[frameIndex];
+//            }
+            return new Texture(Gdx.files.internal("rsz_player_idle.png"));
         } else {
-            return new Texture(Gdx.files.internal("rsz_1player_idle.png"));
+            return new Texture(Gdx.files.internal("rsz_player_idle.png"));
         }
     }
 }

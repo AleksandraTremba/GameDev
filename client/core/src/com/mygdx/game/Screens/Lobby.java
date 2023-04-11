@@ -19,20 +19,14 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.net.ServerSocket;
-import com.badlogic.gdx.net.ServerSocketHints;
-import com.badlogic.gdx.net.Socket;
-import com.badlogic.gdx.net.SocketHints;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.esotericsoftware.kryonet.Client;
-import com.esotericsoftware.kryonet.Connection;
-import com.esotericsoftware.kryonet.Listener;
-import com.esotericsoftware.kryonet.Server;
+
+
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Scenes.Hud;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -41,7 +35,6 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Scenes.LobbyHud;
 import com.mygdx.game.Sprites.Frog;
-
 
 public class Lobby implements Screen{
     //Reference to our Game, used to set Screens
@@ -63,9 +56,10 @@ public class Lobby implements Screen{
 
     //sprites
     private Frog player;
+    private Frog player2;
 
     //private Texture frogPng;
-    //private SpriteBatch batch;
+    //private SpriteBatch bat
 
     public Lobby(MyGdxGame game) {
         this.game = game;
@@ -98,7 +92,7 @@ public class Lobby implements Screen{
         Body body;
 
         //create frog in our game world
-        player = new Frog(world, 200, 32, "player1", 1);
+        player = new Frog(world, 200, 32, "player1");
         //player2 = new Frog(world, 250, 32, "player2");
         //player = new Frog(world, 150, 32, "frog3");
 
@@ -131,6 +125,7 @@ public class Lobby implements Screen{
         world.step(1/60f, 6, 2);
 
         // set the gamecam so it will not move with the character
+        //gamecam.position.x = player.b2body.getPosition().x;
         gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
         gamecam.update();

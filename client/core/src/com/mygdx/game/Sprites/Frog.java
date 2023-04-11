@@ -7,28 +7,25 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.MyGdxGame;
-import theGame.Player;
 
 public class Frog extends Sprite {
     public static World world;
     public static Body b2body;
-    private int id;
-    private String name;
-    private float xPosition;
-    private float yPosition;
+    private String frogId;
+    private float x;
+    private float y;
 
-    public Frog(World world, float xPosition, float yPosition, String name, int id) {
+    public Frog(World world, float x, float y, String frogId) {
         this.world = world;
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
-        this.name = name;
-        this.id = id;
+        this.x = x;
+        this.y = y;
+        this.frogId = frogId;
         defineFrog();
     }
 
     public void defineFrog() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(xPosition, yPosition);
+        bdef.position.set(x, y);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
@@ -39,8 +36,18 @@ public class Frog extends Sprite {
         fdef.shape = shape;
         b2body.createFixture(fdef);
 
+        /**
+         FixtureDef fdef2 = new FixtureDef();
+         CircleShape shape2 = new CircleShape();
+         shape2.setRadius(12 / MyGdxGame.PPM);
+         fdef2.shape = shape2;
+         fdef2.isSensor = true; // set the fixture to be a sensor
+         b2body.createFixture(fdef2);
+         **/
     }
-
+    public String getFrogId() {
+        return frogId;
+    }
 
     @Override
     public float getX() {
@@ -88,9 +95,6 @@ public class Frog extends Sprite {
 
     public void update(){
 
-    }
-    public static Frog createPlayer(World world, float x, float y, String name, int id) {
-        return new Frog(world, x, y, name, id);
     }
 
 }

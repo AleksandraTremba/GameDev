@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7ea40eaf-446b-4c41-851d-8136ce4c4d50" name="Changes" comment="" />
+    <list default="true" id="7ea40eaf-446b-4c41-851d-8136ce4c4d50" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/client/core/src/com/mygdx/game/Screens/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/com/mygdx/game/Screens/Lobby.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/core/src/com/mygdx/game/Screens/PlayScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/com/mygdx/game/Screens/PlayScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/core/src/com/mygdx/game/Sprites/Frog.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/com/mygdx/game/Sprites/Frog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/core/src/theGame/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/theGame/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/core/src/theGame/Screens/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/theGame/Screens/GameScreen.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,7 +38,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/jarik/IdeaProjects/iti0301-2023-aroundtheworld/server",
+    "last_opened_file_path": "C:/Users/jarik/IdeaProjects/iti0301-2023-aroundtheworld/client",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",

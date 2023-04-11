@@ -85,7 +85,7 @@ public class PlayScreen implements Screen {
         Body body;
 
         //create frog in our game world
-        //player = new Frog(world, 100, 32, "frog1");
+        player = new Frog(world, 100, 32, "frog1");
         //player = new Frog(world, 80, 32, "frog2");
 
         frogPng = new Texture(Gdx.files.internal("frog1.png"));
@@ -218,9 +218,9 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
         /**
-        batch.begin();
-        batch.draw(frogPng, player.b2body.getPosition().x, player.b2body.getPosition().y, 0, 0, 50, 50);
-        batch.end();
+         batch.begin();
+         batch.draw(frogPng, player.b2body.getPosition().x, player.b2body.getPosition().y, 0, 0, 50, 50);
+         batch.end();
          **/
         // game.batch.setProjectionMatrix(gamecam.combined);
         // game.batch.begin();
