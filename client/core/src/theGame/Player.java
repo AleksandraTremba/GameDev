@@ -3,6 +3,9 @@ package theGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.physics.box2d.*;
+import com.mygdx.game.MyGdxGame;
+import theGame.Screens.GameScreen;
 
 import java.util.Objects;
 
@@ -13,12 +16,35 @@ public class Player extends Sprite {
     private float yPosition;
     private String direction;
 
+    public static World world;
+    public static Body b2body;
+
+
 
     public Player(float xPosition, float yPosition, String name, int id) {
         this.id = id;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.name = name;
+        world = GameScreen.world;
+        definePlayer();
+    }
+
+    public void definePlayer() {
+        /**
+        BodyDef bdef = new BodyDef();
+        bdef.position.set(xPosition, yPosition);
+        bdef.type = BodyDef.BodyType.DynamicBody;
+        b2body = world.createBody(bdef);
+
+        FixtureDef fdef = new FixtureDef();
+        CircleShape shape = new CircleShape();
+        shape.setRadius(12 / MyGdxGame.PPM);
+
+        fdef.shape = shape;
+        b2body.createFixture(fdef);
+         **/
+
     }
 
     /**
