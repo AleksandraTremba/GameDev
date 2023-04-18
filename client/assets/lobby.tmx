@@ -3,10 +3,9 @@
  <tileset firstgid="1" source="field-improved.tsx"/>
  <tileset firstgid="171" source="country-platform-preview.tsx"/>
  <tileset firstgid="423" source="SewerAccess16.tsx"/>
- <tileset firstgid="3405" source="redex1.tsx"/>
  <layer id="8" name="Collision" width="25" height="13">
   <data encoding="base64" compression="zlib">
-   eJxjYCAfbOOFYFqCUTtG7Ri1g3I7aoG4DojrKbCDkD19QNwPxBOgdpGCke3Ap24+EC8A4oVQu0jByHbgUwcAnrIvFg==
+   eJxjYBgFo2AUDHdQC8R1QFxPQzv6gLgfiCdA7aIFng/EC4B4IdQuWmAAGWgcJg==
   </data>
  </layer>
  <layer id="4" name="sky" width="25" height="13">
