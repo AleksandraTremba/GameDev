@@ -29,23 +29,6 @@ public class Player extends Sprite {
         world = GameScreen.world;
     }
 
-    public void definePlayer() {
-        /**
-        BodyDef bdef = new BodyDef();
-        bdef.position.set(xPosition, yPosition);
-        bdef.type = BodyDef.BodyType.DynamicBody;
-        b2body = world.createBody(bdef);
-
-        FixtureDef fdef = new FixtureDef();
-        CircleShape shape = new CircleShape();
-        shape.setRadius(12 / MyGdxGame.PPM);
-
-        fdef.shape = shape;
-        b2body.createFixture(fdef);
-         **/
-
-    }
-
     /**
      * Empty constructor is needed here to receive Player objects over the network.
      */
@@ -129,4 +112,5 @@ public class Player extends Sprite {
             return new Texture(Gdx.files.internal("rsz_player_idle.png"));
         }
     }
+
 }

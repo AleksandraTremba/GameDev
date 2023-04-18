@@ -69,7 +69,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         camera.position.set(gamePort.getWorldWidth() / 4, gamePort.getWorldWidth() / 4, 0);
 
         // create the map
-        tiledMap = new TmxMapLoader().load("Lobby.tmx");
+        tiledMap = new TmxMapLoader().load("lobby.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 5);
         Gdx.input.setInputProcessor(this);
 
@@ -217,30 +217,30 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         boolean rightPressed = Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT);
 
         // input from buttons:
-
+        int speed = 3;
         if (upPressed && rightPressed && !leftPressed && !collidesTop() && !collidesRight()) {  // up right
-            clientConnection.sendPlayerInfo(1, 1);
+            clientConnection.sendPlayerInfo(speed, speed);
         }
         else if (upPressed && leftPressed && !rightPressed && !collidesTop() && !collidesLeft()) {  // up left
-            clientConnection.sendPlayerInfo(-1, 1);
+            clientConnection.sendPlayerInfo(-speed, speed);
         }
         else if (downPressed && leftPressed && !rightPressed && !collidesBottom() && !collidesLeft()) { // down left
-            clientConnection.sendPlayerInfo(-1, -1);
+            clientConnection.sendPlayerInfo(-speed, -speed);
         }
         else if (downPressed && rightPressed && !leftPressed && !collidesBottom() && !collidesRight()) { // down right
-            clientConnection.sendPlayerInfo(1, -1);
+            clientConnection.sendPlayerInfo(speed, -speed);
         }
         else if (upPressed && !upAndDownPressed && !collidesTop()) {  // up
-            clientConnection.sendPlayerInfo(0, 1);
+            clientConnection.sendPlayerInfo(0, speed);
         }
         else if (leftPressed && !leftAndRightPressed && !collidesLeft()) {  // left
-            clientConnection.sendPlayerInfo(-1, 0);
+            clientConnection.sendPlayerInfo(-speed, 0);
         }
         else if (downPressed && !upAndDownPressed && !collidesBottom()) {  // down
-            clientConnection.sendPlayerInfo(0, -1);
+            clientConnection.sendPlayerInfo(0, -speed);
         }
         else if (rightPressed && !leftAndRightPressed && !collidesRight()) {  // right
-            clientConnection.sendPlayerInfo(1, 0);
+            clientConnection.sendPlayerInfo(speed, 0);
         }
     }
 
