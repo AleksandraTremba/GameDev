@@ -5,12 +5,14 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -60,6 +62,30 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         //you can zoom and visa virsa, we need it!!!
         gamePort = new FitViewport(2000, 1012, camera);
 
+        //Draw all the player that are in the game, onto the map
+        drawPlayerGameCharacters();
+
+        // create a camera with zoom
+        camera.position.set(gamePort.getWorldWidth() / 4, gamePort.getWorldWidth() / 4, 0);
+
+        // create the map
+        tiledMap = new TmxMapLoader().load("Lobby.tmx");
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 5);
+        Gdx.input.setInputProcessor(this);
+
+        // get the collision layer
+        collisionLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
+        Gdx.input.setInputProcessor(this);
+
+        /**
+        batch = new SpriteBatch();
+
+        // create the camera and the SpriteBatch
+        camera = new OrthographicCamera();
+        // create a FitViewport to maintain virtual aspects ratio despite screen size
+        //you can zoom and visa virsa, we need it!!!
+        gamePort = new FitViewport(2000, 1012, camera);
+
         //camera.setToOrtho(false, 400, 200);
         batch = new SpriteBatch();
 
@@ -71,15 +97,22 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 5);
         Gdx.input.setInputProcessor(this);
 
+        // get the collision layer
+        collisionLayer = (TiledMapTileLayer) tiledMap.getLayers().get("Collision");
+        Gdx.input.setInputProcessor(this);
+        System.out.println(collisionLayer.getName());
+
         camera.position.set(gamePort.getWorldWidth() / 4, gamePort.getWorldWidth() / 4, 0);
 
         world = new World(new Vector2(0, -150), true);
         b2dr = new Box2DDebugRenderer();
 
+
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         Body body;
+
 
         for (MapObject object : tiledMap.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -93,6 +126,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
             fdef.shape = shape;
             body.createFixture(fdef);
         }
+         **/
     }
 
     public void update(float dt) {
@@ -126,7 +160,6 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         //Draw all the players in the game onto the map
         drawPlayerGameCharacters();
         batch.end();
-
     }
 
     /**
@@ -151,7 +184,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
             character.y = player.getYPosition();
             character.width = 100;
             character.height = 149;
-            batch.draw(player.getTexture(), character.x - player.getTexture().getWidth() / 2f, character.y);
+            batch.draw(player.getTexture(), character.x /** - player.getTexture().getWidth() / 2f **/, character.y);
             //batch.draw(player.getTexture(), character.x - player.getTexture().getWidth() / 2f, character.y - player.getTexture().getHeight() / 2f);
         }
     }
@@ -184,33 +217,89 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         boolean rightPressed = Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT);
 
         // input from buttons:
-        int speed = 3;
-        if (upPressed && rightPressed && !leftPressed) {  // up right
-            clientConnection.sendPlayerInfo(speed, speed);
+
+        if (upPressed && rightPressed && !leftPressed && !collidesTop() && !collidesRight()) {  // up right
+            clientConnection.sendPlayerInfo(1, 1);
         }
-        else if (upPressed && leftPressed && !rightPressed) {  // up left
-            clientConnection.sendPlayerInfo(-speed, speed);
+        else if (upPressed && leftPressed && !rightPressed && !collidesTop() && !collidesLeft()) {  // up left
+            clientConnection.sendPlayerInfo(-1, 1);
         }
-        else if (downPressed && leftPressed && !rightPressed) { // down left
-            clientConnection.sendPlayerInfo(-speed, -speed);
+        else if (downPressed && leftPressed && !rightPressed && !collidesBottom() && !collidesLeft()) { // down left
+            clientConnection.sendPlayerInfo(-1, -1);
         }
-        else if (downPressed && rightPressed && !leftPressed) { // down right
-            clientConnection.sendPlayerInfo(speed, -speed);
+        else if (downPressed && rightPressed && !leftPressed && !collidesBottom() && !collidesRight()) { // down right
+            clientConnection.sendPlayerInfo(1, -1);
         }
-        else if (upPressed && !upAndDownPressed) {  // up
-            clientConnection.sendPlayerInfo(0, speed);
+        else if (upPressed && !upAndDownPressed && !collidesTop()) {  // up
+            clientConnection.sendPlayerInfo(0, 1);
         }
-        else if (leftPressed && !leftAndRightPressed) {  // left
-            clientConnection.sendPlayerInfo(-speed, 0);
+        else if (leftPressed && !leftAndRightPressed && !collidesLeft()) {  // left
+            clientConnection.sendPlayerInfo(-1, 0);
         }
-        else if (downPressed && !upAndDownPressed) {  // down
-            clientConnection.sendPlayerInfo(0, -speed);
+        else if (downPressed && !upAndDownPressed && !collidesBottom()) {  // down
+            clientConnection.sendPlayerInfo(0, -1);
         }
-        else if (rightPressed && !leftAndRightPressed) {  // right
-            clientConnection.sendPlayerInfo(speed, 0);
+        else if (rightPressed && !leftAndRightPressed && !collidesRight()) {  // right
+            clientConnection.sendPlayerInfo(1, 0);
         }
     }
 
+
+    // Collision checks
+    // Check if the block exists in front of them and is signed as "collision"
+    public boolean isCellBlocked (float x, float y) {
+        TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (x / collisionLayer.getTileWidth()), (int) (y / collisionLayer.getTileHeight()));
+        return cell != null && cell.getTile() != null && cell.getTile().getProperties().containsKey("blocked");
+    }
+
+    // If collision happens, returns true
+    public boolean collidesRight() {
+        boolean collides = false;
+        for (float step = 0; step < character.getHeight(); step += collisionLayer.getTileHeight() / 2.0) {
+            collides = isCellBlocked(character.getX() + character.getWidth(), character.getY() + step);
+            if (collides) {
+                System.out.println("I hit something - right");
+                break;
+            }
+        }
+        return collides;
+
+    }
+    public boolean collidesLeft() {
+        boolean collides = false;
+        for (float step = 1; step < character.getHeight(); step += collisionLayer.getTileHeight() / 2.0) {
+            collides = isCellBlocked(character.getX() - character.getWidth() / 10, character.getY() + step);
+            if (collides) {
+                System.out.println("I hit something - left");
+                break;
+            }
+        }
+        return collides;
+    }
+    public boolean collidesTop() {
+        boolean collides = false;
+        for (float step = 0; step < character.getWidth(); step += collisionLayer.getTileWidth() / 2.0) {
+            collides = isCellBlocked(character.getX() + step, character.getY() + character.getHeight());
+            if (collides) {
+                System.out.println("I hit something - up");
+                break;
+            }
+        }
+        return collides;
+
+    }
+    public boolean collidesBottom() {
+        boolean collides = false;
+        for (float step = 0; step < character.getWidth(); step += collisionLayer.getTileWidth() / 2.0) {
+            collides = isCellBlocked(character.getX() + step, character.getY() - character.getHeight() / 10);
+            if (collides) {
+                System.out.println("I hit something - down");
+                break;
+            }
+        }
+        return collides;
+
+    }
 
     @Override
     public boolean keyDown(int keycode) {

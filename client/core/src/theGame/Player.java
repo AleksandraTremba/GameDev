@@ -27,7 +27,6 @@ public class Player extends Sprite {
         this.yPosition = yPosition;
         this.name = name;
         world = GameScreen.world;
-        definePlayer();
     }
 
     public void definePlayer() {
