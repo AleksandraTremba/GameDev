@@ -76,57 +76,6 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         // get the collision layer
         collisionLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
         Gdx.input.setInputProcessor(this);
-
-        /**
-        batch = new SpriteBatch();
-
-        // create the camera and the SpriteBatch
-        camera = new OrthographicCamera();
-        // create a FitViewport to maintain virtual aspects ratio despite screen size
-        //you can zoom and visa virsa, we need it!!!
-        gamePort = new FitViewport(2000, 1012, camera);
-
-        //camera.setToOrtho(false, 400, 200);
-        batch = new SpriteBatch();
-
-        //Draw all the player that are in the game, onto the map
-        drawPlayerGameCharacters();
-
-        // create the map
-        tiledMap = new TmxMapLoader().load("lobby.tmx");
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 5);
-        Gdx.input.setInputProcessor(this);
-
-        // get the collision layer
-        collisionLayer = (TiledMapTileLayer) tiledMap.getLayers().get("Collision");
-        Gdx.input.setInputProcessor(this);
-        System.out.println(collisionLayer.getName());
-
-        camera.position.set(gamePort.getWorldWidth() / 4, gamePort.getWorldWidth() / 4, 0);
-
-        world = new World(new Vector2(0, -150), true);
-        b2dr = new Box2DDebugRenderer();
-
-
-        BodyDef bdef = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fdef = new FixtureDef();
-        Body body;
-
-
-        for (MapObject object : tiledMap.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / MyGdxGame.PPM, (rect.getY() + rect.getHeight() / 2) / MyGdxGame.PPM);
-
-            body = world.createBody(bdef);
-
-            shape.setAsBox(rect.getWidth() / 2 / MyGdxGame.PPM, rect.getHeight() / 2 / MyGdxGame.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
-         **/
     }
 
     public void update(float dt) {
@@ -263,7 +212,6 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
             }
         }
         return collides;
-
     }
     public boolean collidesLeft() {
         boolean collides = false;
