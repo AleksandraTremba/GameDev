@@ -15,9 +15,9 @@ import java.io.IOException;
  Class for connecting client to the server and exchanging information with the server.
  */
 public class ClientConnection {
-    String ip = "193.40.156.35";
-    Integer tcpPort = 8080;
-    Integer udpPort = 8090;
+    String ip = "193.40.156.27";
+    Integer tcpPort = 8085;
+    Integer udpPort = 8085;
     private final Client client;
     private ClientWorld clientWorld;
     private Integer clientId;
@@ -68,7 +68,7 @@ public class ClientConnection {
             // Connected to the server - wait 5000ms before failing.
             client.start();
             // client.connect(5000, ip, tcpPort, udpPort);  // <- use this when server is up on school pc
-            client.connect(5000, "localhost", tcpPort, udpPort);
+            client.connect(5000, ip, tcpPort, udpPort);
             clientId = client.getID();  // put the id of this player into variable
         } catch (IOException exception) {
             JOptionPane.showMessageDialog(null, "Can not connect to the Server.");
