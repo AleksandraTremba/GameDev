@@ -62,16 +62,18 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         //you can zoom and visa virsa, we need it!!!
         gamePort = new FitViewport(2000, 1012, camera);
 
+        //camera.setToOrtho(false, 400, 200);
+        batch = new SpriteBatch();
+
         //Draw all the player that are in the game, onto the map
         drawPlayerGameCharacters();
-
-        // create a camera with zoom
-        camera.position.set(gamePort.getWorldWidth() / 4, gamePort.getWorldWidth() / 4, 0);
 
         // create the map
         tiledMap = new TmxMapLoader().load("lobby.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 5);
         Gdx.input.setInputProcessor(this);
+
+        camera.position.set(gamePort.getWorldWidth() / 4, gamePort.getWorldWidth() / 4, 0);
 
         // get the collision layer
         collisionLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
@@ -109,6 +111,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         //Draw all the players in the game onto the map
         drawPlayerGameCharacters();
         batch.end();
+
     }
 
     /**
@@ -207,7 +210,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         for (float step = 0; step < character.getHeight(); step += collisionLayer.getTileHeight() / 2.0) {
             collides = isCellBlocked(character.getX() + character.getWidth(), character.getY() + step);
             if (collides) {
-                System.out.println("I hit something - right");
+                System.out.println("Collision right");
                 break;
             }
         }
@@ -218,7 +221,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         for (float step = 1; step < character.getHeight(); step += collisionLayer.getTileHeight() / 2.0) {
             collides = isCellBlocked(character.getX() - character.getWidth() / 10, character.getY() + step);
             if (collides) {
-                System.out.println("I hit something - left");
+                System.out.println("Collision left");
                 break;
             }
         }
@@ -229,7 +232,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         for (float step = 0; step < character.getWidth(); step += collisionLayer.getTileWidth() / 2.0) {
             collides = isCellBlocked(character.getX() + step, character.getY() + character.getHeight());
             if (collides) {
-                System.out.println("I hit something - up");
+                System.out.println("Collision up");
                 break;
             }
         }
@@ -241,7 +244,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         for (float step = 0; step < character.getWidth(); step += collisionLayer.getTileWidth() / 2.0) {
             collides = isCellBlocked(character.getX() + step, character.getY() - character.getHeight() / 10);
             if (collides) {
-                System.out.println("I hit something - down");
+                System.out.println("Collision down");
                 break;
             }
         }
