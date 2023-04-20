@@ -3,9 +3,6 @@ package theGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.physics.box2d.*;
-import com.mygdx.game.MyGdxGame;
-import theGame.Screens.GameScreen;
 
 import java.util.Objects;
 
@@ -15,10 +12,7 @@ public class Player extends Sprite {
     private float xPosition;
     private float yPosition;
     private String direction;
-
-    public static World world;
-    public static Body b2body;
-
+    private String previousDirection;
 
 
     public Player(float xPosition, float yPosition, String name, int id) {
@@ -26,7 +20,6 @@ public class Player extends Sprite {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.name = name;
-        world = GameScreen.world;
     }
 
     /**
@@ -65,6 +58,14 @@ public class Player extends Sprite {
         prevYPosition = yPosition;
         xPosition = xPos;
         yPosition = yPos;
+
+        if (xPos > prevXPosition) {
+            previousDirection = "right";
+        } else if (xPos < prevXPosition) {
+            previousDirection = "left";
+        } else {
+            previousDirection = direction;
+        }
     }
 
     /**
@@ -90,7 +91,13 @@ public class Player extends Sprite {
      */
     public Texture getTexture() {
         if (Objects.equals(direction, "up")) {
-            return new Texture(Gdx.files.internal("rsz_player_idle.png"));
+            if (Objects.equals(previousDirection, "right")) {
+                return new Texture(Gdx.files.internal("rsz_player_back.png"));
+            } else if (Objects.equals(previousDirection, "left")) {
+                return new Texture(Gdx.files.internal("rsz_player_back_left.png"));
+            } else {
+                return new Texture(Gdx.files.internal("rsz_player_back.png"));
+            }
         } else if (Objects.equals(direction, "down")) {
             return new Texture(Gdx.files.internal("rsz_player_idle.png"));
         } else if (Objects.equals(direction, "left")) {
@@ -112,5 +119,4 @@ public class Player extends Sprite {
             return new Texture(Gdx.files.internal("rsz_player_idle.png"));
         }
     }
-
 }

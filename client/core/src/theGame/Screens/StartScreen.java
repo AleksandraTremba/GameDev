@@ -54,7 +54,7 @@ public class StartScreen extends ApplicationAdapter implements Screen {
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.audio.newSound(Gdx.files.internal("naitatilli.mp3")).play(1.0f);
+                Gdx.audio.newSound(Gdx.files.internal("discord-notification.mp3")).play(1.0f);
                 menuMusic.stop(); // stop the music
                 gameClient.startGame();
             }
