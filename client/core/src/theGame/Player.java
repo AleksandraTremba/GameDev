@@ -3,6 +3,9 @@ package theGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.physics.box2d.*;
+import com.mygdx.game.MyGdxGame;
+import theGame.Screens.GameScreen;
 
 import java.util.Objects;
 
@@ -13,12 +16,17 @@ public class Player extends Sprite {
     private float yPosition;
     private String direction;
 
+    public static World world;
+    public static Body b2body;
+
+
 
     public Player(float xPosition, float yPosition, String name, int id) {
         this.id = id;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.name = name;
+        world = GameScreen.world;
     }
 
     /**
@@ -104,4 +112,5 @@ public class Player extends Sprite {
             return new Texture(Gdx.files.internal("rsz_player_idle.png"));
         }
     }
+
 }

@@ -44,7 +44,7 @@ public class MyServer {
 
                     playerCount += 1;
                     System.out.println("Received message from the client: " + packetConnect.getPlayerName());
-                    Player player = new Player(connection.getID(), "player", 200, 32);
+                    Player player = new Player(connection.getID(), "player", 500, 200);
                     players.put(connection.getID(), player);   // connection.getRemoteAddressUDP()
                     serverWorld.addGameCharacter(connection.getID(), player);
                     addPlayerToClientsGame(connection, player);
@@ -85,7 +85,7 @@ public class MyServer {
             }
         });
 
-        server.bind(8080, 8090);  // set ports for TCP, UDP. They must be equal with clients ports.
+        server.bind(8085, 8085);  // set ports for TCP, UDP. They must be equal with clients ports.
         server.start();  // start the server
     }
 
