@@ -44,7 +44,7 @@ public class MyServer {
 
                     playerCount += 1;
                     System.out.println("Received message from the client: " + packetConnect.getPlayerName());
-                    Player player = new Player(connection.getID(), "player", 500, 200);
+                    Player player = new Player(connection.getID(), "player", 4020, 3380);
                     players.put(connection.getID(), player);   // connection.getRemoteAddressUDP()
                     serverWorld.addGameCharacter(connection.getID(), player);
                     addPlayerToClientsGame(connection, player);

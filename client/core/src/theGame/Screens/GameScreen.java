@@ -198,7 +198,6 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     }
 
 
-
     /**
      * Get input from buttons, react to the player pressing a button on their computer's keyboard.
      * The first part of the method is about collision, but doesn't temporarily work,
@@ -244,8 +243,8 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
 
     // Collision checks
     // Check if the block exists in front of them and is signed as "collision"
-    public boolean isCellBlocked (TiledMapTileLayer collisionLayer, float x, float y) {
-        TiledMapTileLayer.Cell cell = this.collisionLayer.getCell((int) (x / this.collisionLayer.getTileWidth() / 5), (int) (y / this.collisionLayer.getTileHeight() / 5));
+    public boolean isCellBlocked (float x, float y) {
+        TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (x / collisionLayer.getTileWidth() / 5), (int) (y / collisionLayer.getTileHeight() / 5));
         return cell != null && cell.getTile() != null && cell.getTile().getProperties().containsKey("blocked");
     }
 
@@ -253,7 +252,8 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     public boolean collidesRight() {
         boolean collides = false;
         for (float step = 0; step < character.getHeight(); step += collisionLayer.getTileHeight() / 2.0) {
-            collides = isCellBlocked(collisionLayer, character.getX() + character.getWidth(), character.getY() + step);
+            collides = isCellBlocked(clientWorld.getGameCharacter(myPlayerId).getXPosition() + character.getWidth(),
+                    clientWorld.getGameCharacter(myPlayerId).getYPosition() + step);
             if (collides) {
                 System.out.println("I am always - right");
                 break;
@@ -262,10 +262,12 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         return collides;
 
     }
+
     public boolean collidesLeft() {
         boolean collides = false;
         for (float step = 1; step < character.getHeight(); step += collisionLayer.getTileHeight() / 2.0) {
-            collides = isCellBlocked(collisionLayer, character.getX() - character.getWidth() / 10, character.getY() + step);
+            collides = isCellBlocked(clientWorld.getGameCharacter(myPlayerId).getXPosition() - character.getWidth() / 10,
+                    clientWorld.getGameCharacter(myPlayerId).getYPosition() + step);
             if (collides) {
                 System.out.println("On your - left");
                 break;
@@ -276,7 +278,8 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     public boolean collidesTop() {
         boolean collides = false;
         for (float step = 0; step < character.getWidth(); step += collisionLayer.getTileWidth() / 2.0) {
-            collides = isCellBlocked(collisionLayer, character.getX() + step, character.getY() + character.getHeight());
+            collides = isCellBlocked(clientWorld.getGameCharacter(myPlayerId).getXPosition() + step,
+                    clientWorld.getGameCharacter(myPlayerId).getYPosition() + character.getHeight());
             if (collides) {
                 System.out.println("Never gonna give you - up");
                 break;
@@ -288,7 +291,8 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     public boolean collidesBottom() {
         boolean collides = false;
         for (float step = 0; step < character.getWidth(); step += collisionLayer.getTileWidth() / 2.0) {
-            collides = isCellBlocked(collisionLayer, character.getX() + step, character.getY() - character.getHeight() / 10);
+            collides = isCellBlocked(clientWorld.getGameCharacter(myPlayerId).getXPosition() + step,
+                    clientWorld.getGameCharacter(myPlayerId).getYPosition() - character.getHeight() / 10);
             if (collides) {
                 System.out.println("Never gonna let you - down");
                 break;

@@ -113,6 +113,10 @@ public class Player extends Sprite {
         boolean downPressed = Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN);
         boolean leftPressed = Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT);
         boolean rightPressed = Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT);
+        boolean bPressed = Gdx.input.isKeyPressed(Input.Keys.B);
+        boolean kPressed = Gdx.input.isKeyPressed(Input.Keys.K);
+        boolean tPressed = Gdx.input.isKeyPressed(Input.Keys.T);
+
         if (Objects.equals(direction, "up")) {
 //            if (upPressed) {
 //                Texture[] textures = new Texture[2];
@@ -144,6 +148,15 @@ public class Player extends Sprite {
 //            }
             return new Texture(Gdx.files.internal("rsz_5player_idle.png"));
         } else if (Objects.equals(direction, "right")) {
+            if (bPressed){
+                return new Texture(Gdx.files.internal("brettik.png"));
+            }
+            if (kPressed){
+                return new Texture(Gdx.files.internal("keit.png"));
+            }
+            if (tPressed){
+                return new Texture(Gdx.files.internal("bj.png"));
+            }
 //            if (rightPressed) {
 //                Texture[] textures = new Texture[3];
 //                for (int i = 1; i <= 3; i++) {
@@ -157,6 +170,5 @@ public class Player extends Sprite {
             return new Texture(Gdx.files.internal("rsz_player_idle.png"));
         }
     }
-
 
 }
