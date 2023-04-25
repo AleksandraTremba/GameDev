@@ -32,10 +32,9 @@ public class StartScreen extends ApplicationAdapter implements Screen {
     private final Texture playButtonInactive;
     private final Texture exitButtonActive;
     private final Texture exitButtonInactive;
-    private ImageButton playButton;
-    private ImageButton exitButton;
-    private Music menuMusic;
-
+    private final ImageButton playButton;
+    private final ImageButton exitButton;
+    private final Music menuMusic;
 
     public StartScreen(final GameClient gameClient) {
 
@@ -106,7 +105,6 @@ public class StartScreen extends ApplicationAdapter implements Screen {
 
         menuMusic.setLooping(true);
         menuMusic.play();
-
     }
 
     @Override

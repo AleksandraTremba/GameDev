@@ -1,21 +1,14 @@
 {
-    "Map/SizeTest": {
-        "height": 4300,
-        "width": 2
-    },
-    "activeFile": "C:/Users/jarik/AppData/Local/Temp/Temp2_iti0301-2023.zip/iti0301-2023/Client/assets/Labürint.tmx",
-    "expandedProjectPaths": [
-    ],
     "fileStates": {
         "": {
             "scaleInDock": 1
         },
         "Big_map.tmx": {
-            "scale": 1.5,
-            "selectedLayer": 0,
+            "scale": 1,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 220,
-                "y": 661.6666666666666
+                "x": 429,
+                "y": 457.5
             }
         },
         "BlueFrog.tsx": {
@@ -134,7 +127,7 @@
             "selectedLayer": -1,
             "viewCenter": {
                 "x": 972.7272727272727,
-                "y": 3753.030303030303
+                "y": 3750
             }
         },
         "bugs16.tsx": {
@@ -200,26 +193,25 @@
             "scaleInDock": 1,
             "scaleInEditor": 2
         },
-        "trees_and_bushes.tsx": {
+        "trees-and-bushesX.tsx": {
+            "scaleInDock": 0.25,
+            "scaleInEditor": 0.5
+        },
+        "trees-and-bushesXS.tsx": {
             "scaleInDock": 0.25,
             "scaleInEditor": 1
+        },
+        "trees_and_bushes.tsx": {
+            "scaleInDock": 0.25,
+            "scaleInEditor": 0.5
         }
     },
     "last.imagePath": "C:/Users/jarik/IdeaProjects/iti0301-2023-aroundtheworld/client/assets",
-    "map.height": 54,
-    "map.lastUsedFormat": "tmx",
-    "map.layerDataFormat": null,
-    "map.tileHeight": 80,
-    "map.tileWidth": 80,
-    "map.width": 54,
-    "openFiles": [
-        "level1.tmx",
-        "lobby.tmx",
-        "C:/Users/jarik/AppData/Local/Temp/Temp2_iti0301-2023.zip/iti0301-2023/Client/assets/Labürint.tmx"
-    ],
-    "project": "level01.tiled-project",
     "recentFiles": [
         "trees_and_bushes.tsx",
+        "trees-and-bushesXS.tsx",
+        "WELL.tmx",
+        "trees-and-bushesX.tsx",
         "C:/Users/jarik/IdeaProjects/iti0301-2023/Client/assets/Labürint.tmx",
         "C:/Users/jarik/IdeaProjects/iti0301-2023/Client/assets/map/Hedge_tileset.tsx",
         "C:/Users/jarik/IdeaProjects/iti0301-2023/Client/assets/Map/redex.tsx",
@@ -227,16 +219,11 @@
         "Big_map.tmx",
         "lobby.tmx",
         "level1.tmx",
-        "C:/Users/jarik/IdeaProjects/iti0301-2023/Client/assets/map/Ground.tsx",
-        "Lab3.tmx",
-        "Lab2.tmx",
-        "C:/Users/jarik/AppData/Local/Temp/Temp2_iti0301-2023.zip/iti0301-2023/Client/assets/Labürint.tmx"
+        "C:/Users/jarik/IdeaProjects/iti0301-2023/Client/assets/map/Ground.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
-    "tileset.margin": 0,
-    "tileset.spacing": 0,
     "tileset.tileSize": {
-        "height": 80,
-        "width": 80
+        "height": 16,
+        "width": 16
     }
 }

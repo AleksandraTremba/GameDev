@@ -1,8 +1,10 @@
 package theGame.Screens;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
@@ -12,15 +14,16 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.Sprites.Frog;
+import com.badlogic.gdx.graphics.Texture;
 import theGame.GameInfo.ClientWorld;
 import theGame.GameInfo.GameClient;
 import theGame.ClientConnection;
 import theGame.Player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GameScreen extends ApplicationAdapter implements Screen, InputProcessor{
     SpriteBatch batch;
@@ -36,6 +39,12 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     private final ClientWorld clientWorld;
     private GameClient gameClient;
     private Integer myPlayerId;
+
+    private BitmapFont font;
+    private OrthographicCamera hudCamera;
+    private Viewport hudViewport;
+    private SpriteBatch hudBatch;
+    private String hudText = "Collect 15 sticks to save your friend!";
 
 
     public GameScreen(ClientWorld clientWorld) {
@@ -71,6 +80,16 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         Gdx.input.setInputProcessor(this);
 
         camera.position.set(gamePort.getWorldWidth() / 4, gamePort.getWorldWidth() / 4, 0);
+
+        font = new BitmapFont();
+        font.getData().setScale(5f);
+        font.setColor(Color.YELLOW);
+        //font.setColor(1f, 0.5f, 0f, 1f); // red: 1, green: 0.5, blue: 0, alpha: 1
+        //font.setColor(0, 0.5f, 0, 1); // set color to dark green (R=0, G=0.5, B=0, A=1)
+        hudCamera = new OrthographicCamera();
+        hudViewport = new FitViewport(3000, 2012, hudCamera);
+        hudBatch = new SpriteBatch();
+        hudBatch.setProjectionMatrix(hudCamera.combined);
     }
 
     @Override
@@ -82,8 +101,34 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         // getGameCharacter(myPlayerId) is equal to "null" only the first time that this render is called
         // All the later times it won't be null
         if (clientWorld.getGameCharacter(myPlayerId) != null) {
-            camera.position.x = clientWorld.getGameCharacter(myPlayerId).getXPosition();
-            camera.position.y = clientWorld.getGameCharacter(myPlayerId).getYPosition();
+            float x = clientWorld.getGameCharacter(myPlayerId).getXPosition();
+            float y = clientWorld.getGameCharacter(myPlayerId).getYPosition();
+            // calculate the distance from the player to the edge of the map
+            float leftDistance = x;
+            float rightDistance = 8000 - x;
+            float bottomDistance = y;
+            float topDistance = 8000 - y;
+
+            // calculate the threshold distance from the edge of the map where the camera should stop following the player
+            float threshold = 1000; // adjust this value to change the threshold distance
+            float threshold2 = 1500;
+
+            // adjust the camera position based on the player's position and the distance from the edge of the map
+            if (leftDistance < threshold) {
+                camera.position.x = threshold;
+            } else if (rightDistance < threshold) {
+                camera.position.x = 8000 - threshold;
+            } else {
+                camera.position.x = x;
+            }
+
+            if (bottomDistance < threshold) {
+                camera.position.y = threshold;
+            } else if (topDistance < threshold) {
+                camera.position.y = 8000 - threshold;
+            } else {
+                camera.position.y = y;
+            }
         }
         camera.update();
 
@@ -97,7 +142,19 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
 
         //Draw all the players in the game onto the map
         drawPlayerGameCharacters();
+
+        // Draw scared frog at (4030, 3990)
+        Texture scaredFrog = new Texture("assets/scared_frog.png");
+        batch.draw(scaredFrog, 3930, 4090, scaredFrog.getWidth(), scaredFrog.getHeight());
+
         batch.end();
+
+        // draw HUD
+        hudCamera.update();
+        hudBatch.setProjectionMatrix(hudCamera.combined);
+        hudBatch.begin();
+        font.draw(hudBatch, hudText, hudCamera.position.x - 1400, hudCamera.position.y + 900);
+        hudBatch.end();
 
     }
 
@@ -137,6 +194,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     public void resize(int width, int height) {
         gamePort.update(width, height);
         batch.setProjectionMatrix(camera.combined);
+        hudViewport.update(width, height, true);
     }
 
 
@@ -156,7 +214,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         boolean rightPressed = Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT);
 
         // input from buttons:
-        int speed = 3;
+        int speed = 5;
         if (upPressed && rightPressed && !leftPressed && !collidesTop() && !collidesRight()) {  // up right
             clientConnection.sendPlayerInfo(speed, speed);
         }
@@ -185,8 +243,8 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
 
     // Collision checks
     // Check if the block exists in front of them and is signed as "collision"
-    public boolean isCellBlocked (float x, float y) {
-        TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (x / collisionLayer.getTileWidth() / 5), (int) (y / collisionLayer.getTileHeight() / 5));
+    public boolean isCellBlocked (TiledMapTileLayer collisionLayer, float x, float y) {
+        TiledMapTileLayer.Cell cell = this.collisionLayer.getCell((int) (x / this.collisionLayer.getTileWidth() / 5), (int) (y / this.collisionLayer.getTileHeight() / 5));
         return cell != null && cell.getTile() != null && cell.getTile().getProperties().containsKey("blocked");
     }
 
@@ -194,7 +252,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     public boolean collidesRight() {
         boolean collides = false;
         for (float step = 0; step < character.getHeight(); step += collisionLayer.getTileHeight() / 2.0) {
-            collides = isCellBlocked(character.getX() + character.getWidth(), character.getY() + step);
+            collides = isCellBlocked(collisionLayer, character.getX() + character.getWidth(), character.getY() + step);
             if (collides) {
                 System.out.println("I am always - right");
                 break;
@@ -206,7 +264,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     public boolean collidesLeft() {
         boolean collides = false;
         for (float step = 1; step < character.getHeight(); step += collisionLayer.getTileHeight() / 2.0) {
-            collides = isCellBlocked(character.getX() - character.getWidth() / 10, character.getY() + step);
+            collides = isCellBlocked(collisionLayer, character.getX() - character.getWidth() / 10, character.getY() + step);
             if (collides) {
                 System.out.println("On your - left");
                 break;
@@ -217,7 +275,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     public boolean collidesTop() {
         boolean collides = false;
         for (float step = 0; step < character.getWidth(); step += collisionLayer.getTileWidth() / 2.0) {
-            collides = isCellBlocked(character.getX() + step, character.getY() + character.getHeight());
+            collides = isCellBlocked(collisionLayer, character.getX() + step, character.getY() + character.getHeight());
             if (collides) {
                 System.out.println("Never gonna give you - up");
                 break;
@@ -229,7 +287,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     public boolean collidesBottom() {
         boolean collides = false;
         for (float step = 0; step < character.getWidth(); step += collisionLayer.getTileWidth() / 2.0) {
-            collides = isCellBlocked(character.getX() + step, character.getY() - character.getHeight() / 10);
+            collides = isCellBlocked(collisionLayer, character.getX() + step, character.getY() - character.getHeight() / 10);
             if (collides) {
                 System.out.println("Never gonna let you - down");
                 break;
@@ -253,6 +311,8 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
             tiledMap.getLayers().get(1).setVisible(!tiledMap.getLayers().get(1).isVisible());
         if(keycode == Input.Keys.NUM_3)
             tiledMap.getLayers().get(2).setVisible(!tiledMap.getLayers().get(2).isVisible());
+        if(keycode == Input.Keys.NUM_4)
+            tiledMap.getLayers().get(2).setVisible(!tiledMap.getLayers().get(3).isVisible());
         return false;
     }
 

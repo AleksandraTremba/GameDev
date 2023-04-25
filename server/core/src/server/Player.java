@@ -26,9 +26,9 @@ public class Player {
 
         //The height and width of the map is 1900
         if (xPosition < 0) xPosition= 0;
-        if (xPosition > 1900) xPosition = 1900;
+        //if (xPosition > 1900) xPosition = 1900;
         if (yPosition < 0) yPosition = 0;
-        if (yPosition > 1900) yPosition = 1900;
+        //if (yPosition > 1900) yPosition = 1900;
     }
 
     public float getXPosition() {
