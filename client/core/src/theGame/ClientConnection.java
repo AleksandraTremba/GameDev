@@ -15,7 +15,7 @@ import java.io.IOException;
  Class for connecting client to the server and exchanging information with the server.
  */
 public class ClientConnection {
-    String ip = "193.40.156.27";
+    String ip = "localhost";
     Integer tcpPort = 8085;
     Integer udpPort = 8085;
     private final Client client;

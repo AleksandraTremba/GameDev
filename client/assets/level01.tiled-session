@@ -1,14 +1,15 @@
 {
-    "Map/SizeTest": {
-        "height": 4300,
-        "width": 2
-    },
-    "activeFile": "level01.tmx",
-    "expandedProjectPaths": [
-    ],
     "fileStates": {
         "": {
             "scaleInDock": 1
+        },
+        "Big_map.tmx": {
+            "scale": 1,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 429,
+                "y": 457.5
+            }
         },
         "BlueFrog.tsx": {
             "scaleInDock": 1,
@@ -17,6 +18,91 @@
         "Blue_Frog.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "C:/Users/jarik/AppData/Local/Temp/Temp2_iti0301-2023.zip/iti0301-2023/Client/assets/Labürint.tmx": {
+            "scale": 0.21671875,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1241.2400865176642,
+                "y": 1008.219178082192
+            }
+        },
+        "C:/Users/jarik/AppData/Local/Temp/Temp2_iti0301-2023.zip/iti0301-2023/Client/assets/Map/redex.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/jarik/AppData/Local/Temp/Temp2_iti0301-2023.zip/iti0301-2023/Client/assets/map/Castle.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/jarik/AppData/Local/Temp/Temp2_iti0301-2023.zip/iti0301-2023/Client/assets/map/Ground.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/jarik/AppData/Local/Temp/Temp2_iti0301-2023.zip/iti0301-2023/Client/assets/map/Hedge_edges.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/jarik/AppData/Local/Temp/Temp2_iti0301-2023.zip/iti0301-2023/Client/assets/map/Hedge_tileset.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/jarik/AppData/Local/Temp/Temp2_iti0301-2023.zip/iti0301-2023/Client/assets/map/House.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/jarik/AppData/Local/Temp/Temp2_iti0301-2023.zip/iti0301-2023/Client/assets/map/Plants.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/jarik/IdeaProjects/iti0301-2023/Client/assets/Labürint.tmx": {
+            "scale": 0.37158854166666666,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 962.0856401990327,
+                "y": 1741.173172611956
+            }
+        },
+        "C:/Users/jarik/IdeaProjects/iti0301-2023/Client/assets/Map/redex.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/jarik/IdeaProjects/iti0301-2023/Client/assets/map/Castle.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/jarik/IdeaProjects/iti0301-2023/Client/assets/map/Ground.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/jarik/IdeaProjects/iti0301-2023/Client/assets/map/Hedge_edges.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/jarik/IdeaProjects/iti0301-2023/Client/assets/map/Hedge_tileset.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/jarik/IdeaProjects/iti0301-2023/Client/assets/map/House.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/jarik/IdeaProjects/iti0301-2023/Client/assets/map/Plants.tsx": {
+            "scaleInDock": 1
+        },
+        "Forest_map.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 828,
+                "y": 3270
+            }
+        },
+        "Lab2.tmx": {
+            "scale": 0.37158854166666666,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1116.8266872240522,
+                "y": 819.4547620716238
+            }
+        },
+        "Lab3.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 130.66666666666666,
+                "y": 1405.3333333333333
+            }
         },
         "PixelArt16.tsx": {
             "scaleInDock": 1,
@@ -36,6 +122,14 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "WELL.tmx": {
+            "scale": 0.33,
+            "selectedLayer": -1,
+            "viewCenter": {
+                "x": 972.7272727272727,
+                "y": 3750
+            }
+        },
         "bugs16.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
@@ -43,6 +137,9 @@
         "clouds.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "country-platform-preview.tsx": {
+            "scaleInDock": 1
         },
         "field-improved.tsx": {
             "scaleInDock": 1,
@@ -60,8 +157,8 @@
             "scale": 2,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 288,
-                "y": 111.25
+                "x": 1470.5,
+                "y": 43.75
             }
         },
         "level1.tmx": {
@@ -74,10 +171,10 @@
         },
         "lobby.tmx": {
             "scale": 2.3655,
-            "selectedLayer": 2,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 176.284083703234,
-                "y": 115.19763263580637
+                "x": 207.56711054745298,
+                "y": 104.6290424857324
             }
         },
         "lobbymap.tmx": {
@@ -91,40 +188,40 @@
         "sunny-green-hills.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "trees-and-bushes.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 2
+        },
+        "trees-and-bushesX.tsx": {
+            "scaleInDock": 0.25,
+            "scaleInEditor": 0.5
+        },
+        "trees-and-bushesXS.tsx": {
+            "scaleInDock": 0.25,
+            "scaleInEditor": 1
+        },
+        "trees_and_bushes.tsx": {
+            "scaleInDock": 0.25,
+            "scaleInEditor": 0.5
         }
     },
     "last.imagePath": "C:/Users/jarik/IdeaProjects/iti0301-2023-aroundtheworld/client/assets",
-    "map.height": 13,
-    "map.lastUsedFormat": "tmx",
-    "map.layerDataFormat": null,
-    "map.tileHeight": 16,
-    "map.tileWidth": 16,
-    "map.width": 25,
-    "openFiles": [
-        "level1.tmx",
-        "level01.tmx",
-        "PixelArt16.tsx",
-        "SewerAccess16.tsx",
-        "BlueFrog.tsx"
-    ],
-    "project": "level01.tiled-project",
     "recentFiles": [
-        "level1.tmx",
-        "level01.tmx",
-        "field-improved.tsx",
+        "trees_and_bushes.tsx",
+        "trees-and-bushesXS.tsx",
+        "WELL.tmx",
+        "trees-and-bushesX.tsx",
+        "C:/Users/jarik/IdeaProjects/iti0301-2023/Client/assets/Labürint.tmx",
+        "C:/Users/jarik/IdeaProjects/iti0301-2023/Client/assets/map/Hedge_tileset.tsx",
+        "C:/Users/jarik/IdeaProjects/iti0301-2023/Client/assets/Map/redex.tsx",
+        "trees-and-bushes.tsx",
+        "Big_map.tmx",
         "lobby.tmx",
-        "lobbymap.tmx",
-        "sunny-green-hills.tsx",
-        "clouds.tsx",
-        "field-removed.tsx",
-        "field.tsx",
-        "BlueFrog.tsx",
-        "SewerAccess16.tsx",
-        "PixelArt16.tsx"
+        "level1.tmx",
+        "C:/Users/jarik/IdeaProjects/iti0301-2023/Client/assets/map/Ground.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
-    "tileset.margin": 1,
-    "tileset.spacing": 2,
     "tileset.tileSize": {
         "height": 16,
         "width": 16

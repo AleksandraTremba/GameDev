@@ -1,11 +1,9 @@
 package theGame;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.physics.box2d.*;
-import com.mygdx.game.MyGdxGame;
-import theGame.Screens.GameScreen;
 
 import java.util.Objects;
 
@@ -15,9 +13,7 @@ public class Player extends Sprite {
     private float xPosition;
     private float yPosition;
     private String direction;
-
-    public static World world;
-    public static Body b2body;
+    private String previousDirection;
 
 
 
@@ -26,7 +22,6 @@ public class Player extends Sprite {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.name = name;
-        world = GameScreen.world;
     }
 
     /**
@@ -40,6 +35,10 @@ public class Player extends Sprite {
 
     public float getYPosition() {
         return yPosition;
+    }
+
+    public int getId() {
+        return id;
     }
 
     /**
@@ -65,6 +64,7 @@ public class Player extends Sprite {
         prevYPosition = yPosition;
         xPosition = xPos;
         yPosition = yPos;
+
     }
 
     /**
@@ -84,22 +84,67 @@ public class Player extends Sprite {
         this.direction = direction;
     }
 
+    public void setTexture(int xPos, int yPos) {
+        if (xPos > xPosition) {
+            direction = "right";
+        } else if (xPos < xPosition) {
+            direction = "left";
+        } else if (yPos > yPosition) {
+            direction = "up";
+        } else {
+            direction = "down";
+        }
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
     /**
      * Return the Texture to use for a player at the current moment.
      * @return Texture
      */
     public Texture getTexture() {
+        boolean upAndDownPressed = Gdx.input.isKeyPressed(Input.Keys.W) && Gdx.input.isKeyPressed(Input.Keys.S) ||
+                Gdx.input.isKeyPressed(Input.Keys.UP) && Gdx.input.isKeyPressed(Input.Keys.DOWN);
+        boolean leftAndRightPressed = Gdx.input.isKeyPressed(Input.Keys.A) && Gdx.input.isKeyPressed(Input.Keys.D) ||
+                Gdx.input.isKeyPressed(Input.Keys.LEFT) && Gdx.input.isKeyPressed(Input.Keys.RIGHT);
+        boolean upPressed = Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP);
+        boolean downPressed = Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN);
+        boolean leftPressed = Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT);
+        boolean rightPressed = Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT);
         if (Objects.equals(direction, "up")) {
-            return new Texture(Gdx.files.internal("rsz_player_idle.png"));
+//            if (upPressed) {
+//                Texture[] textures = new Texture[2];
+//                textures[0] = new Texture(Gdx.files.internal("rsz_1player_back.png"));
+//                textures[1] = new Texture(Gdx.files.internal("rsz_2player_back.png"));
+//                int frameIndex = (int) ((System.currentTimeMillis() / 400) % 2);
+//                return textures[frameIndex];
+//            }
+            return new Texture(Gdx.files.internal("rsz_player_back.png"));
+
         } else if (Objects.equals(direction, "down")) {
+//            if (downPressed) {
+//                Texture[] textures = new Texture[3];
+//                for (int i = 1; i <= 3; i++) {
+//                    textures[i-1] = new Texture(Gdx.files.internal("rsz_" + i + "player_idle.png"));
+//                }
+//                int frameIndex = (int) ((System.currentTimeMillis() / 100) % 3);
+//                return textures[frameIndex];
+//            }
             return new Texture(Gdx.files.internal("rsz_player_idle.png"));
         } else if (Objects.equals(direction, "left")) {
+//            if (leftPressed) {
+//                Texture[] textures = new Texture[3];
+//                for (int i = 1; i <= 3; i++) {
+//                    textures[i-1] = new Texture(Gdx.files.internal("rsz_" + i + "player_idle_left.png"));
+//                }
+//                int frameIndex = (int) ((System.currentTimeMillis() / 100) % 3);
+//                return textures[frameIndex];
+//            }
             return new Texture(Gdx.files.internal("rsz_5player_idle.png"));
         } else if (Objects.equals(direction, "right")) {
-//            if (prevXPosition == xPosition && prevYPosition == yPosition) {
-//                // Player is standing still
-//                return new Texture(Gdx.files.internal("rsz_player_idle.png"));
-//            } else {
+//            if (rightPressed) {
 //                Texture[] textures = new Texture[3];
 //                for (int i = 1; i <= 3; i++) {
 //                    textures[i-1] = new Texture(Gdx.files.internal("rsz_" + i + "player_idle.png"));
@@ -112,5 +157,6 @@ public class Player extends Sprite {
             return new Texture(Gdx.files.internal("rsz_player_idle.png"));
         }
     }
+
 
 }
