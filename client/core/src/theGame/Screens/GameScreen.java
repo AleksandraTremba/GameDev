@@ -19,11 +19,11 @@ import theGame.GameInfo.ClientWorld;
 import theGame.GameInfo.GameClient;
 import theGame.ClientConnection;
 import theGame.Player;
+import theGame.enemy.Raccoon;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Random;
 
 public class GameScreen extends ApplicationAdapter implements Screen, InputProcessor{
     SpriteBatch batch;
@@ -45,13 +45,31 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     private Viewport hudViewport;
     private SpriteBatch hudBatch;
     private String hudText = "Collect 15 sticks to save your friend!";
+    //private List<Raccoon> raccoons;
+    private List<Raccoon> raccoons = new ArrayList<>();
+    private Random random = new Random();
+
 
 
     public GameScreen(ClientWorld clientWorld) {
         this.clientWorld = clientWorld;
+        createRaccoons();
         create();
         render();
     }
+
+    public void createRaccoons() {
+        for (int i = 0; i < 1; i++) {
+            float x, y;
+            do {
+                x = random.nextInt(8000);
+                y = random.nextInt(8000);
+            } while ((x >= 3000 && x <= 5000) && (y >= 3000 && y <= 5000));
+            raccoons.add(new Raccoon(x, y, i));
+        }
+    }
+
+
 
     @Override
     public void create() {
@@ -84,8 +102,6 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         font = new BitmapFont();
         font.getData().setScale(5f);
         font.setColor(Color.YELLOW);
-        //font.setColor(1f, 0.5f, 0f, 1f); // red: 1, green: 0.5, blue: 0, alpha: 1
-        //font.setColor(0, 0.5f, 0, 1); // set color to dark green (R=0, G=0.5, B=0, A=1)
         hudCamera = new OrthographicCamera();
         hudViewport = new FitViewport(3000, 2012, hudCamera);
         hudBatch = new SpriteBatch();
@@ -140,6 +156,10 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         batch.begin();
         detectInput();
 
+        for (Raccoon raccoon : raccoons) {
+            batch.draw(raccoon.getTexture(), raccoon.getXPosition(), raccoon.getYPosition());
+        }
+
         //Draw all the players in the game onto the map
         drawPlayerGameCharacters();
 
@@ -184,6 +204,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
             //batch.draw(player.getTexture(), character.x - player.getTexture().getWidth() / 2f, character.y - player.getTexture().getHeight() / 2f);
         }
     }
+
 
     /**
      * Resize does not stretch out the game.

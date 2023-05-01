@@ -116,6 +116,7 @@ public class Player extends Sprite {
         boolean bPressed = Gdx.input.isKeyPressed(Input.Keys.B);
         boolean kPressed = Gdx.input.isKeyPressed(Input.Keys.K);
         boolean tPressed = Gdx.input.isKeyPressed(Input.Keys.T);
+        boolean fPressed = Gdx.input.isKeyPressed(Input.Keys.F);
 
         if (Objects.equals(direction, "up")) {
 //            if (upPressed) {
@@ -138,6 +139,14 @@ public class Player extends Sprite {
 //            }
             return new Texture(Gdx.files.internal("rsz_player_idle.png"));
         } else if (Objects.equals(direction, "left")) {
+            if (fPressed) {
+                Texture[] textures = new Texture[8];
+                for (int i = 1; i <= 8; i++) {
+                    textures[i-1] = new Texture(Gdx.files.internal("JavaExamAnswers/rsz_frog_" + i + ".png"));
+                }
+                int frameIndex = (int) ((System.currentTimeMillis() / 100) % 8);
+                return textures[frameIndex];
+            }
 //            if (leftPressed) {
 //                Texture[] textures = new Texture[3];
 //                for (int i = 1; i <= 3; i++) {
