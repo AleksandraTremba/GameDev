@@ -45,7 +45,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     private Viewport hudViewport;
     private SpriteBatch hudBatch;
     private String hudText = "Collect 15 sticks to save your friend!";
-    //private List<Raccoon> raccoons;
+
     private List<Raccoon> raccoons = new ArrayList<>();
     private Random random = new Random();
 
@@ -59,13 +59,13 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     }
 
     public void createRaccoons() {
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 2; i++) {
             float x, y;
             do {
-                x = random.nextInt(8000);
-                y = random.nextInt(8000);
+                x = 4000;
+                y = 2900;
             } while ((x >= 3000 && x <= 5000) && (y >= 3000 && y <= 5000));
-            raccoons.add(new Raccoon(x, y, i));
+            raccoons.add(new Raccoon(x + i * 200, y - i * 200, i));
         }
     }
 
@@ -158,6 +158,9 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
 
         for (Raccoon raccoon : raccoons) {
             batch.draw(raccoon.getTexture(), raccoon.getXPosition(), raccoon.getYPosition());
+        }
+        for (Raccoon raccoon : raccoons) {
+            raccoon.move();
         }
 
         //Draw all the players in the game onto the map

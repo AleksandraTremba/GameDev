@@ -123,4 +123,21 @@ public class RaccoonAI {
 //        }
 //
 //    }
+    //render method in GameScreen
+//    Raccoon raccoon = raccoons.get(0);
+//if (raccoon.getXPosition() < 4400) {
+//        raccoon.moveToNewPos(raccoon.getXPosition() + 1, raccoon.getYPosition());
+//    } else {
+//        // move raccoon to the left
+//        if (raccoon.getXPosition() > 3600) {
+//            raccoon.moveToNewPos(raccoon.getXPosition() - 1, raccoon.getYPosition());
+//        } else {
+//            // make raccoon idle for 5-12 seconds
+//            try {
+//                Thread.sleep(random.nextInt(7000) + 5000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 }
