@@ -25,6 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static java.lang.Math.pow;
+import static java.lang.Math.sqrt;
+
 public class GameScreen extends ApplicationAdapter implements Screen, InputProcessor{
     SpriteBatch batch;
     private OrthographicCamera camera;
@@ -50,7 +53,6 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     private Random random = new Random();
 
 
-
     public GameScreen(ClientWorld clientWorld) {
         this.clientWorld = clientWorld;
         createRaccoons();
@@ -58,18 +60,13 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         render();
     }
 
+    /**
+     * Creating raccoons to the map and adding them to the list.
+     */
     public void createRaccoons() {
-        for (int i = 0; i < 2; i++) {
-            float x, y;
-            do {
-                x = 4000;
-                y = 2900;
-            } while ((x >= 3000 && x <= 5000) && (y >= 3000 && y <= 5000));
-            raccoons.add(new Raccoon(x + i * 200, y - i * 200, i));
-        }
+        raccoons.add(new Raccoon(3600, 2900, 1));
+        raccoons.add(new Raccoon(3400, 2900, 2));
     }
-
-
 
     @Override
     public void create() {
@@ -81,7 +78,6 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         //you can zoom and visa virsa, we need it!!!
         gamePort = new FitViewport(3000, 2012, camera);
 
-        //camera.setToOrtho(false, 400, 200);
         batch = new SpriteBatch();
 
         //Draw all the player that are in the game, onto the map
@@ -90,7 +86,6 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         // create the map
         tiledMap = new TmxMapLoader().load("Big_map.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 5);
-        //collisionLayer = (TiledMapTileLayer) tiledMap.getLayers().get(1);
         Gdx.input.setInputProcessor(this);
 
         collisionLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
@@ -127,7 +122,6 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
 
             // calculate the threshold distance from the edge of the map where the camera should stop following the player
             float threshold = 1000; // adjust this value to change the threshold distance
-            float threshold2 = 1500;
 
             // adjust the camera position based on the player's position and the distance from the edge of the map
             if (leftDistance < threshold) {
@@ -155,12 +149,28 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
 
         batch.begin();
         detectInput();
-
-        for (Raccoon raccoon : raccoons) {
-            batch.draw(raccoon.getTexture(), raccoon.getXPosition(), raccoon.getYPosition());
+        //draw raccons to the map
+        if (clientWorld.getGameCharacter(myPlayerId) != null) {
+            float x = clientWorld.getGameCharacter(myPlayerId).getXPosition();
+            float y = clientWorld.getGameCharacter(myPlayerId).getYPosition();
+            for (Raccoon raccoon : raccoons) {
+                float raccoonX = raccoon.getXPosition();
+                float raccoonY = raccoon.getYPosition();
+                //calculate the distance between the raccoon and a player
+                float distanceToPlayer = (float) sqrt(pow(x - raccoonX, 2) + pow(y - raccoonY, 2));
+                //draw the raccoons only if the distance between it and a player is less or equal to 1600 pixels
+                if (distanceToPlayer <= 1600) {
+                    batch.draw(raccoon.getTexture(), raccoon.getXPosition(), raccoon.getYPosition());
+                }
+            }
         }
-        for (Raccoon raccoon : raccoons) {
-            raccoon.move();
+
+        //draw the raccoon's movement towards a player
+        if (clientWorld.getGameCharacter(myPlayerId) != null) {
+            Player player = clientWorld.getGameCharacter(myPlayerId);
+            for (Raccoon raccoon : raccoons) {
+                raccoon.moveTowardsPlayer(player.getXPosition(), player.getYPosition());
+            }
         }
 
         //Draw all the players in the game onto the map
@@ -204,7 +214,6 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
             character.width = 150;
             character.height = 150;
             batch.draw(player.getTexture(), character.x - player.getTexture().getWidth() / 2f, character.y);
-            //batch.draw(player.getTexture(), character.x - player.getTexture().getWidth() / 2f, character.y - player.getTexture().getHeight() / 2f);
         }
     }
 
@@ -238,7 +247,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         boolean rightPressed = Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT);
 
         // input from buttons:
-        int speed = 5;
+        int speed = 3;
         if (upPressed && rightPressed && !leftPressed && !collidesTop() && !collidesRight()) {  // up right
             clientConnection.sendPlayerInfo(speed, speed);
         }

@@ -6,6 +6,7 @@ import java.util.Map;
 public class World {
 
     private final Map<Integer, Player> clients = new HashMap<>();
+    private final Map<Integer, Raccoon> raccoons = new HashMap<>();
 
 
     /**
@@ -16,6 +17,9 @@ public class World {
      */
     public Player getGameCharacter(int id){
         return clients.get(id);
+    }
+    public Raccoon getRaccoon(int id) {
+        return raccoons.get(id);
     }
 
 
@@ -42,6 +46,13 @@ public class World {
         Player character = getGameCharacter(id);
         if (character != null) {
             character.move(xPosChange, yPosChange);
+        }
+    }
+
+    public void moveRaccoon(int id, float xPosChange, float yPosChange) {
+        Raccoon raccoon = getRaccoon(id);
+        if (raccoon != null) {
+            raccoon.move(xPosChange, yPosChange);
         }
     }
 

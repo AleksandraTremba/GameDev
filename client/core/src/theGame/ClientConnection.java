@@ -16,6 +16,7 @@ import java.io.IOException;
  */
 public class ClientConnection {
     String ip = "localhost";
+    //String ip = "193.40.156.27";
     Integer tcpPort = 8085;
     Integer udpPort = 8085;
     private final Client client;
@@ -89,6 +90,11 @@ public class ClientConnection {
     public void sendPlayerInfo(float xChange, float yChange) {
         PacketUpdateCharacterInfo packet = PacketCreator.createPacketUpdateCharacterInfo(client.getID(), xChange, yChange);
         client.sendUDP(packet);
+    }
+
+    public void sendRaccoonInfo(float xChange, float yChange) {
+        PacketUpdateRaccoonInfo packet1 = PacketCreator.createPacketUpdateRaccoonInfo(client.getID(), xChange, yChange);
+        client.sendUDP(packet1);
     }
 
     public void setGameScreen(GameScreen gameScreen) {

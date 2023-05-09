@@ -2,6 +2,7 @@ package theGame.GameInfo;
 
 import theGame.ClientConnection;
 import theGame.Player;
+import theGame.enemy.Raccoon;
 
 import java.util.HashMap;
 
@@ -12,6 +13,7 @@ public class ClientWorld {
 
     private Player player;
     private final HashMap<Integer, Player> worldGameCharactersMap = new HashMap<>();
+    private HashMap<Integer, Raccoon> raccoons = new HashMap<>();
 
     /**
      * Adds the instance of ClientConnection to this class.

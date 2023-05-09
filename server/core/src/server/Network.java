@@ -19,6 +19,7 @@ public class Network {
         kryo.register(PacketConnect.class);
         kryo.register(PacketCreator.class);
         kryo.register(PacketUpdateCharacterInfo.class);
+        kryo.register(PacketUpdateRaccoonInfo.class);
         kryo.register(PacketAddPlayer.class);
         kryo.register(PacketClientDisconnect.class);
     }

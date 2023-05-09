@@ -1,5 +1,6 @@
 package theGame.enemy;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -140,4 +141,44 @@ public class RaccoonAI {
 //            }
 //        }
 //    }
+//    public void createRaccoons() {
+////        for (int i = 0; i < 2; i++) {
+////            float x, y;
+////            do {
+////                x = 4000;
+////                y = 2900;
+////            } while ((x >= 3000 && x <= 5000) && (y >= 3000 && y <= 5000));
+////            raccoons.add(new Raccoon(x + i * 200, y - i * 200, i));
+////        }
+//        raccoons.add(new Raccoon(3900, 2600, 1));
+//    }
+
+//    public void move() {
+//        if (direction.equals("idle")) {
+//            idleTime += Gdx.graphics.getDeltaTime();
+//            if (idleTime >= 5f + Math.random() * 7f) {
+//                direction = "right";
+//                idleTime = 0;
+//            }
+//        }
+//        else if (direction.equals("right")) {
+//            xPosition += speed;
+//            if (xPosition >= 4000) {
+//                direction = "left";
+//            }
+//        }
+//        else if (direction.equals("left")) {
+//            xPosition -= speed;
+//            if (xPosition <= 3600) {
+//                direction = "idle";
+//            }
+//        }
+//    }
+
+//    for (Raccoon raccoon : raccoons) {
+////            raccoon.move();
+////        }
+    //        ClientConnection clientConnection = new ClientConnection();
+//        clientConnection.sendRaccoonInfo(xPosition, yPosition);
+
 }
