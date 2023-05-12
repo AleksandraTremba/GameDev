@@ -13,7 +13,7 @@ public class ClientWorld {
 
     private Player player;
     private final HashMap<Integer, Player> worldGameCharactersMap = new HashMap<>();
-    private HashMap<Integer, Raccoon> raccoons = new HashMap<>();
+//    private HashMap<Integer, Raccoon> raccoons = new HashMap<>();
 
     /**
      * Adds the instance of ClientConnection to this class.

@@ -64,8 +64,8 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
      * Creating raccoons to the map and adding them to the list.
      */
     public void createRaccoons() {
-        raccoons.add(new Raccoon(3600, 2900, 1));
-        raccoons.add(new Raccoon(3400, 2900, 2));
+        raccoons.add(new Raccoon(3300, 2900, 1));
+        raccoons.add(new Raccoon(3200, 2900, 2));
     }
 
     @Override
@@ -154,6 +154,8 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
             float x = clientWorld.getGameCharacter(myPlayerId).getXPosition();
             float y = clientWorld.getGameCharacter(myPlayerId).getYPosition();
             for (Raccoon raccoon : raccoons) {
+                //draw the raccoon's movement towards a player
+                raccoon.moveTowardsPlayer(x, y);
                 float raccoonX = raccoon.getXPosition();
                 float raccoonY = raccoon.getYPosition();
                 //calculate the distance between the raccoon and a player
@@ -162,14 +164,6 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
                 if (distanceToPlayer <= 1600) {
                     batch.draw(raccoon.getTexture(), raccoon.getXPosition(), raccoon.getYPosition());
                 }
-            }
-        }
-
-        //draw the raccoon's movement towards a player
-        if (clientWorld.getGameCharacter(myPlayerId) != null) {
-            Player player = clientWorld.getGameCharacter(myPlayerId);
-            for (Raccoon raccoon : raccoons) {
-                raccoon.moveTowardsPlayer(player.getXPosition(), player.getYPosition());
             }
         }
 

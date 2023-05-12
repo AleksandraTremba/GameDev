@@ -17,7 +17,7 @@ public class MyServer {
      * Each player object has coordinates (x and y)
      */
     private final HashMap<Integer, server.Player> players = new HashMap<>();  //java.net.InetSocketAddress
-    private final HashMap<Integer, server.Raccoon> RACCOONS = new HashMap<>();
+//    private final HashMap<Integer, server.Raccoon> raccoons = new HashMap<>();
     private final Server server;
     private int playerCount = 1;
     private World serverWorld;
@@ -101,17 +101,17 @@ public class MyServer {
                 Id, character.getXPosition(), character.getYPosition());
         server.sendToAllUDP(packet);
     }
-    public void sendUpdatedRaccoon(int Id, float xPos, float yPos) {
-        System.out.println("SENDING SMTH BACK TO CLIENT");
-
-        serverWorld.movePlayerGameCharacter(Id, xPos, yPos);  // Update given PlayerGameCharacter.
-        Raccoon character = serverWorld.getRaccoon(Id);
-
-        // Send updated PlayerGameCharacter's info to all connections.
-        PacketUpdateRaccoonInfo packet1 = PacketCreator.createPacketUpdateRaccoonInfo(
-                Id, character.getXPosition(), character.getYPosition());
-        server.sendToAllUDP(packet1);
-    }
+//    public void sendUpdatedRaccoon(int Id, float xPos, float yPos) {
+//        System.out.println("SENDING SMTH BACK TO CLIENT");
+//
+//        serverWorld.movePlayerGameCharacter(Id, xPos, yPos);  // Update given PlayerGameCharacter.
+//        Raccoon character = serverWorld.getRaccoon(Id);
+//
+//        // Send updated PlayerGameCharacter's info to all connections.
+//        PacketUpdateRaccoonInfo packet1 = PacketCreator.createPacketUpdateRaccoonInfo(
+//                Id, character.getXPosition(), character.getYPosition());
+//        server.sendToAllUDP(packet1);
+//    }
 
     /**
      * Method for sending new PlayerGameCharacter instance info to all connections and sending existing characters

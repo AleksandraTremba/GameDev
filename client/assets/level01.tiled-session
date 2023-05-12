@@ -1,4 +1,7 @@
 {
+    "activeFile": "Big_map.tmx",
+    "expandedProjectPaths": [
+    ],
     "fileStates": {
         "": {
             "scaleInDock": 1
@@ -8,7 +11,7 @@
             "selectedLayer": 1,
             "viewCenter": {
                 "x": 429,
-                "y": 457.5
+                "y": 271.5
             }
         },
         "BlueFrog.tsx": {
@@ -130,6 +133,9 @@
                 "y": 3750
             }
         },
+        "art-davids-digits.tsx": {
+            "scaleInDock": 1
+        },
         "bugs16.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
@@ -185,9 +191,16 @@
                 "y": 104.41767068273091
             }
         },
+        "overworld_tileset_grass.tsx": {
+            "scaleInDock": 1.5,
+            "scaleInEditor": 1
+        },
         "sunny-green-hills.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "the_tree.tsx": {
+            "scaleInDock": 1
         },
         "trees-and-bushes.tsx": {
             "scaleInDock": 1,
@@ -207,7 +220,13 @@
         }
     },
     "last.imagePath": "C:/Users/jarik/IdeaProjects/iti0301-2023-aroundtheworld/client/assets",
+    "openFiles": [
+        "Big_map.tmx"
+    ],
+    "project": "",
     "recentFiles": [
+        "overworld_tileset_grass.tsx",
+        "Big_map.tmx",
         "trees_and_bushes.tsx",
         "trees-and-bushesXS.tsx",
         "WELL.tmx",
@@ -216,10 +235,8 @@
         "C:/Users/jarik/IdeaProjects/iti0301-2023/Client/assets/map/Hedge_tileset.tsx",
         "C:/Users/jarik/IdeaProjects/iti0301-2023/Client/assets/Map/redex.tsx",
         "trees-and-bushes.tsx",
-        "Big_map.tmx",
         "lobby.tmx",
-        "level1.tmx",
-        "C:/Users/jarik/IdeaProjects/iti0301-2023/Client/assets/map/Ground.tsx"
+        "level1.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

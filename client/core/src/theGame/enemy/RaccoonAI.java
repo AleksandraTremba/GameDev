@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import static java.lang.Math.*;
+import static java.lang.Math.sin;
+
 public class RaccoonAI {
     private Vector2 position;
     private Vector2 velocity;
@@ -181,4 +184,79 @@ public class RaccoonAI {
     //        ClientConnection clientConnection = new ClientConnection();
 //        clientConnection.sendRaccoonInfo(xPosition, yPosition);
 
+//    Texture[] textures = new Texture[6];
+//            for (int i = 1; i <= 6; i++) {
+//        textures[i-1] = new Texture(Gdx.files.internal("raccoon/rsz_raccoon_" + i + ".png"));
+//    }
+//    int frameIndex = (int) ((System.currentTimeMillis() / 100) % 6);
+//            return textures[frameIndex];
+    //draw the raccoon's movement towards a player
+//        if (clientWorld.getGameCharacter(myPlayerId) != null) {
+//            Player player = clientWorld.getGameCharacter(myPlayerId);
+//            for (Raccoon raccoon : raccoons) {
+//                raccoon.moveTowardsPlayer(player.getXPosition(), player.getYPosition());
+//            }
+//        }
+// calculating distance between a player and the raccoon
+//    float distanceToPlayer = (float) sqrt(pow(playerX - xPosition, 2) + pow(playerY - yPosition, 2));
+//    if (distanceToPlayer >= 600) {
+//        // if the distance is greater than or equal to 600 pixels, the raccoon doesn't chase the player
+//        return;
+//    }
+//
+//    // if the distance is less than 600 pixels, the raccoon starts chasing a player
+//    float angleToPlayer = (float) atan2(playerY - yPosition, playerX - xPosition);
+//    xPosition += speed * cos(angleToPlayer);
+//    yPosition += speed * sin(angleToPlayer);
+//
+//    direction = playerX > xPosition ? "right" : "left";
+
+    // calculating distance between a player and the raccoon
+//    float distanceToPlayer = (float) sqrt(pow(playerX - xPosition, 2) + pow(playerY - yPosition, 2));
+//        if (distanceToPlayer <= 600) {
+//        // if the distance is less than 600 pixels, the raccoon starts chasing a player
+//        float angleToPlayer = (float) atan2(playerY - yPosition, playerX - xPosition);
+//        xPosition += speed * cos(angleToPlayer);
+//        yPosition += speed * sin(angleToPlayer);
+//
+//        direction = playerX > xPosition ? "right" : "left";
+//    } else if (distanceToPlayer > 600) {
+//        // if player is too far away, the raccoon moves back to spawn location
+//        float angleToSpawn = (float) atan2(spawnYPosition - yPosition, spawnXPosition - xPosition);
+//        xPosition += speed * cos(angleToSpawn);
+//        yPosition += speed * sin(angleToSpawn);
+//        direction = spawnXPosition > xPosition ? "right" : "left";
+//    }
+
+    //if (upPressed) {
+//                Texture[] textures = new Texture[2];
+//                textures[0] = new Texture(Gdx.files.internal("rsz_1player_back.png"));
+//                textures[1] = new Texture(Gdx.files.internal("rsz_2player_back.png"));
+//                int frameIndex = (int) ((System.currentTimeMillis() / 400) % 2);
+//                return textures[frameIndex];
+//            }
+//            if (downPressed) {
+//                Texture[] textures = new Texture[3];
+//                for (int i = 1; i <= 3; i++) {
+//                    textures[i-1] = new Texture(Gdx.files.internal("rsz_" + i + "player_idle.png"));
+//                }
+//                int frameIndex = (int) ((System.currentTimeMillis() / 100) % 3);
+//                return textures[frameIndex];
+//            }
+//            if (leftPressed) {
+//                Texture[] textures = new Texture[3];
+//                for (int i = 1; i <= 3; i++) {
+//                    textures[i-1] = new Texture(Gdx.files.internal("rsz_" + i + "player_idle_left.png"));
+//                }
+//                int frameIndex = (int) ((System.currentTimeMillis() / 100) % 3);
+//                return textures[frameIndex];
+//            }
+//            if (rightPressed) {
+//                Texture[] textures = new Texture[3];
+//                for (int i = 1; i <= 3; i++) {
+//                    textures[i-1] = new Texture(Gdx.files.internal("rsz_" + i + "player_idle.png"));
+//                }
+//                int frameIndex = (int) ((System.currentTimeMillis() / 100) % 3);
+//                return textures[frameIndex];
+//            }
 }

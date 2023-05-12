@@ -92,10 +92,10 @@ public class ClientConnection {
         client.sendUDP(packet);
     }
 
-    public void sendRaccoonInfo(float xChange, float yChange) {
-        PacketUpdateRaccoonInfo packet1 = PacketCreator.createPacketUpdateRaccoonInfo(client.getID(), xChange, yChange);
-        client.sendUDP(packet1);
-    }
+//    public void sendRaccoonInfo(float xChange, float yChange) {
+//        PacketUpdateRaccoonInfo packet1 = PacketCreator.createPacketUpdateRaccoonInfo(client.getID(), xChange, yChange);
+//        client.sendUDP(packet1);
+//    }
 
     public void setGameScreen(GameScreen gameScreen) {
     }
