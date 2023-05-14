@@ -42,12 +42,19 @@ public class StartScreen extends ApplicationAdapter implements Screen {
         // Load textures
         backgroundTexture = new Texture("background.jpg");
 
-        playButtonActive = new Texture("playButtonInactive.png");
-        playButtonInactive = new Texture("playButtonActive.png");
+        playButtonActive = new Texture("playButtonActive.png");
+        playButtonInactive = new Texture("playButtonInactive.png");
 
-        playButton = new ImageButton(new TextureRegionDrawable(playButtonInactive),
-                new TextureRegionDrawable(playButtonActive));
-        playButton.setWidth(Gdx.graphics.getWidth() / 3f);
+        // Create the play button with its textures scaled up by a factor of 2
+        Drawable playButtonActiveDrawable = new TextureRegionDrawable(new TextureRegion(playButtonInactive));
+        Drawable playButtonInactiveDrawable = new TextureRegionDrawable(new TextureRegion(playButtonActive));
+        playButtonActiveDrawable.setMinHeight(playButtonActiveDrawable.getMinHeight() * 2);
+        playButtonActiveDrawable.setMinWidth(playButtonActiveDrawable.getMinWidth() * 2);
+        playButtonInactiveDrawable.setMinHeight(playButtonInactiveDrawable.getMinHeight() * 2);
+        playButtonInactiveDrawable.setMinWidth(playButtonInactiveDrawable.getMinWidth() * 2);
+
+        playButton = new ImageButton(playButtonInactiveDrawable, playButtonActiveDrawable);
+        playButton.setWidth(Gdx.graphics.getWidth() / 3f * 2);
         playButton.setPosition(Gdx.graphics.getWidth() / 2f - playButton.getWidth() / 2,
                 Gdx.graphics.getHeight() / 3f - playButton.getHeight() / 2);
         playButton.addListener(new ClickListener() {
@@ -72,10 +79,16 @@ public class StartScreen extends ApplicationAdapter implements Screen {
 
         exitButtonActive = new Texture("exitButtonInactive.png");
         exitButtonInactive = new Texture("exitButtonActive.png");
+        // Create the exit button with its textures scaled up by a factor of 2
+        Drawable exitButtonActiveDrawable = new TextureRegionDrawable(new TextureRegion(exitButtonInactive));
+        Drawable exitButtonInactiveDrawable = new TextureRegionDrawable(new TextureRegion(exitButtonActive));
+        exitButtonActiveDrawable.setMinHeight(exitButtonActiveDrawable.getMinHeight() * 2);
+        exitButtonActiveDrawable.setMinWidth(exitButtonActiveDrawable.getMinWidth() * 2);
+        exitButtonInactiveDrawable.setMinHeight(exitButtonInactiveDrawable.getMinHeight() * 2);
+        exitButtonInactiveDrawable.setMinWidth(exitButtonInactiveDrawable.getMinWidth() * 2);
 
-        exitButton = new ImageButton(new TextureRegionDrawable(exitButtonInactive),
-                new TextureRegionDrawable(exitButtonActive));
-        exitButton.setWidth(Gdx.graphics.getWidth() / 3f);
+        exitButton = new ImageButton(exitButtonActiveDrawable, exitButtonInactiveDrawable);
+        exitButton.setWidth(Gdx.graphics.getWidth() / 3f * 2);
         exitButton.setPosition(Gdx.graphics.getWidth() / 2f - exitButton.getWidth() / 2,
                 Gdx.graphics.getHeight() / 6f - exitButton.getHeight() / 2);
         exitButton.addListener(new ClickListener() {

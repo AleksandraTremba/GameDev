@@ -12,18 +12,28 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.Texture;
 import theGame.GameInfo.ClientWorld;
 import theGame.GameInfo.GameClient;
 import theGame.ClientConnection;
 import theGame.Player;
+import theGame.enemy.Raccoon;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Random;
+
+import static java.lang.Math.pow;
+import static java.lang.Math.sqrt;
+
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 
 public class GameScreen extends ApplicationAdapter implements Screen, InputProcessor{
     SpriteBatch batch;
@@ -46,11 +56,25 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     private SpriteBatch hudBatch;
     private String hudText = "Collect 15 sticks to save your friend!";
 
+    private List<Raccoon> raccoons = new ArrayList<>();
+    private Stage stage;
+    private Texture exitButtont;
+    private ImageButton exitButton;
+
 
     public GameScreen(ClientWorld clientWorld) {
         this.clientWorld = clientWorld;
+        createRaccoons();
         create();
         render();
+    }
+
+    /**
+     * Creating raccoons to the map and adding them to the list.
+     */
+    public void createRaccoons() {
+        raccoons.add(new Raccoon(3300, 2900, 1));
+        raccoons.add(new Raccoon(3200, 2900, 2));
     }
 
     @Override
@@ -63,7 +87,6 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         //you can zoom and visa virsa, we need it!!!
         gamePort = new FitViewport(3000, 2012, camera);
 
-        //camera.setToOrtho(false, 400, 200);
         batch = new SpriteBatch();
 
         //Draw all the player that are in the game, onto the map
@@ -72,7 +95,6 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         // create the map
         tiledMap = new TmxMapLoader().load("Big_map.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 5);
-        //collisionLayer = (TiledMapTileLayer) tiledMap.getLayers().get(1);
         Gdx.input.setInputProcessor(this);
 
         collisionLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
@@ -83,13 +105,29 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
 
         font = new BitmapFont();
         font.getData().setScale(5f);
-        font.setColor(Color.YELLOW);
-        //font.setColor(1f, 0.5f, 0f, 1f); // red: 1, green: 0.5, blue: 0, alpha: 1
-        //font.setColor(0, 0.5f, 0, 1); // set color to dark green (R=0, G=0.5, B=0, A=1)
         hudCamera = new OrthographicCamera();
+        font.setColor(Color.YELLOW);
         hudViewport = new FitViewport(3000, 2012, hudCamera);
         hudBatch = new SpriteBatch();
         hudBatch.setProjectionMatrix(hudCamera.combined);
+
+        // create exit button
+        stage = new Stage(new ScreenViewport());
+
+        exitButtont = new Texture("rsz_exit_button.png");
+        exitButton = new ImageButton(new TextureRegionDrawable(exitButtont));
+        exitButton.setWidth(Gdx.graphics.getWidth() / 3f);
+        exitButton.setPosition(Gdx.graphics.getWidth()  - 170, Gdx.graphics.getHeight() - 120);
+
+        exitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.exit();
+            }
+        });
+        stage.addActor(exitButton);
+
+
     }
 
     @Override
@@ -111,7 +149,6 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
 
             // calculate the threshold distance from the edge of the map where the camera should stop following the player
             float threshold = 1000; // adjust this value to change the threshold distance
-            float threshold2 = 1500;
 
             // adjust the camera position based on the player's position and the distance from the edge of the map
             if (leftDistance < threshold) {
@@ -139,6 +176,23 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
 
         batch.begin();
         detectInput();
+        //draw raccons to the map
+        if (clientWorld.getGameCharacter(myPlayerId) != null) {
+            float x = clientWorld.getGameCharacter(myPlayerId).getXPosition();
+            float y = clientWorld.getGameCharacter(myPlayerId).getYPosition();
+            for (Raccoon raccoon : raccoons) {
+                //draw the raccoon's movement towards a player
+                raccoon.moveTowardsPlayer(x, y);
+                float raccoonX = raccoon.getXPosition();
+                float raccoonY = raccoon.getYPosition();
+                //calculate the distance between the raccoon and a player
+                float distanceToPlayer = (float) sqrt(pow(x - raccoonX, 2) + pow(y - raccoonY, 2));
+                //draw the raccoons only if the distance between it and a player is less or equal to 1600 pixels
+                if (distanceToPlayer <= 1700) {
+                    batch.draw(raccoon.getTexture(), raccoon.getXPosition(), raccoon.getYPosition());
+                }
+            }
+        }
 
         //Draw all the players in the game onto the map
         drawPlayerGameCharacters();
@@ -155,6 +209,9 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         hudBatch.begin();
         font.draw(hudBatch, hudText, hudCamera.position.x - 1400, hudCamera.position.y + 900);
         hudBatch.end();
+
+        // draw exit button
+        stage.draw();
 
     }
 
@@ -181,9 +238,9 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
             character.width = 150;
             character.height = 150;
             batch.draw(player.getTexture(), character.x - player.getTexture().getWidth() / 2f, character.y);
-            //batch.draw(player.getTexture(), character.x - player.getTexture().getWidth() / 2f, character.y - player.getTexture().getHeight() / 2f);
         }
     }
+
 
     /**
      * Resize does not stretch out the game.
@@ -192,11 +249,16 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
      */
     @Override
     public void resize(int width, int height) {
+        // Update the stage viewport
+        stage.getViewport().update(width, height, true);
+        exitButton.setWidth(stage.getWidth() / 3f);
+        exitButton.setPosition(stage.getWidth() - exitButton.getWidth() + 200,
+                stage.getHeight() - exitButton.getHeight() - 30);
         gamePort.update(width, height);
         batch.setProjectionMatrix(camera.combined);
         hudViewport.update(width, height, true);
-    }
 
+    }
 
 
     /**
@@ -215,7 +277,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         boolean rightPressed = Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT);
 
         // input from buttons:
-        int speed = 5;
+        int speed = 3;
         if (upPressed && rightPressed && !leftPressed && !collidesTop() && !collidesRight()) {  // up right
             clientConnection.sendPlayerInfo(speed, speed);
         }
@@ -244,8 +306,8 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
 
     // Collision checks
     // Check if the block exists in front of them and is signed as "collision"
-    public boolean isCellBlocked (TiledMapTileLayer collisionLayer, float x, float y) {
-        TiledMapTileLayer.Cell cell = this.collisionLayer.getCell((int) (x / this.collisionLayer.getTileWidth() / 5), (int) (y / this.collisionLayer.getTileHeight() / 5));
+    public boolean isCellBlocked (float x, float y) {
+        TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (x / collisionLayer.getTileWidth() / 5), (int) (y / collisionLayer.getTileHeight() / 5));
         return cell != null && cell.getTile() != null && cell.getTile().getProperties().containsKey("blocked");
     }
 
@@ -253,7 +315,8 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     public boolean collidesRight() {
         boolean collides = false;
         for (float step = 0; step < character.getHeight(); step += collisionLayer.getTileHeight() / 2.0) {
-            collides = isCellBlocked(collisionLayer, character.getX() + character.getWidth(), character.getY() + step);
+            collides = isCellBlocked(clientWorld.getGameCharacter(myPlayerId).getXPosition() + character.getWidth(),
+                    clientWorld.getGameCharacter(myPlayerId).getYPosition() + step);
             if (collides) {
                 System.out.println("I am always - right");
                 break;
@@ -262,10 +325,12 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         return collides;
 
     }
+
     public boolean collidesLeft() {
         boolean collides = false;
         for (float step = 1; step < character.getHeight(); step += collisionLayer.getTileHeight() / 2.0) {
-            collides = isCellBlocked(collisionLayer, character.getX() - character.getWidth() / 10, character.getY() + step);
+            collides = isCellBlocked(clientWorld.getGameCharacter(myPlayerId).getXPosition() - character.getWidth() / 10,
+                    clientWorld.getGameCharacter(myPlayerId).getYPosition() + step);
             if (collides) {
                 System.out.println("On your - left");
                 break;
@@ -276,7 +341,8 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     public boolean collidesTop() {
         boolean collides = false;
         for (float step = 0; step < character.getWidth(); step += collisionLayer.getTileWidth() / 2.0) {
-            collides = isCellBlocked(collisionLayer, character.getX() + step, character.getY() + character.getHeight());
+            collides = isCellBlocked(clientWorld.getGameCharacter(myPlayerId).getXPosition() + step,
+                    clientWorld.getGameCharacter(myPlayerId).getYPosition() + character.getHeight());
             if (collides) {
                 System.out.println("Never gonna give you - up");
                 break;
@@ -288,7 +354,8 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     public boolean collidesBottom() {
         boolean collides = false;
         for (float step = 0; step < character.getWidth(); step += collisionLayer.getTileWidth() / 2.0) {
-            collides = isCellBlocked(collisionLayer, character.getX() + step, character.getY() - character.getHeight() / 10);
+            collides = isCellBlocked(clientWorld.getGameCharacter(myPlayerId).getXPosition() + step,
+                    clientWorld.getGameCharacter(myPlayerId).getYPosition() - character.getHeight() / 10);
             if (collides) {
                 System.out.println("Never gonna let you - down");
                 break;
@@ -349,6 +416,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(stage);
 
     }
 

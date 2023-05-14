@@ -14,6 +14,9 @@ public class Player extends Sprite {
     private float yPosition;
     private String direction;
     private String previousDirection;
+    private boolean bPressed;
+    private long lastBPressedTime;
+    private boolean bAudioPlayed;
 
 
 
@@ -113,50 +116,48 @@ public class Player extends Sprite {
         boolean downPressed = Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN);
         boolean leftPressed = Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT);
         boolean rightPressed = Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT);
-        if (Objects.equals(direction, "up")) {
-//            if (upPressed) {
-//                Texture[] textures = new Texture[2];
-//                textures[0] = new Texture(Gdx.files.internal("rsz_1player_back.png"));
-//                textures[1] = new Texture(Gdx.files.internal("rsz_2player_back.png"));
-//                int frameIndex = (int) ((System.currentTimeMillis() / 400) % 2);
-//                return textures[frameIndex];
-//            }
-            return new Texture(Gdx.files.internal("rsz_player_back.png"));
+        boolean bPressed = Gdx.input.isKeyPressed(Input.Keys.B);
+        boolean kPressed = Gdx.input.isKeyPressed(Input.Keys.K);
+        boolean tPressed = Gdx.input.isKeyPressed(Input.Keys.T);
+        boolean fPressed = Gdx.input.isKeyPressed(Input.Keys.F);
 
+
+        if (Objects.equals(direction, "up")) {
+            return new Texture(Gdx.files.internal("frog/rsz_player_back.png"));
         } else if (Objects.equals(direction, "down")) {
-//            if (downPressed) {
-//                Texture[] textures = new Texture[3];
-//                for (int i = 1; i <= 3; i++) {
-//                    textures[i-1] = new Texture(Gdx.files.internal("rsz_" + i + "player_idle.png"));
-//                }
-//                int frameIndex = (int) ((System.currentTimeMillis() / 100) % 3);
-//                return textures[frameIndex];
-//            }
-            return new Texture(Gdx.files.internal("rsz_player_idle.png"));
+            return new Texture(Gdx.files.internal("frog/rsz_player_idle.png"));
         } else if (Objects.equals(direction, "left")) {
-//            if (leftPressed) {
-//                Texture[] textures = new Texture[3];
-//                for (int i = 1; i <= 3; i++) {
-//                    textures[i-1] = new Texture(Gdx.files.internal("rsz_" + i + "player_idle_left.png"));
-//                }
-//                int frameIndex = (int) ((System.currentTimeMillis() / 100) % 3);
-//                return textures[frameIndex];
-//            }
-            return new Texture(Gdx.files.internal("rsz_5player_idle.png"));
+            if (fPressed) {
+                Texture[] textures = new Texture[8];
+                for (int i = 1; i <= 8; i++) {
+                    textures[i-1] = new Texture(Gdx.files.internal("JavaExamAnswers/rsz_frog_" + i + ".png"));
+                }
+                int frameIndex = (int) ((System.currentTimeMillis() / 100) % 8);
+                return textures[frameIndex];
+            }
+            return new Texture(Gdx.files.internal("frog/rsz_5player_idle.png"));
         } else if (Objects.equals(direction, "right")) {
-//            if (rightPressed) {
-//                Texture[] textures = new Texture[3];
-//                for (int i = 1; i <= 3; i++) {
-//                    textures[i-1] = new Texture(Gdx.files.internal("rsz_" + i + "player_idle.png"));
-//                }
-//                int frameIndex = (int) ((System.currentTimeMillis() / 100) % 3);
-//                return textures[frameIndex];
-//            }
-            return new Texture(Gdx.files.internal("rsz_player_idle.png"));
+            if (bPressed){
+                if (!bAudioPlayed) {
+                    Gdx.audio.newSound(Gdx.files.internal("frog/DontYouDare.mp3")).play(1.0f);
+                    bAudioPlayed = true;
+                }
+                if (System.currentTimeMillis() - lastBPressedTime > 3000) {
+                    lastBPressedTime = System.currentTimeMillis();
+                    bAudioPlayed = false;
+                } else {
+                    return new Texture(Gdx.files.internal("frog/brettik.png"));
+                }
+            }
+            if (kPressed){
+                return new Texture(Gdx.files.internal("frog/keit.png"));
+            }
+            if (tPressed){
+                return new Texture(Gdx.files.internal("frog/bj.png"));
+            }
+            return new Texture(Gdx.files.internal("frog/rsz_player_idle.png"));
         } else {
-            return new Texture(Gdx.files.internal("rsz_player_idle.png"));
+            return new Texture(Gdx.files.internal("frog/rsz_player_idle.png"));
         }
     }
-
-
 }

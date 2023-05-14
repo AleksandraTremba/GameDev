@@ -16,6 +16,14 @@ public class PacketCreator {
         return updateInfo;
     }
 
+//    public static PacketUpdateRaccoonInfo createPacketUpdateRaccoonInfo(int id, float xPos, float yPos) {
+//        PacketUpdateRaccoonInfo updateInfo = new PacketUpdateRaccoonInfo();
+//        updateInfo.setId(id);
+//        updateInfo.setX(xPos);
+//        updateInfo.setY(yPos);
+//        return updateInfo;
+//    }
+
     /**
      * Create a PacketConnect.
      *
