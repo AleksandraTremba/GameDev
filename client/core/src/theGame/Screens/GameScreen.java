@@ -12,7 +12,11 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.Texture;
 import theGame.GameInfo.ClientWorld;
@@ -27,6 +31,9 @@ import java.util.Random;
 
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
+
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 
 public class GameScreen extends ApplicationAdapter implements Screen, InputProcessor{
     SpriteBatch batch;
@@ -50,7 +57,9 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     private String hudText = "Collect 15 sticks to save your friend!";
 
     private List<Raccoon> raccoons = new ArrayList<>();
-    private Random random = new Random();
+    private Stage stage;
+    private Texture exitButtont;
+    private ImageButton exitButton;
 
 
     public GameScreen(ClientWorld clientWorld) {
@@ -96,11 +105,29 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
 
         font = new BitmapFont();
         font.getData().setScale(5f);
-        font.setColor(Color.YELLOW);
         hudCamera = new OrthographicCamera();
+        font.setColor(Color.YELLOW);
         hudViewport = new FitViewport(3000, 2012, hudCamera);
         hudBatch = new SpriteBatch();
         hudBatch.setProjectionMatrix(hudCamera.combined);
+
+        // create exit button
+        stage = new Stage(new ScreenViewport());
+
+        exitButtont = new Texture("rsz_exit_button.png");
+        exitButton = new ImageButton(new TextureRegionDrawable(exitButtont));
+        exitButton.setWidth(Gdx.graphics.getWidth() / 3f);
+        exitButton.setPosition(Gdx.graphics.getWidth()  - 170, Gdx.graphics.getHeight() - 120);
+
+        exitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.exit();
+            }
+        });
+        stage.addActor(exitButton);
+
+
     }
 
     @Override
@@ -161,7 +188,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
                 //calculate the distance between the raccoon and a player
                 float distanceToPlayer = (float) sqrt(pow(x - raccoonX, 2) + pow(y - raccoonY, 2));
                 //draw the raccoons only if the distance between it and a player is less or equal to 1600 pixels
-                if (distanceToPlayer <= 1600) {
+                if (distanceToPlayer <= 1700) {
                     batch.draw(raccoon.getTexture(), raccoon.getXPosition(), raccoon.getYPosition());
                 }
             }
@@ -182,6 +209,9 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         hudBatch.begin();
         font.draw(hudBatch, hudText, hudCamera.position.x - 1400, hudCamera.position.y + 900);
         hudBatch.end();
+
+        // draw exit button
+        stage.draw();
 
     }
 
@@ -219,9 +249,15 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
      */
     @Override
     public void resize(int width, int height) {
+        // Update the stage viewport
+        stage.getViewport().update(width, height, true);
+        exitButton.setWidth(stage.getWidth() / 3f);
+        exitButton.setPosition(stage.getWidth() - exitButton.getWidth() + 200,
+                stage.getHeight() - exitButton.getHeight() - 30);
         gamePort.update(width, height);
         batch.setProjectionMatrix(camera.combined);
         hudViewport.update(width, height, true);
+
     }
 
 
@@ -380,6 +416,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(stage);
 
     }
 
