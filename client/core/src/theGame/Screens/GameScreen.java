@@ -19,6 +19,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.Texture;
+import packets.PacketCoins;
+import theGame.Coin;
 import theGame.GameInfo.ClientWorld;
 import theGame.GameInfo.GameClient;
 import theGame.ClientConnection;
@@ -54,12 +56,18 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     private OrthographicCamera hudCamera;
     private Viewport hudViewport;
     private SpriteBatch hudBatch;
-    private String hudText = "Collect 15 sticks to save your friend!";
 
     private List<Raccoon> raccoons = new ArrayList<>();
     private Stage stage;
     private Texture exitButtont;
     private ImageButton exitButton;
+    private List<Coin> broughtSticks = new ArrayList<>();
+    private String hudText;
+    private Rectangle coin;
+    private List<Coin> coins = new ArrayList<>();
+    private Texture coinTexture;
+
+
 
 
     public GameScreen(ClientWorld clientWorld) {
@@ -127,7 +135,8 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         });
         stage.addActor(exitButton);
 
-
+        coinTexture = new Texture(Gdx.files.internal("stick.png"));
+        coins = clientWorld.getCoins();
     }
 
     @Override
@@ -201,18 +210,27 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         Texture scaredFrog = new Texture("assets/scared_frog.png");
         batch.draw(scaredFrog, 3930, 4090, scaredFrog.getWidth(), scaredFrog.getHeight());
 
+        drawCoins();
+        detectCoin();
+        drawCoinCounter();
+
         batch.end();
 
-        // draw HUD
+        updateText();
+
+
+        // draw exit button
+        stage.draw();
+
+    }
+
+    public void updateText() {
+        hudText = "Collect " + (15 - broughtSticks.size()) + " sticks to save your friend!";
         hudCamera.update();
         hudBatch.setProjectionMatrix(hudCamera.combined);
         hudBatch.begin();
         font.draw(hudBatch, hudText, hudCamera.position.x - 1400, hudCamera.position.y + 900);
         hudBatch.end();
-
-        // draw exit button
-        stage.draw();
-
     }
 
     /**
@@ -239,6 +257,81 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
             character.height = 150;
             batch.draw(player.getTexture(), character.x - player.getTexture().getWidth() / 2f, character.y);
         }
+    }
+
+    public void drawCoins() {
+        if (clientWorld.getGameCharacter(myPlayerId) != null) {
+            int myPlayerX = (int) clientWorld.getGameCharacter(myPlayerId).getXPosition();
+            int myPlayerY = (int) clientWorld.getGameCharacter(myPlayerId).getYPosition();
+
+            for (Coin oneCoin : coins) {
+                if (oneCoin.getXPos() > myPlayerX + 1600 || oneCoin.getXPos() < myPlayerX - 1600) {
+                    continue;
+                } else if (oneCoin.getYPos() > myPlayerY + 1900 || oneCoin.getYPos() < myPlayerY - 1900) {
+                    continue;
+                }
+                oneCoin.draw(batch);
+            }
+        }
+    }
+
+
+    /**
+     * Draw the coin counter to the screen.
+     */
+    public void drawCoinCounter() {
+        if (clientWorld.getGameCharacter(myPlayerId) != null) {
+            Integer coins = clientWorld.getGameCharacter(myPlayerId).getCoinCounter();
+            font.draw(batch, "Sticks: " + coins, camera.position.x + 1000, camera.position.y + 900);
+        }
+    }
+
+
+    /**
+     * Detect coin.
+     */
+
+    public void detectCoin() {
+        List<Coin> coin2 = new ArrayList<>(coins);
+        for (Coin coin: coin2) {
+            if (character.overlaps(coin.getBoundingBox())) {
+                if (clientWorld.getGameCharacter(myPlayerId) != null) {
+                    if (clientWorld.getGameCharacter(myPlayerId).getCoinCounter() < 1) {
+                        clientWorld.getGameCharacter(myPlayerId).addCoin();
+                        PacketCoins packet = new PacketCoins();
+                        packet.setXPos(coin.getXPos());
+                        packet.setYPos(coin.getYPos());
+                        clientConnection.sendPacketCoin(packet);
+                        coins.remove(coin);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    public void bringCoin() {
+        if (clientWorld.getGameCharacter(myPlayerId) != null) {
+            if (clientWorld.getGameCharacter(myPlayerId).getCoinCounter() > 0) {
+                int x = currentXandY().get(0);
+                int y = currentXandY().get(1);
+                if (x > 3000 && x < 4500 && y > 3000 && y < 4000)
+                {
+                    Coin coin = new Coin(x, y);
+                    broughtSticks.add(coin);
+                    clientWorld.getGameCharacter(myPlayerId).emptyCoins();
+                }
+            }
+        }
+    }
+
+    public List<Integer> currentXandY() {
+        List<Integer> xandy = new ArrayList<>();
+        if (clientWorld.getGameCharacter(myPlayerId) != null) {
+            xandy.add((int) clientWorld.getGameCharacter(myPlayerId).getXPosition());
+            xandy.add((int) clientWorld.getGameCharacter(myPlayerId).getYPosition());
+        }
+        return xandy;
     }
 
 
@@ -275,9 +368,13 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         boolean downPressed = Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN);
         boolean leftPressed = Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT);
         boolean rightPressed = Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT);
+        boolean EPressed = Gdx.input.isKeyPressed(Input.Keys.E);
 
         // input from buttons:
         int speed = 3;
+        if (EPressed) {
+            bringCoin();
+        }
         if (upPressed && rightPressed && !leftPressed && !collidesTop() && !collidesRight()) {  // up right
             clientConnection.sendPlayerInfo(speed, speed);
         }

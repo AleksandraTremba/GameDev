@@ -1,10 +1,13 @@
 package theGame.GameInfo;
 
 import theGame.ClientConnection;
+import theGame.Coin;
 import theGame.Player;
-import theGame.enemy.Raccoon;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Class in the Client's side, where the local version of the game is created and maintained.
@@ -13,7 +16,7 @@ public class ClientWorld {
 
     private Player player;
     private final HashMap<Integer, Player> worldGameCharactersMap = new HashMap<>();
-//    private HashMap<Integer, Raccoon> raccoons = new HashMap<>();
+    private List<Coin> coins = new ArrayList<>();
 
     /**
      * Adds the instance of ClientConnection to this class.
@@ -40,7 +43,7 @@ public class ClientWorld {
         this.player = player;
     }
 
-    public Player getGameCharacter(Integer id){
+    public Player getGameCharacter(Integer id) {
         return worldGameCharactersMap.get(id);
     }
 
@@ -72,4 +75,26 @@ public class ClientWorld {
     public void movePlayerGameCharacter(int id, float xPosChange, float yPosChange) {
         getGameCharacter(id).moveToNewPos(xPosChange, yPosChange);
     }
+    public List<Coin> getCoins() {
+        return coins;
+    }
+
+    public void addCoin(Integer x, Integer y) {
+        Coin coin = new Coin(x, y);
+        coins.add(coin);
+    }
+
+    /**
+     public void removeOtherPlayerCoins(String color) {
+     List<Coin> newCoins = new ArrayList<>();
+     for (Coin coin : coins) {
+     if (!Objects.equals(coin.getColor(), color)) {
+     newCoins.add(coin);
+     }
+     }
+     coins = newCoins;
+     }
+     **/
+
+
 }
