@@ -314,6 +314,9 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     }
 
     public void bringCoin() {
+        if (broughtSticksCounter == 15) {
+            gameClient.endGame();
+        }
         if (clientWorld.getGameCharacter(myPlayerId) != null) {
             if (clientWorld.getGameCharacter(myPlayerId).getCoinCounter() > 0) {
                 int x = currentXandY().get(0);
@@ -326,9 +329,6 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
                     clientWorld.getGameCharacter(myPlayerId).emptyCoins();
                 }
             }
-           if (broughtSticksCounter == 1) {
-                gameClient.endGame();
-           }
         }
     }
 

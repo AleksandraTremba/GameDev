@@ -36,7 +36,7 @@ public class GameOverScreen extends ApplicationAdapter implements Screen {
 
         stage = new Stage(new ScreenViewport());
         // Load textures
-        backgroundTexture = new Texture("background.jpg");
+        backgroundTexture = new Texture("gameover.png");
 
         exitButtonActive = new Texture("exitButtonInactive.png");
         exitButtonInactive = new Texture("exitButtonActive.png");
@@ -96,10 +96,10 @@ public class GameOverScreen extends ApplicationAdapter implements Screen {
         stage.getViewport().update(width, height, true);
 
         // Update exit button size and position
-        ImageButton exitButton = (ImageButton) stage.getActors().get(1);
+        ImageButton exitButton = (ImageButton) stage.getActors().get(0);
         exitButton.setWidth(stage.getWidth() / 3f);
         exitButton.setPosition(stage.getWidth() / 2f - exitButton.getWidth() / 2,
-                stage.getHeight() / 6f - 110);
+                stage.getHeight() / 6f);
     }
 
     @Override
