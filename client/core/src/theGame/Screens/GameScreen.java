@@ -282,7 +282,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     public void drawCoinCounter() {
         if (clientWorld.getGameCharacter(myPlayerId) != null) {
             Integer coins = clientWorld.getGameCharacter(myPlayerId).getCoinCounter();
-            font.draw(batch, "Sticks: " + coins, camera.position.x + 1000, camera.position.y + 900);
+            font.draw(batch, "Sticks: " + coins, camera.position.x + 900, camera.position.y + 900);
         }
     }
 
@@ -345,7 +345,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
         // Update the stage viewport
         stage.getViewport().update(width, height, true);
         exitButton.setWidth(stage.getWidth() / 3f);
-        exitButton.setPosition(stage.getWidth() - exitButton.getWidth() + 200,
+        exitButton.setPosition(stage.getWidth() - exitButton.getWidth() + 170,
                 stage.getHeight() - exitButton.getHeight() - 30);
         gamePort.update(width, height);
         batch.setProjectionMatrix(camera.combined);

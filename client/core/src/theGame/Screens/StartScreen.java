@@ -40,7 +40,7 @@ public class StartScreen extends ApplicationAdapter implements Screen {
 
         stage = new Stage(new ScreenViewport());
         // Load textures
-        backgroundTexture = new Texture("background.jpg");
+        backgroundTexture = new Texture("newmenu.png");
 
         playButtonActive = new Texture("playButtonActive.png");
         playButtonInactive = new Texture("playButtonInactive.png");
@@ -90,7 +90,7 @@ public class StartScreen extends ApplicationAdapter implements Screen {
         exitButton = new ImageButton(exitButtonActiveDrawable, exitButtonInactiveDrawable);
         exitButton.setWidth(Gdx.graphics.getWidth() / 3f * 2);
         exitButton.setPosition(Gdx.graphics.getWidth() / 2f - exitButton.getWidth() / 2,
-                Gdx.graphics.getHeight() / 6f - exitButton.getHeight() / 2);
+                Gdx.graphics.getHeight() / 6f - exitButton.getHeight() / 3);
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -148,7 +148,7 @@ public class StartScreen extends ApplicationAdapter implements Screen {
         ImageButton exitButton = (ImageButton) stage.getActors().get(1);
         exitButton.setWidth(stage.getWidth() / 3f);
         exitButton.setPosition(stage.getWidth() / 2f - exitButton.getWidth() / 2,
-                stage.getHeight() / 6f - exitButton.getHeight() / 2);
+                stage.getHeight() / 6f - 110);
     }
 
     @Override
