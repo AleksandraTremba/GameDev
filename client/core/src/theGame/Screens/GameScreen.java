@@ -62,16 +62,19 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     private Texture exitButtont;
     private ImageButton exitButton;
     private List<Coin> broughtSticks = new ArrayList<>();
+    private int broughtSticksCounter = 0;
     private String hudText;
     private Rectangle coin;
     private List<Coin> coins = new ArrayList<>();
     private Texture coinTexture;
+    private GameOverScreen gameOverScreen;
 
 
 
 
-    public GameScreen(ClientWorld clientWorld) {
+    public GameScreen(ClientWorld clientWorld, GameClient gameClient) {
         this.clientWorld = clientWorld;
+        this.gameClient = gameClient;
         createRaccoons();
         create();
         render();
@@ -319,9 +322,13 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
                 {
                     Coin coin = new Coin(x, y);
                     broughtSticks.add(coin);
+                    broughtSticksCounter++;
                     clientWorld.getGameCharacter(myPlayerId).emptyCoins();
                 }
             }
+           if (broughtSticksCounter == 1) {
+                gameClient.endGame();
+           }
         }
     }
 
@@ -514,9 +521,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-
     }
-
     @Override
     public void render(float delta) {
         render();
