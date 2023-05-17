@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class MyServer {
     /**
@@ -17,7 +18,6 @@ public class MyServer {
      * Each player object has coordinates (x and y)
      */
     private final HashMap<Integer, server.Player> players = new HashMap<>();  //java.net.InetSocketAddress
-//    private final HashMap<Integer, server.Raccoon> raccoons = new HashMap<>();
     private final Server server;
     private int playerCount = 1;
     private World serverWorld;
@@ -51,6 +51,10 @@ public class MyServer {
                     addPlayerToClientsGame(connection, player);
 
                     System.out.println(connection.getRemoteAddressUDP().toString() + " connected");
+
+                    addCoinsToNewClient(connection);
+                    serverWorld.addCoins(connection.getID());
+                    addCoinsToClientsGame(connection);
                 }
                 // We check if we received a character (they want to tell the server, where they want to go).
                 else if (object instanceof PacketUpdateCharacterInfo) {
@@ -70,7 +74,19 @@ public class MyServer {
                     System.out.println(character.getYPosition());
 
                     sendUpdatedGameCharacter(connection.getID(), packet.getXPosition(), packet.getYPosition());
+                } else if (object instanceof PacketCoins) {
+                    PacketCoins packet = (PacketCoins) object;
+                    List<Coin> coins = serverWorld.getClientsCoins().get(serverWorld.getClients().get(connection.getID()));
+                    for (Coin coin : coins) {
+                        if (Objects.equals(coin.getXPos(), packet.getXPos()) && Objects.equals(coin.getYPos(), packet.getYPos())) {
+                            removeCoinFromClientsGame(connection, coin);
+                            coins.remove(coin);
+                            break;
+                        }
+                    }
+
                 }
+
             }
 
             /**
@@ -80,6 +96,7 @@ public class MyServer {
             public void disconnected(Connection c) {
                 players.remove(c.getID());
                 playerCount -= 1;
+                serverWorld.getClientsCoins().remove(serverWorld.getClients().get(c.getID()));
                 serverWorld.removePlayer(c.getID());
                 PacketClientDisconnect packet = PacketCreator.createPacketClientDisconnect(c.getID());
                 server.sendToAllUDP(packet);
@@ -101,17 +118,6 @@ public class MyServer {
                 Id, character.getXPosition(), character.getYPosition());
         server.sendToAllUDP(packet);
     }
-//    public void sendUpdatedRaccoon(int Id, float xPos, float yPos) {
-//        System.out.println("SENDING SMTH BACK TO CLIENT");
-//
-//        serverWorld.movePlayerGameCharacter(Id, xPos, yPos);  // Update given PlayerGameCharacter.
-//        Raccoon character = serverWorld.getRaccoon(Id);
-//
-//        // Send updated PlayerGameCharacter's info to all connections.
-//        PacketUpdateRaccoonInfo packet1 = PacketCreator.createPacketUpdateRaccoonInfo(
-//                Id, character.getXPosition(), character.getYPosition());
-//        server.sendToAllUDP(packet1);
-//    }
 
     /**
      * Method for sending new PlayerGameCharacter instance info to all connections and sending existing characters
@@ -141,4 +147,44 @@ public class MyServer {
                 newPlayerConnection.getID(), newPlayer.getXPosition(), newPlayer.getYPosition());
         server.sendToAllTCP(addCharacter);  // Send packet to all connections.
     }
+
+    /**
+     * When new client connects, send all coins that are in the map to client.
+     * @param connection new connection
+     */
+    private void addCoinsToNewClient(Connection connection) {
+        List<Coin> combinedList = new ArrayList<>();
+        for (List<Coin> list : serverWorld.getClientsCoins().values()) {
+            combinedList.addAll(list);
+        }
+        for (Coin coin : combinedList) {
+            PacketCoins packetCoins = new PacketCoins();
+            packetCoins.setXPos(coin.getXPos());
+            packetCoins.setYPos(coin.getYPos());
+            packetCoins.setColor(coin.getColor());
+            server.sendToTCP(connection.getID(), packetCoins);
+        }
+    }
+
+    /**
+     * Add coins to clients game when someone connects to server.
+     * @param connection new connection
+     */
+    public void addCoinsToClientsGame(Connection connection) {
+        for (Coin coin : serverWorld.getClientsCoins().get(serverWorld.getClients().get(connection.getID()))) {
+            PacketCoins packetCoins = new PacketCoins();
+            packetCoins.setXPos(coin.getXPos());
+            packetCoins.setYPos(coin.getYPos());
+            packetCoins.setColor(coin.getColor());
+            server.sendToAllUDP(packetCoins);
+        }
+    }
+
+    public void removeCoinFromClientsGame(Connection connection, Coin coin) {
+        PacketRemoveCoin packet = new PacketRemoveCoin();
+        packet.setXPos(coin.getXPos());
+        packet.setYPos(coin.getYPos());
+        server.sendToAllUDP(packet);
+    }
+
 }

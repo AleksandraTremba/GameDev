@@ -5,17 +5,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import theGame.ClientConnection;
+import theGame.Screens.GameOverScreen;
 import theGame.Screens.GameScreen;
 import theGame.Screens.StartScreen;
 
 import java.io.IOException;
 
 public class GameClient extends Game {
-//    public static final int V_WIDTH = 400;
+    //    public static final int V_WIDTH = 400;
 //    public static final int V_HEIGHT = 208;
     public SpriteBatch batch;
     private GameScreen gameScreen;
     private StartScreen startScreen;
+    private GameOverScreen gameOverScreen;
     private Skin gameSkin;
     /**
      * Method creates a new Client who connects to the Server with its ClientWorld and GameScreen.
@@ -45,7 +47,7 @@ public class GameClient extends Game {
      */
     public void startGame() {
         ClientWorld clientWorld = new ClientWorld();
-        gameScreen = new GameScreen(clientWorld);
+        gameScreen = new GameScreen(clientWorld, this);
         setScreen(gameScreen);
 
         try {
@@ -54,6 +56,11 @@ public class GameClient extends Game {
             e.printStackTrace();
         }
         //Gdx.input.setInputProcessor(gameScreen);
+    }
+
+    public void endGame() {
+        gameOverScreen = new GameOverScreen(this);
+        setScreen(gameOverScreen);
     }
 
     /**

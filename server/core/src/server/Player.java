@@ -1,11 +1,15 @@
 package server;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Player {
 
     private float xPosition;
     private float yPosition;
     private final String name;
     private final int id;
+    private List<Coin> coins = new ArrayList<>();
 
     public Player(int id, String name, float x, float y) {
         this.xPosition = x;
@@ -45,6 +49,10 @@ public class Player {
 
     public int getId() {
         return id;
+    }
+
+    public void addCoins(List<Coin> coins) {
+        this.coins = coins;
     }
 
     public static Player createNewPlayer(float xPos, float yPos, String name, int id) {

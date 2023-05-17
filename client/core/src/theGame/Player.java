@@ -14,9 +14,11 @@ public class Player extends Sprite {
     private float yPosition;
     private String direction;
     private String previousDirection;
+    private Integer coinCounter = 0;
     private boolean bPressed;
     private long lastBPressedTime;
     private boolean bAudioPlayed;
+
 
 
 
@@ -159,5 +161,19 @@ public class Player extends Sprite {
         } else {
             return new Texture(Gdx.files.internal("frog/rsz_player_idle.png"));
         }
+    }
+
+
+    public void addCoin() {
+        coinCounter++;
+    }
+
+    public Integer getCoinCounter() {
+        return coinCounter;
+    }
+
+
+    public void emptyCoins() {
+        coinCounter = 0;
     }
 }

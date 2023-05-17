@@ -24,58 +24,19 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import theGame.GameInfo.GameClient;
 
-public class StartScreen extends ApplicationAdapter implements Screen {
+public class GameOverScreen extends ApplicationAdapter implements Screen {
     private GameClient gameClient;
     private final Stage stage;
     private final Texture backgroundTexture;
-    private final Texture playButtonActive;
-    private final Texture playButtonInactive;
     private final Texture exitButtonActive;
     private final Texture exitButtonInactive;
-    private final ImageButton playButton;
     private final ImageButton exitButton;
-    private final Music menuMusic;
 
-    public StartScreen(final GameClient gameClient) {
+    public GameOverScreen(final GameClient gameClient) {
 
         stage = new Stage(new ScreenViewport());
         // Load textures
-        backgroundTexture = new Texture("newmenu.png");
-
-        playButtonActive = new Texture("playButtonActive.png");
-        playButtonInactive = new Texture("playButtonInactive.png");
-
-        // Create the play button with its textures scaled up by a factor of 2
-        Drawable playButtonActiveDrawable = new TextureRegionDrawable(new TextureRegion(playButtonInactive));
-        Drawable playButtonInactiveDrawable = new TextureRegionDrawable(new TextureRegion(playButtonActive));
-        playButtonActiveDrawable.setMinHeight(playButtonActiveDrawable.getMinHeight() * 2);
-        playButtonActiveDrawable.setMinWidth(playButtonActiveDrawable.getMinWidth() * 2);
-        playButtonInactiveDrawable.setMinHeight(playButtonInactiveDrawable.getMinHeight() * 2);
-        playButtonInactiveDrawable.setMinWidth(playButtonInactiveDrawable.getMinWidth() * 2);
-
-        playButton = new ImageButton(playButtonInactiveDrawable, playButtonActiveDrawable);
-        playButton.setWidth(Gdx.graphics.getWidth() / 3f * 2);
-        playButton.setPosition(Gdx.graphics.getWidth() / 2f - playButton.getWidth() / 2,
-                Gdx.graphics.getHeight() / 3f - playButton.getHeight() / 2);
-        playButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.audio.newSound(Gdx.files.internal("discord-notification.mp3")).play(1.0f);
-                menuMusic.stop(); // stop the music
-                gameClient.startGame();
-            }
-
-            @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                playButton.getImage().setDrawable(new TextureRegionDrawable(playButtonActive));
-            }
-
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                playButton.getImage().setDrawable(new TextureRegionDrawable(playButtonInactive));
-            }
-        });
-        stage.addActor(playButton);
+        backgroundTexture = new Texture("gameover.png");
 
         exitButtonActive = new Texture("exitButtonInactive.png");
         exitButtonInactive = new Texture("exitButtonActive.png");
@@ -108,16 +69,12 @@ public class StartScreen extends ApplicationAdapter implements Screen {
             }
         });
         stage.addActor(exitButton);
-        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("tyagi.mp3"));
 
     }
 
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-
-        menuMusic.setLooping(true);
-        menuMusic.play();
     }
 
     @Override
@@ -138,17 +95,11 @@ public class StartScreen extends ApplicationAdapter implements Screen {
         // Update the stage viewport
         stage.getViewport().update(width, height, true);
 
-        // Update play button size and position
-        ImageButton playButton = (ImageButton) stage.getActors().get(0);
-        playButton.setWidth(stage.getWidth() / 3f);
-        playButton.setPosition(stage.getWidth() / 2f - playButton.getWidth() / 2,
-                stage.getHeight() / 3f - playButton.getHeight() / 2);
-
         // Update exit button size and position
-        ImageButton exitButton = (ImageButton) stage.getActors().get(1);
+        ImageButton exitButton = (ImageButton) stage.getActors().get(0);
         exitButton.setWidth(stage.getWidth() / 3f);
         exitButton.setPosition(stage.getWidth() / 2f - exitButton.getWidth() / 2,
-                stage.getHeight() / 6f - 110);
+                stage.getHeight() / 6f);
     }
 
     @Override
@@ -159,7 +110,5 @@ public class StartScreen extends ApplicationAdapter implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-        menuMusic.stop();
-        menuMusic.dispose();
     }
 }

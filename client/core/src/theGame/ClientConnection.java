@@ -16,7 +16,6 @@ import java.io.IOException;
  */
 public class ClientConnection {
     String ip = "localhost";
-    //String ip = "193.40.156.27";
     Integer tcpPort = 8085;
     Integer udpPort = 8085;
     private final Client client;
@@ -51,7 +50,10 @@ public class ClientConnection {
                     Player newPlayer = Player.createPlayer(packetAddCharacter.getX(), packetAddCharacter.getY(), packetAddCharacter.getPlayerName(), packetAddCharacter.getId());
                     // Add new PlayerGameCharacter to client's game.
                     clientWorld.addGameCharacter(packetAddCharacter.getId(), newPlayer);
-                } else if (object instanceof PacketClientDisconnect) {
+                } else if (object instanceof PacketCoins) {
+                    PacketCoins packetCoins = (PacketCoins) object;
+                    clientWorld.addCoin(packetCoins.getXPos(), packetCoins.getYPos());
+                }else if (object instanceof PacketClientDisconnect) {
                     PacketClientDisconnect packetClientDisconnect = (PacketClientDisconnect) object;
                     clientWorld.removeGameCharacter(packetClientDisconnect.getId());
                 }
@@ -92,11 +94,6 @@ public class ClientConnection {
         client.sendUDP(packet);
     }
 
-//    public void sendRaccoonInfo(float xChange, float yChange) {
-//        PacketUpdateRaccoonInfo packet1 = PacketCreator.createPacketUpdateRaccoonInfo(client.getID(), xChange, yChange);
-//        client.sendUDP(packet1);
-//    }
-
     public void setGameScreen(GameScreen gameScreen) {
     }
 
@@ -111,6 +108,10 @@ public class ClientConnection {
     public void sendPacketConnect(String playerName) {
         PacketConnect packetConnect = PacketCreator.createPacketConnect(playerName);
         client.sendTCP(packetConnect);
+    }
+
+    public void sendPacketCoin(PacketCoins packet) {
+        client.sendTCP(packet);
     }
 
     public void setPlayerName(String playerName) {

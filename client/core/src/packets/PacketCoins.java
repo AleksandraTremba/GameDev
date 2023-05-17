@@ -1,18 +1,11 @@
-package server;
+package packets;
 
-public class Coin {
 
-    private Integer xPos = null;
-    private Integer yPos = null;
+public class PacketCoins {
+
+    private Integer xPos;
+    private Integer yPos;
     private String color;
-
-    /**
-     * Constructor.
-     */
-    public Coin(Integer xPos, Integer yPos) {
-        this.xPos = xPos;
-        this.yPos = yPos;
-    }
 
     public Integer getXPos() {
         return xPos;
