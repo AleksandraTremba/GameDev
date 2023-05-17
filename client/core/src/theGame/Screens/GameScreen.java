@@ -260,6 +260,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
 
     }
 
+
     public void updateText() {
         hudText = "Collect " + (15 - broughtSticks.size()) + " sticks to save your friend!";
         hudCamera.update();
