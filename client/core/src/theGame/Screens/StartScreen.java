@@ -108,7 +108,7 @@ public class StartScreen extends ApplicationAdapter implements Screen {
             }
         });
         stage.addActor(exitButton);
-        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("tyagi.mp3"));
+        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("MusicForMyEars.mp3"));
 
     }
 

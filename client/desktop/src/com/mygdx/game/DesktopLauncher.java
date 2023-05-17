@@ -12,7 +12,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setTitle("Around the world");
-		//config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
+		config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
 		new Lwjgl3Application(new GameClient(), config);
 		//new Lwjgl3Application(new MyGdxGame(), config);
 	}
