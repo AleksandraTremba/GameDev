@@ -122,13 +122,11 @@ public class Player extends Sprite {
         boolean kPressed = Gdx.input.isKeyPressed(Input.Keys.K);
         boolean tPressed = Gdx.input.isKeyPressed(Input.Keys.T);
         boolean fPressed = Gdx.input.isKeyPressed(Input.Keys.F);
+        boolean isCoinCounterMoreThanZero = getCoinCounter() > 0;
 
-
-        if (Objects.equals(direction, "up")) {
-            return new Texture(Gdx.files.internal("frog/rsz_player_back.png"));
-        } else if (Objects.equals(direction, "down")) {
-            return new Texture(Gdx.files.internal("frog/rsz_player_idle.png"));
-        } else if (Objects.equals(direction, "left")) {
+        // some textures
+        if ((Objects.equals(direction, "up")) || (Objects.equals(direction, "left")) ||
+                (Objects.equals(direction, "right"))|| (Objects.equals(direction, "down"))) {
             if (fPressed) {
                 Texture[] textures = new Texture[8];
                 for (int i = 1; i <= 8; i++) {
@@ -137,8 +135,6 @@ public class Player extends Sprite {
                 int frameIndex = (int) ((System.currentTimeMillis() / 100) % 8);
                 return textures[frameIndex];
             }
-            return new Texture(Gdx.files.internal("frog/rsz_5player_idle.png"));
-        } else if (Objects.equals(direction, "right")) {
             if (bPressed){
                 if (!bAudioPlayed) {
                     Gdx.audio.newSound(Gdx.files.internal("frog/DontYouDare.mp3")).play(1.0f);
@@ -156,6 +152,27 @@ public class Player extends Sprite {
             }
             if (tPressed){
                 return new Texture(Gdx.files.internal("frog/bj.png"));
+            }
+        }
+
+        if (Objects.equals(direction, "up")) {
+            if (isCoinCounterMoreThanZero) {
+                return new Texture(Gdx.files.internal("frog/rsz_frog_w_stick_b.png"));
+            }
+            return new Texture(Gdx.files.internal("frog/rsz_player_back.png"));
+        } else if (Objects.equals(direction, "down")) {
+            if (isCoinCounterMoreThanZero) {
+                return new Texture(Gdx.files.internal("frog/rsz_frog_w_stick.png"));
+            }
+            return new Texture(Gdx.files.internal("frog/rsz_player_idle.png"));
+        } else if (Objects.equals(direction, "left")) {
+            if (isCoinCounterMoreThanZero) {
+                return new Texture(Gdx.files.internal("frog/rsz_frog_w_stick1.png"));
+            }
+            return new Texture(Gdx.files.internal("frog/rsz_5player_idle.png"));
+        } else if (Objects.equals(direction, "right")) {
+            if (isCoinCounterMoreThanZero) {
+                return new Texture(Gdx.files.internal("frog/rsz_frog_w_stick.png"));
             }
             return new Texture(Gdx.files.internal("frog/rsz_player_idle.png"));
         } else {

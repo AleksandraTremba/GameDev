@@ -16,7 +16,7 @@ public class Raccoon extends Sprite {
     private float xPosition;
     private float yPosition;
     private String direction;
-    private float speed = 5f;
+    private float speed = 4f;
     private float spawnXPosition;
     private float spawnYPosition;
     private Texture[] textures; // Array to store textures for left-facing raccoon
@@ -101,7 +101,7 @@ public class Raccoon extends Sprite {
     public void moveTowardsPlayer(float playerX, float playerY) {
          //calculating distance between a player and the raccoon
         float distanceToPlayer = (float) sqrt(pow(playerX - xPosition, 2) + pow(playerY - yPosition, 2));
-        if (distanceToPlayer >= 800) {
+        if (distanceToPlayer >= 1000) {
             returnToSpawn();
             // if the distance is greater than or equal to 600 pixels, the raccoon doesn't chase the player
             return;

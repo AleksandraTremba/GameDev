@@ -25,6 +25,7 @@ import theGame.GameInfo.ClientWorld;
 import theGame.GameInfo.GameClient;
 import theGame.ClientConnection;
 import theGame.Player;
+import theGame.enemy.Monkey;
 import theGame.enemy.Raccoon;
 
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     private SpriteBatch hudBatch;
 
     private List<Raccoon> raccoons = new ArrayList<>();
+    private List<Monkey> monkeys = new ArrayList<>();
     private Stage stage;
     private Texture exitButtont;
     private ImageButton exitButton;
@@ -70,12 +72,11 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     private GameOverScreen gameOverScreen;
 
 
-
-
     public GameScreen(ClientWorld clientWorld, GameClient gameClient) {
         this.clientWorld = clientWorld;
         this.gameClient = gameClient;
         createRaccoons();
+        createMonkey();
         create();
         render();
     }
@@ -84,9 +85,24 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
      * Creating raccoons to the map and adding them to the list.
      */
     public void createRaccoons() {
-        raccoons.add(new Raccoon(3300, 2900, 1));
-        raccoons.add(new Raccoon(3200, 2900, 2));
+//        raccoons.add(new Raccoon(3300, 2900, 11));
+//        raccoons.add(new Raccoon(3200, 2900, 24));
+        raccoons.add(new Raccoon(4000, 7000, 1));
+        raccoons.add(new Raccoon(1900, 5900, 2));
+        raccoons.add(new Raccoon(1400, 3150, 3));
+        raccoons.add(new Raccoon(2050, 1650, 4));
+        raccoons.add(new Raccoon(3100, 220, 5));
+        raccoons.add(new Raccoon(5530, 1670, 6));
+        raccoons.add(new Raccoon(6900, 5400, 7));
+        raccoons.add(new Raccoon(6200, 5400, 8));
+        raccoons.add(new Raccoon(5500, 6600, 9));
+
     }
+
+    public void createMonkey() {
+        monkeys.add(new Monkey(7000, 500, 1));
+    }
+
 
     @Override
     public void create() {
@@ -188,6 +204,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
 
         batch.begin();
         detectInput();
+
         //draw raccons to the map
         if (clientWorld.getGameCharacter(myPlayerId) != null) {
             float x = clientWorld.getGameCharacter(myPlayerId).getXPosition();
@@ -200,14 +217,30 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
                 //calculate the distance between the raccoon and a player
                 float distanceToPlayer = (float) sqrt(pow(x - raccoonX, 2) + pow(y - raccoonY, 2));
                 //draw the raccoons only if the distance between it and a player is less or equal to 1600 pixels
-                if (distanceToPlayer <= 1700) {
+                if (distanceToPlayer <= 1800) {
                     batch.draw(raccoon.getTexture(), raccoon.getXPosition(), raccoon.getYPosition());
                 }
             }
         }
 
+
         //Draw all the players in the game onto the map
         drawPlayerGameCharacters();
+        if (clientWorld.getGameCharacter(myPlayerId) != null) {
+            float x = clientWorld.getGameCharacter(myPlayerId).getXPosition();
+            float y = clientWorld.getGameCharacter(myPlayerId).getYPosition();
+            for (Monkey monkey : monkeys) {
+                float kongX = monkey.getXPosition();
+                float kongY = monkey.getYPosition();
+                float distanceToPlayer = (float) sqrt(pow(x - kongX, 2) + pow(y - kongY, 2));
+                if (distanceToPlayer <= 1800) {
+                    batch.draw(monkey.getTexture(), monkey.getXPosition() - 193, monkey.getYPosition() - 149);
+                }
+            }
+            // update the monkey
+            Monkey monkey = monkeys.get(0);
+            monkey.update(x, y);
+        }
 
         // Draw scared frog at (4030, 3990)
         Texture scaredFrog = new Texture("assets/scared_frog.png");
@@ -264,17 +297,29 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
 
     public void drawCoins() {
         if (clientWorld.getGameCharacter(myPlayerId) != null) {
-            int myPlayerX = (int) clientWorld.getGameCharacter(myPlayerId).getXPosition();
-            int myPlayerY = (int) clientWorld.getGameCharacter(myPlayerId).getYPosition();
-
+            float x = clientWorld.getGameCharacter(myPlayerId).getXPosition();
+            float y = clientWorld.getGameCharacter(myPlayerId).getYPosition();
             for (Coin oneCoin : coins) {
-                if (oneCoin.getXPos() > myPlayerX + 1600 || oneCoin.getXPos() < myPlayerX - 1600) {
-                    continue;
-                } else if (oneCoin.getYPos() > myPlayerY + 1900 || oneCoin.getYPos() < myPlayerY - 1900) {
-                    continue;
+                float coinX = oneCoin.getXPos();
+                float coinY = oneCoin.getYPos();
+                //calculate the distance between the raccoon and a player
+                float distanceToPlayer = (float) sqrt(pow(x - coinX, 2) + pow(y - coinY, 2));
+                //draw the raccoons only if the distance between it and a player is less or equal to 1600 pixels
+                if (distanceToPlayer <= 1000) {
+                    oneCoin.draw(batch);
                 }
-                oneCoin.draw(batch);
             }
+//            int myPlayerX = (int) clientWorld.getGameCharacter(myPlayerId).getXPosition();
+//            int myPlayerY = (int) clientWorld.getGameCharacter(myPlayerId).getYPosition();
+//
+//            for (Coin oneCoin : coins) {
+//                if (oneCoin.getXPos() > myPlayerX + 1600 || oneCoin.getXPos() < myPlayerX - 1600) {
+//                    continue;
+//                } else if (oneCoin.getYPos() > myPlayerY + 1900 || oneCoin.getYPos() < myPlayerY - 1900) {
+//                    continue;
+//                }
+//                oneCoin.draw(batch);
+//            }
         }
     }
 
@@ -285,7 +330,7 @@ public class GameScreen extends ApplicationAdapter implements Screen, InputProce
     public void drawCoinCounter() {
         if (clientWorld.getGameCharacter(myPlayerId) != null) {
             Integer coins = clientWorld.getGameCharacter(myPlayerId).getCoinCounter();
-            font.draw(batch, "Sticks: " + coins, camera.position.x + 900, camera.position.y + 900);
+            font.draw(batch, "Sticks: " + coins, camera.position.x + 800, camera.position.y + 900);
         }
     }
 
